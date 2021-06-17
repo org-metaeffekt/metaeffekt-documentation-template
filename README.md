@@ -17,7 +17,7 @@
 
 ## Build Instructions
 
-    mvn clean install -P extraction -P documentation
+    mvn clean install -P extraction -P documentation -Dimage.repo=debian -Dimage.tag=latest
 
 Extraction and documentation have been split in separate profiles to
 be used separately. Extraction is a pre-requisite to documentation
