@@ -1,5 +1,9 @@
 # metaeffekt-documentation-template
 
+## Overview
+
+![Alt](doc/overview.png)
+
 ## Current Scope
 - illustrate extraction from containers
 - illustrate extraction from a POM
