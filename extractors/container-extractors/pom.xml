@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <artifactId>ae-extractors</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ae-container-extractors</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+    </properties>
+
+    <modules>
+        <module>ae-container-extractor</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20.1</version>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>unpack-container-scripts</id>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}</outputDirectory>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>org.metaeffekt.core</groupId>
+                                        <artifactId>ae-inventory-maven-plugin</artifactId>
+                                        <version>${ae.core.version}</version>
+                                    </artifactItem>
+                                </artifactItems>
+                                <includes>container-extractors/*.sh</includes>
+                                <overWriteSnapshots>true</overWriteSnapshots>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                    <executions>
+                        <execution>
+                            <id>container-extractors-chmod</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <chmod perm="+x">
+                                        <fileSet dir="${project.build.directory}/container-extractors" includes="**/*.sh" />
+                                    </chmod>
+                                    <mkdir dir="${project.build.directory}/classes/analysis" />
+                                </target>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.6.0</version>
+                    <executions>
+                        <execution>
+                            <id>run-image-inspect</id>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <phase>compile</phase>
+                            <configuration>
+                                <executable>docker</executable>
+                                <arguments>
+                                    <argument>inspect</argument>
+                                    <argument>${image.id}</argument>
+                                </arguments>
+                                <outputFile>${ae.extractor.analysis.dir}/image-inspect.yaml</outputFile>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>run-inventory-extractor</id>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <phase>compile</phase>
+                            <configuration>
+                                <executable>docker</executable>
+                                <arguments>
+                                    <argument>run</argument>
+                                    <argument>--rm</argument>
+                                    <argument>-i</argument>
+                                    <argument>-v</argument>
+                                    <argument>${project.build.directory}/container-extractors/:/container-extractors</argument>
+                                    <argument>-v</argument>
+                                    <argument>${ae.extractor.analysis.dir}/:/analysis</argument>
+                                    <argument>--entrypoint</argument>
+                                    <!-- NOTE: here an image-os-specific extractor can be used -->
+                                    <argument>/container-extractors/extract.sh</argument>
+                                    <argument>${image.id}</argument>
+                                </arguments>
+                                <outputFile>${ae.extractor.analysis.dir}/image-analysis.txt</outputFile>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>run-file-extractor</id>
+                            <goals>
+                                <goal>exec</goal>
+                            </goals>
+                            <phase>test-compile</phase>
+                            <configuration>
+                                <executable>docker</executable>
+                                <arguments>
+                                    <argument>run</argument>
+                                    <argument>--rm</argument>
+                                    <argument>-i</argument>
+                                    <argument>-v</argument>
+                                    <argument>${project.build.directory}/container-extractors/:/container-extractors</argument>
+                                    <argument>-v</argument>
+                                    <argument>${ae.extractor.analysis.dir}/:/analysis</argument>
+                                    <argument>--entrypoint</argument>
+                                    <argument>/container-extractors/extract-filtered-files.sh</argument>
+                                    <argument>${image.id}</argument>
+                                </arguments>
+                                <outputFile>${ae.extractor.analysis.dir}/image-extracted-files.txt</outputFile>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.metaeffekt.core</groupId>
+                    <artifactId>ae-inventory-maven-plugin</artifactId>
+                    <version>${ae.core.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>extract-container-inventory</goal>
+                            </goals>
+                            <phase>process-test-resources</phase>
+                            <configuration>
+                                <analysisDir>${ae.extractor.analysis.dir}</analysisDir>
+                                <targetInventoryFile>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</targetInventoryFile>
+                                <filterPackagesWithoutVersion>true</filterPackagesWithoutVersion>
+                                <excludes>
+                                    <exclude>/var/cache/ldconfig/**/*</exclude>
+                                    <exclude>/var/log/**/*</exclude>
+
+                                    <exclude>/var/lib/rpm/**/*</exclude>
+                                    <exclude>/var/lib/dpkg/**/*</exclude>
+                                    <exclude>/var/lib/pacman/**/*</exclude>
+
+                                    <exclude>/var/cache/apt/**/*</exclude>
+                                    <exclude>/var/cache/debconf/**/*</exclude>
+                                    <exclude>/var/lib/apt/**/*</exclude>
+                                    <exclude>/var/lib/pam/**/*</exclude>
+                                    <exclude>/var/lib/systemd/deb-systemd-helper-enabled/**/*</exclude>
+                                    <exclude>/var/lib/yum/yumdb/**/*</exclude>
+
+                                    <exclude>/lib/apk/db/**/*</exclude>
+
+                                    <exclude>/sys/**/*</exclude>
+                                    <exclude>/proc/**/*</exclude>
+                                    <exclude>/root/.*</exclude>
+                                    <exclude>/etc/**/*</exclude>
+
+                                    <exclude>/usr/lib/locale/locale-archive</exclude>
+
+                                    <exclude>**/.lock</exclude>
+                                    <exclude>**/lock</exclude>
+
+                                    <exclude>/run/utmp</exclude>
+                                </excludes>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>scan-extracted</id>
+                            <goals>
+                                <goal>create-directory-report</goal>
+                            </goals>
+                            <phase>test-compile</phase>
+                            <configuration>
+                                <inputDirectory>${ae.extractor.analysis.dir}/extracted-files</inputDirectory>
+                                <scanDirectory>${ae.extractor.analysis.dir}/extracted-scan</scanDirectory>
+                                <scanIncludes>**/*</scanIncludes>
+                                <scanExcludes>-none-</scanExcludes>
+                                <enableImplicitUnpack>false</enableImplicitUnpack>
+
+                                <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
+                                <sourceInventoryIncludes>inventory/*.xls</sourceInventoryIncludes>
+
+                                <targetInventoryDir>${ae.extractor.analysis.dir}</targetInventoryDir>
+                                <targetInventoryPath>${project.artifactId}-file-inventory.xls</targetInventoryPath>
+
+                                <failOnUnknown>false</failOnUnknown>
+                                <failOnUnknownVersion>false</failOnUnknownVersion>
+                                <failOnError>false</failOnError>
+                                <failOnMissingLicense>false</failOnMissingLicense>
+                                <failOnMissingLicenseFile>false</failOnMissingLicenseFile>
+                                <failOnInternal>false</failOnInternal>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>merge-inventory</id>
+                            <goals>
+                                <goal>merge-inventories</goal>
+                            </goals>
+                            <phase>test-compile</phase>
+                            <configuration>
+                                <sourceInventory>${ae.extractor.analysis.dir}/${project.artifactId}-file-inventory.xls</sourceInventory>
+                                <targetInventory>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</targetInventory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>infer-inventory</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>update-inventory</goal>
+                            </goals>
+                            <configuration>
+                                <sourceInventoryPath>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</sourceInventoryPath>
+                                <targetInventoryPath>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</targetInventoryPath>
+                                <processors>
+                                    <processor>
+                                        <className>org.metaeffekt.core.inventory.processor.RemoveFilesWithoutChecksumProcessor</className>
+                                    </processor>
+                                    <processor>
+                                        <className>org.metaeffekt.core.inventory.processor.InferMetaDataProcessor</className>
+                                    </processor>
+                                </processors>
+                            </configuration>
+                        </execution>
+                    </executions>
+
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.metaeffekt.example.documentation</groupId>
+                            <artifactId>ae-inventory</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+                    <executions>
+                        <execution>
+                            <id>default-jar</id>
+                            <configuration>
+                                <excludes>
+                                    <exclude>--nothing--</exclude>
+                                </excludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.metaeffekt.core</groupId>
+            <artifactId>ae-inventory-processor</artifactId>
+            <version>${ae.core.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.15.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.11.0</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>

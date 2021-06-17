@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- FIXME: use specific parent or replace package -->
+	<artifactId>ae-documentation</artifactId>
+	  
+	<packaging>pom</packaging>
+
+	  <!-- FIXME: eliminate redundant information inherited by parent -->
+    <groupId>org.metaeffekt.example.documentation</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+
+	  <!-- FIXME: SCM urls do not really exists -->
+    <scm>
+        <connection>scm:git:git://xxxx.git</connection>
+        <developerConnection>scm:git:ssh://xxxx.git</developerConnection>
+        <url>https://xxxx.git</url>
+    </scm>
+
+    <properties>
+        <ae.core.version>0.38.0</ae.core.version>
+        <ae.dita.version>0.28.0</ae.dita.version>
+        
+		<ae.artifact.analysis.version>0.4.0</ae.artifact.analysis.version>
+
+        <artifact.inventory.validation>false</artifact.inventory.validation>
+        <artifact.annex.validation>false</artifact.annex.validation>        
+        <artifact.extractor.validation>false</artifact.extractor.validation>          
+        
+		<assembly.plugin.version>3.1.0</assembly.plugin.version>
+    </properties>
+
+	<modules>
+        <module>inventories</module>
+	</modules>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${assembly.plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<!-- profiles to activate different use cases -->
+	<profiles>
+		<profile>
+			<id>extraction</id>
+			<modules>
+				<module>extractors</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>documentation</id>
+			<modules>
+				<!-- FIXME: add example branding
+				<module>branding</module>
+				-->
+				<module>documents</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>monitor</id>
+			<modules>
+				<module>scanners</module>
+			</modules>
+		</profile>
+	</profiles>
+
+</project>

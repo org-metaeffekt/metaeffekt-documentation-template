@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <artifactId>ae-documentation</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+	<artifactId>ae-documents</artifactId>
+	<packaging>pom</packaging>
+
+    <properties>
+		<buildnumber.plugin.version>1.4</buildnumber.plugin.version>
+
+        <product.title>Example</product.title>
+        <product.name>${product.title}</product.name>
+        <product.version>1.0</product.version>
+        <product.prefix>expl</product.prefix>
+        <product.watermark.name>Example Watermark</product.watermark.name>
+
+        <organization.name>Example Corp.</organization.name>
+        <organization.accronym>EC</organization.accronym>
+        <organization.address>https://...</organization.address>
+        <organization.license>EC Proprietary</organization.license>
+
+        <dita.source.dir>${basedir}/src/main/dita</dita.source.dir>
+    </properties>
+
+	<modules>
+        <module>annexes</module>
+	</modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>${buildnumber.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>extract-date-only</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                            <configuration>
+                                <format>{0,date,dd.MM.yyyy}</format>
+                                <items>
+                                    <item>timestamp</item>
+                                </items>
+                                <doCheck>false</doCheck>
+                                <doUpdate>false</doUpdate>
+                                <buildNumberPropertyName>asset.date_en</buildNumberPropertyName>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>extract-month-year</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                            <configuration>
+                                <format>{0,date,dd.MM.yyyy}</format>
+                                <items>
+                                    <item>timestamp</item>
+                                </items>
+                                <doCheck>false</doCheck>
+                                <doUpdate>false</doUpdate>
+                                <buildNumberPropertyName>document.date_en</buildNumberPropertyName>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>extract-year</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                            <configuration>
+                                <format>{0,date,yyyy}</format>
+                                <items>
+                                    <item>timestamp</item>
+                                </items>
+                                <doCheck>false</doCheck>
+                                <doUpdate>false</doUpdate>
+                                <buildNumberPropertyName>document.copyright.year</buildNumberPropertyName>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                    <executions>
+                        <execution>
+                            <id>extract-versions</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <taskdef resource="net/sf/antcontrib/antlib.xml" />
+                                    <propertyregex property="release.version" input="${project.version}"
+                                       regexp="-SNAPSHOT" replace="" defaultValue="${project.version}" global="true" />
+                                    <propertyregex property="product.version" input="${release.version}"
+                                       regexp="\.[0-9]*$" replace="" defaultValue="${release.version}" global="true" />
+                                    <echo message="release.version=${release.version}" />
+                                    <echo message="product.version=${product.version}" />
+                                </target>
+                                <exportAntProperties>true</exportAntProperties>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>ant-contrib</groupId>
+                            <artifactId>ant-contrib</artifactId>
+                            <version>1.0b3</version>
+                            <exclusions>
+                              <exclusion>
+                                <groupId>ant</groupId>
+                                <artifactId>ant</artifactId>
+                              </exclusion>
+                            </exclusions>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <!-- Retrieve the branding to be used for producing the documentation. -->
+                        <execution>
+                            <id>retrieve-branding</id>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/branding-base</outputDirectory>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <!-- Use the metaeffekt standard branding -->
+                                        <groupId>org.metaeffekt.dita</groupId>
+                                        <artifactId>ae-dita-branding</artifactId>
+                                        <type>zip</type>
+                                        <classifier>resources</classifier>
+                                        <version>${ae.dita.version}</version>
+                                    </artifactItem>
+                                </artifactItems>
+                            </configuration>
+                        </execution>
+
+                        <!--
+                        <execution>
+                            <id>retrieve-customer-branding</id>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/branding-base/ae-dita-branding</outputDirectory>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>org.metaeffekt.example.documentation</groupId>
+                                        <artifactId>ae-branding</artifactId>
+                                        <version>${project.version}</version>
+                                    </artifactItem>
+                                </artifactItems>
+                            </configuration>
+                        </execution>
+                        -->
+
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.6</version>
+                    <executions>
+                        <!-- Copy the complete dita.source.dir to the target folder and apply filtering  -->
+                        <execution>
+                            <id>copy-resources</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <!-- Required for copying to the target dita directory. -->
+                                <outputDirectory>${project.build.directory}/dita</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${dita.source.dir}</directory>
+                                        <filtering>true</filtering>
+                                        <includes>
+                                            <include>**/*</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>copy-branding-resources</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/branding</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}/branding-base</directory>
+                                        <filtering>true</filtering>
+                                        <includes>
+                                            <include>**/*</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+
+		<plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+		</plugins>
+    </build>
+
+    <dependencies>
+        <!-- Default texts for general purposes -->
+        <dependency>
+            <groupId>org.metaeffekt.dita</groupId>
+            <artifactId>ae-common-content</artifactId>
+            <type>jar</type>
+            <classifier>doc</classifier>
+            <version>${ae.dita.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

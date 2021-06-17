@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <artifactId>ae-extractors</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ae-dependency-extractors</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+
+        <!-- FIXME: enable validation -->
+        <extraction.validation>false</extraction.validation>
+    </properties>
+
+    <modules>
+        <module>ae-dependency-extractor</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20.1</version>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.1.2</version>
+
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.metaeffekt.core</groupId>
+                    <artifactId>ae-inventory-maven-plugin</artifactId>
+                    <version>${ae.core.version}</version>
+                    <executions>
+
+                        <execution>
+                            <id>create-scan-report</id>
+                            <goals>
+                                <goal>create-directory-report</goal>
+                            </goals>
+                            <phase>compile</phase>
+                            <configuration>
+                                <inputDirectory>${project.build.directory}/dependency</inputDirectory>
+                                <scanDirectory>${project.build.directory}/scan</scanDirectory>
+                                <artifactExcludes>-nothing-</artifactExcludes>
+
+                                <scanIncludes>
+                                    <include>**/*</include>
+                                </scanIncludes>
+
+                                <scanExcludes>
+                                    <exclude>**/.lock</exclude>
+                                    <exclude>**/*.lock</exclude>
+
+                                    <exclude>**/application-*.properties</exclude>
+                                    <exclude>**/application.properties</exclude>
+                                    <exclude>**/application-*.yml</exclude>
+                                    <exclude>**/application-*.yaml</exclude>
+                                    <exclude>**/application.yml</exclude>
+                                    <exclude>**/application.yaml</exclude>
+
+                                    <exclude>**/additional-spring-configuration-metadata.json</exclude>
+                                    <exclude>**/spring-configuration-metadata.json</exclude>
+
+                                    <exclude>**/build-info.properties</exclude>
+                                    <exclude>**/git.properties</exclude>
+                                    <exclude>**/pom.properties</exclude>
+                                    <exclude>**/pom.xml</exclude>
+                                    <exclude>**/logback.xml</exclude>
+
+                                    <exclude>**/*.conf.js</exclude>
+                                    <exclude>**/*.conf.json</exclude>
+                                    <exclude>**/*.tsconfig.json</exclude>
+                                    <exclude>**/*.tsconfig-*.json</exclude>
+                                    <exclude>**/manifest.json</exclude>
+
+                                    <exclude>**/CHANGELOG.md</exclude>
+                                    <exclude>**/Changelog.md</exclude>
+                                    <exclude>**/db.changelog*.yaml</exclude>
+
+                                    <exclude>**/.travis.yml</exclude>
+                                    <exclude>**/.npmrc</exclude>
+                                    <exclude>**/.nvmrc</exclude>
+                                    <exclude>**/.eslintrc.json</exclude>
+                                    <exclude>**/.eslintrc.yml</exclude>
+                                    <exclude>**/.eslintrc.yaml</exclude>
+                                    <exclude>**/.eslintrc</exclude>
+                                    <exclude>**/eslintignore</exclude>
+                                    <exclude>**/.htmllintrc</exclude>
+                                    <exclude>**/.npmignore</exclude>
+                                    <exclude>**/.coveralls.yml</exclude>
+                                    <exclude>**/.editorconfig.example</exclude>
+                                    <exclude>**/.editorconfig</exclude>
+                                    <exclude>**/.eslintignore</exclude>
+                                    <exclude>**/.stylelintrc</exclude>
+
+                                    <!-- These should not be included in the delivery artifacts -->
+                                    <exclude>**/.svn/**/*</exclude>
+                                    <exclude>**/.svn</exclude>
+                                    <exclude>**/.git</exclude>
+                                    <exclude>**/.git/**/*</exclude>
+                                    <exclude>**/.github/**/*</exclude>
+                                    <exclude>**/.github</exclude>
+                                    <exclude>**/.git*</exclude>
+
+                                    <!-- Build related -->
+                                    <exclude>**/Makefile</exclude>
+                                    <exclude>**/Jenkinsfile</exclude>
+
+                                </scanExcludes>
+
+                                <!-- FIXME: this validation can only be enabled as soon as all license obligations are fulfilled (phase 2) -->
+
+                                <!-- USE MORE STRICT CHECK FOR DISTRIBUTION -->
+                                <failOnError>${extraction.validation}</failOnError>
+                                <failOnBanned>${extraction.validation}</failOnBanned>
+                                <failOnInternal>${extraction.validation}</failOnInternal>
+                                <failOnUnknownVersion>${extraction.validation}</failOnUnknownVersion>
+                                <failOnUnknown>${extraction.validation}</failOnUnknown>
+                                <failOnUpgrade>false</failOnUpgrade>
+                                <failOnDowngrade>false</failOnDowngrade>
+                                <failOnDevelopment>${extraction.validation}</failOnDevelopment>
+                                <failOnMissingLicense>${extraction.validation}</failOnMissingLicense>
+                                <failOnMissingLicenseFile>${extraction.validation}</failOnMissingLicenseFile>
+                                <failOnMissingNotice>${extraction.validation}</failOnMissingNotice>
+
+                                <!-- The scan is already supported by the inventory -->
+                                <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
+                                <sourceInventoryIncludes>inventory/artifact-inventory.xls</sourceInventoryIncludes>
+
+                                <targetInventoryDir>${project.build.directory}/classes/inventory</targetInventoryDir>
+                                <targetInventoryPath>${project.artifactId}-inventory.xls</targetInventoryPath>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
