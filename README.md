@@ -24,4 +24,4 @@ be used separately. Extraction is a pre-requisite to documentation
 
 ## DISCLAIMER
 Currently, the provided inventory is empty. We promise to add some example
-data to illustrate the use.
+data to better illustrate the use cases.
