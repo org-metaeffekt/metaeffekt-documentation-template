@@ -11,7 +11,7 @@
 ## Future Scope
 - illustrate extraction from NodeJS
 - illustrate local source scan for licenses
-- generate vulnerability dashboard for produces inventories
+- generate vulnerability dashboard based on the extracted inventories
 - generate CycloneDx BOM from inventories
 - ingest DependencyTrack results
 
