@@ -5,7 +5,7 @@
         <ph>${product.title} ${product.version}</ph>
     </title>
     <bookmeta>
-        <category>Software Distrbution Annex</category>
+        <category>Software Distribution Annex</category>
         <bookrights>
             <copyrlast>
                 <year>2021</year>
@@ -38,7 +38,6 @@
         <topicref href="ae-dependency/gen/tpc_inventory-package-report-effective.dita" />
         <topicref href="ae-dependency/gen/tpc_inventory-licenses-annotated.dita" />
         <topicref href="ae-dependency/gen/tpc_inventory-notices.dita" keys="license-notices" />
-        <topicref href="ae-dependency/gen/tpc_inventory-vulnerabilities.dita" />
 	</chapter>
 
     <chapter href="ae-container/tpc_bill-of-materials.dita">
@@ -46,7 +45,6 @@
         <topicref href="ae-container/gen/tpc_inventory-package-report-effective.dita" />
         <topicref href="ae-container/gen/tpc_inventory-licenses-annotated.dita" />
         <topicref href="ae-container/gen/tpc_inventory-notices.dita" />
-        <topicref href="ae-container/gen/tpc_inventory-vulnerabilities.dita" />
 	</chapter>
 
 	<backmatter>
