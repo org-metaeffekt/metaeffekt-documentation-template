@@ -17,10 +17,9 @@
 
         <ae.extractor.analysis.dir>${project.build.directory}/classes/analysis</ae.extractor.analysis.dir>
 
-        <!-- use properties to explicitly define image repo and tag to use
-        <image.repo></image.repo>
-        <image.tag></image.tag>
-        -->
+        <!-- use properties to explicitly define image repo and tag to use -->
+        <image.repo>jboss/keycloak</image.repo>
+        <image.tag>15.0.0</image.tag>
 
         <image.id>${image.repo}:${image.tag}</image.id>
     </properties>
@@ -45,6 +44,11 @@
             <plugin>
                 <groupId>org.metaeffekt.core</groupId>
                 <artifactId>ae-inventory-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

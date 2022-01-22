@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Concept//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/topic.dtd">
+<topic id="tpc_notice">
+    <title>Notice</title>
+    <body>
+        <p>
+            All company names, organization names, license names, and product names mentioned in this documentation
+            are used for identification purposes only. A trademark is explicitly identified as registered or
+            unregistered trademark only if required by appropriate guidelines or license terms.
+        </p>
+        <p>
+            This documentation is protected by copyright ${document.copyright.year}, ${organization.name}.
+        </p>
+
+        <p>
+            <codeph>
+                THIS DOCUMENT IS ONLY EN EXAMPLE PREPARED FOR THE SPDX DOCFEST.
+            </codeph>
+        </p>
+
+        <p>
+            <codeph>
+                THIS DOCUMENT SHOWS INFORMATION THAT WAS EXTRACTED FROM THE JBOSS/KEYCLOAK CONTAINER WITHOUT ANY FURTHER
+                CLEARING ACTIVITIES. THE DOCUMENT IS MEANT TO CONVEY THE FIRST STEP AND KICK-START TOWARDS PROVIDING
+                A COMPLETE AND ACCURATE SOFTWARE DISTRIBUTION ANNEX. BASED ON THE CONVEYED DETAILS FURTHER INFORMATION
+                ON PARTS AND LICENSES CAN BE DERIVED.
+            </codeph>
+        </p>
+
+    </body>
+</topic>

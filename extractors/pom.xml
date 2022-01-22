@@ -56,7 +56,6 @@
 
     <modules>
        <module>container-extractors</module>
-       <module>dependency-extractors</module>
     </modules>
 
 </project>

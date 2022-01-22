@@ -70,6 +70,30 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/container-extractors</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.basedir}/../patch</directory>
+                                        <filtering>false</filtering>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>1.8</version>
                     <executions>
@@ -128,9 +152,11 @@
                                     <argument>${project.build.directory}/container-extractors/:/container-extractors</argument>
                                     <argument>-v</argument>
                                     <argument>${ae.extractor.analysis.dir}/:/analysis</argument>
+                                    <argument>-v</argument>
+                                    <argument>/usr/bin:/analysis-bin</argument>
                                     <argument>--entrypoint</argument>
                                     <!-- NOTE: here an image-os-specific extractor can be used -->
-                                    <argument>/container-extractors/extract.sh</argument>
+                                    <argument>/container-extractors/custom-rhel-extractor.sh</argument>
                                     <argument>${image.id}</argument>
                                 </arguments>
                                 <outputFile>${ae.extractor.analysis.dir}/image-analysis.txt</outputFile>
@@ -205,6 +231,13 @@
                                     <exclude>**/lock</exclude>
 
                                     <exclude>/run/utmp</exclude>
+
+                                    <exclude>/root/buildinfo/**/*</exclude>
+                                    <exclude>/**/*.log</exclude>
+
+                                    <exclude>/var/lib/alternatives/**/*</exclude>
+                                    <exclude>/var/lib/dnf/**/*</exclude>
+                                    <exclude>/.dockerenv</exclude>
                                 </excludes>
                             </configuration>
                         </execution>
@@ -223,8 +256,7 @@
                                 <enableImplicitUnpack>false</enableImplicitUnpack>
 
                                 <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
-                                <sourceInventoryIncludes>inventory/*.xls</sourceInventoryIncludes>
-
+                                <sourceInventoryIncludes>inventory/*-component-pattern.xls</sourceInventoryIncludes>
                                 <targetInventoryDir>${ae.extractor.analysis.dir}</targetInventoryDir>
                                 <targetInventoryPath>${project.artifactId}-file-inventory.xls</targetInventoryPath>
 

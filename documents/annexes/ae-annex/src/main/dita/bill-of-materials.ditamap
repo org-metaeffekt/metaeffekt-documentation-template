@@ -18,32 +18,24 @@
 
     <frontmatter>
         <topicref href="ae-common-content/imprint/en/tpc_imprint.dita" />
-        <topicref href="ae-common-content/notice/en/tpc_notice.dita" />
+        <topicref href="ae-container/notice/en/tpc_notice.dita" />
         <booklists>
             <toc/>
         </booklists>
     </frontmatter>
 
     <chapter href="ae-common-content/bill-of-materials/en/tpc_open-source-based-bom.dita">
-        <topicref href="ae-common-content/components/en/tpc_provider-proprietary-components.dita" />
         <topicref href="ae-common-content/components/en/tpc_proprietary-components.dita" />
         <topicref href="ae-common-content/components/en/tpc_oss-components.dita" />
         <topicref href="ae-common-content/components/en/tpc_public-domain-components.dita" />
         <topicref href="ae-common-content/bill-of-materials/en/tpc_no-import-export-information.dita" />
     </chapter>
 
-    <chapter href="ae-dependency/tpc_bill-of-materials.dita">
-        <topicref href="ae-dependency/gen/tpc_inventory-artifact-report-effective.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-webmodule-report-effective.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-package-report-effective.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-licenses.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-notices.dita" keys="license-notices" />
-	</chapter>
-
-    <chapter href="ae-container/tpc_bill-of-materials.dita">
+    <chapter href="ae-common-content/bill-of-materials/en/tpc_bill-of-materials.dita">
         <topicref href="ae-container/gen/tpc_inventory-artifact-report-effective.dita" />
+        <topicref href="ae-container/gen/tpc_inventory-webmodule-report-effective.dita" />
         <topicref href="ae-container/gen/tpc_inventory-package-report-effective.dita" />
-        <topicref href="ae-container/gen/tpc_inventory-licenses.dita" />
+        <topicref href="ae-container/gen/tpc_inventory-licenses.dita" keys="license-notices" />
         <topicref href="ae-container/gen/tpc_inventory-notices.dita" />
 	</chapter>
 

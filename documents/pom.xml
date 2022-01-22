@@ -15,16 +15,15 @@
     <properties>
 		<buildnumber.plugin.version>1.4</buildnumber.plugin.version>
 
-        <product.title>Example</product.title>
+        <product.title>Keycloak</product.title>
         <product.name>${product.title}</product.name>
-        <product.version>1.0</product.version>
-        <product.prefix>expl</product.prefix>
-        <product.watermark.name>Example Watermark</product.watermark.name>
+        <product.version>15.0</product.version>
+        <product.prefix>keycloak</product.prefix>
+        <product.watermark.name>SPDX Docfest</product.watermark.name>
 
-        <organization.name>Example Corp.</organization.name>
-        <organization.accronym>EC</organization.accronym>
-        <organization.address>https://...</organization.address>
-        <organization.license>EC Proprietary</organization.license>
+        <organization.name>{met&aelig;ffekt}</organization.name>
+        <organization.accronym>ae</organization.accronym>
+        <organization.address>https://metaeffekt.com</organization.address>
 
         <dita.source.dir>${basedir}/src/main/dita</dita.source.dir>
     </properties>

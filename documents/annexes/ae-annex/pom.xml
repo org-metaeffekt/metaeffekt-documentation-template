@@ -16,8 +16,8 @@
     <properties>
 		<buildnumber.plugin.version>1.4</buildnumber.plugin.version>
 
-        <asset.name>Example Asset</asset.name>
-        <asset.version>${project.version}</asset.version>
+        <asset.name>JBoss Keycloak</asset.name>
+        <asset.version>15.0.0</asset.version>
 
 		<document.id>XXXX-YYY-ZZ</document.id>
 
@@ -30,6 +30,8 @@
 
         <dita.source.dir>${basedir}/src/main/dita</dita.source.dir>
         <dita.project.source.dir>${dita.source.dir}/${project.artifactId}</dita.project.source.dir>
+
+        <image.id>jboss/keycloak:15.0.0</image.id>
     </properties>
 
     <build>
@@ -52,19 +54,6 @@
                         </configuration>
                     </execution>
 
-                    <execution>
-                        <id>create-ae-dependency-inventory</id>
-                        <goals>
-                            <goal>create-inventory-report</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                        <configuration>
-                            <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
-                            <sourceInventoryIncludes>**/*.xls</sourceInventoryIncludes>
-                            <inventory>${project.build.directory}/inventories/inventory/ae-dependency-extractor-inventory.xls</inventory>
-                            <targetReportDir>${basedir}/src/main/dita/ae-dependency/gen</targetReportDir>
-                        </configuration>
-                    </execution>
                 </executions>
 
                 <configuration>
@@ -87,9 +76,6 @@
                     <targetComponentDir>${project.build.directory}/components</targetComponentDir>
 
                     <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
-
-                    <!-- FIXME: no enforcement yet -->
-                    <vulnerabilityScoreThreshold>7.0</vulnerabilityScoreThreshold>
 
                     <enableBomReport>true</enableBomReport>
                     <enableVulnerabilityReport>true</enableVulnerabilityReport>
@@ -334,12 +320,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.metaeffekt.example.documentation</groupId>
-            <artifactId>ae-dependency-extractor</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
 </project>
