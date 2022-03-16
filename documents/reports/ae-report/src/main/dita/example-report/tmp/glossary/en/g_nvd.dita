@@ -5,7 +5,7 @@
     <glossdef>
         The National Vulnerability Database (NVD) is a repository of vulnerability related data.
         The NVD hosts <abbreviated-form keyref="cpe"/> and <abbreviated-form keyref="cve"/>
-        details for retrieving and matching vulnerability information..
+        details for retrieving and matching vulnerability information.
         <p>The NVD is managed by the <abbreviated-form keyref="nist"/>.</p>
     </glossdef>
     <glossBody>
