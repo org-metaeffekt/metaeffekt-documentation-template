@@ -21,10 +21,12 @@
     </scm>
 
     <properties>
-        <ae.core.version>0.42.0</ae.core.version>
+		<!-- FIXME: use released versions -->
+        <ae.core.version>HEAD-SNAPSHOT</ae.core.version>
         <ae.dita.version>0.29.0</ae.dita.version>
-        
-		<ae.artifact.analysis.version>0.9.0</ae.artifact.analysis.version>
+
+		<!-- FIXME: use released versions -->
+		<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>
 
         <artifact.inventory.validation>false</artifact.inventory.validation>
         <artifact.annex.validation>false</artifact.annex.validation>        
@@ -52,18 +54,24 @@
 	<!-- profiles to activate different use cases -->
 	<profiles>
 		<profile>
-			<id>extraction</id>
+			<id>extract</id>
 			<modules>
 				<module>extractors</module>
 			</modules>
 		</profile>
 		<profile>
-			<id>documentation</id>
+			<id>document</id>
 			<modules>
 				<!-- FIXME: add example branding
 				<module>branding</module>
 				-->
 				<module>documents</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>advise</id>
+			<modules>
+				<module>advisors</module>
 			</modules>
 		</profile>
 		<profile>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <artifactId>ae-documents</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ae-reports</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <document.name>Vulnerability Report</document.name>
+        <document.ditamap>bm_report.ditamap</document.ditamap>
+
+        <document.classification_en>Restricted</document.classification_en>
+        <document.classification.color>rgb(255,127,0)</document.classification.color>
+
+        <document.status_en>Draft</document.status_en>
+        <document.classifier>report_en</document.classifier>
+        <document.qualifier>${document.id}-01_${asset.id}_SW-REPORT_${asset.version}</document.qualifier>
+        <document.target.dir>${project.build.directory}/report</document.target.dir>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.metaeffekt.core</groupId>
+                    <artifactId>ae-inventory-maven-plugin</artifactId>
+                    <version>${ae.core.version}</version>
+                    <executions>
+                        <execution>
+                            <!-- disable obsolete execution -->
+                            <id>inventory-check</id>
+                            <phase>never</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <artifactExcludes>-nothing-</artifactExcludes>
+
+                        <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
+
+                        <!-- USE MORE STRICT CHECK FOR DISTRIBUTION -->
+                        <failOnError>false</failOnError>
+                        <failOnBanned>false</failOnBanned>
+                        <failOnInternal>false</failOnInternal>
+                        <failOnUnknownVersion>false</failOnUnknownVersion>
+                        <failOnUnknown>false</failOnUnknown>
+                        <failOnUpgrade>false</failOnUpgrade>
+                        <failOnDowngrade>false</failOnDowngrade>
+                        <failOnDevelopment>false</failOnDevelopment>
+                        <failOnMissingLicense>false</failOnMissingLicense>
+                        <failOnMissingLicenseFile>false</failOnMissingLicenseFile>
+                        <failOnMissingNotice>false</failOnMissingNotice>
+                        <failOnMissingSources>false</failOnMissingSources>
+
+                        <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
+                        <sourceInventoryIncludes>inventory/*.xls</sourceInventoryIncludes>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.metaeffekt.dita</groupId>
+                    <artifactId>ae-dita-maven-plugin</artifactId>
+                    <version>${ae.dita.version}</version>
+                    <executions>
+
+                        <execution>
+                            <id>clean-dita-content</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean-generated-content</goal>
+                                <goal>clean-aggregated-content</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>clean-dita-content-ae-container</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean-generated-content</goal>
+                                <goal>clean-aggregated-content</goal>
+                            </goals>
+                            <configuration>
+                                <ditaSourceDir>${project.basedir}/src/main/dita/ae-container</ditaSourceDir>
+                                <ditaSourceGenDir>${project.basedir}/src/main/dita/ae-container/gen</ditaSourceGenDir>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>clean-dita-content-ae-dependency</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean-generated-content</goal>
+                                <goal>clean-aggregated-content</goal>
+                            </goals>
+                            <configuration>
+                                <ditaSourceDir>${project.basedir}/src/main/dita/ae-dependency</ditaSourceDir>
+                                <ditaSourceGenDir>${project.basedir}/src/main/dita/ae-dependency/gen</ditaSourceGenDir>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>install-dita-toolkit</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>ensure-dita-toolkit</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>aggregate-dita-content</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>aggregate-content</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>mark-dita-content-writable</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>mark-generated-content-writable</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>generate-dita-content</id>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>generate-content</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>mark-dita-content-read-only</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>mark-generated-content-read-only</goal>
+                            </goals>
+                        </execution>
+
+                        <execution>
+                            <id>generate-documentation</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>generate-documentation</goal>
+                            </goals>
+                            <configuration>
+                                <documentItems>
+                                    <documentItem>
+                                        <ditaMap>${document.ditamap}</ditaMap>
+                                        <artifactId>${project.artifactId}</artifactId>
+                                        <artifactClassifier>en</artifactClassifier>
+                                    </documentItem>
+                                </documentItems>
+                                <ditaBuildDir>${project.build.directory}/dita</ditaBuildDir>
+                                <ditaCustomizationDir>${project.build.directory}/branding/ae-dita-branding</ditaCustomizationDir>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>generate-glossary</id>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>generate-glossary</goal>
+                            </goals>
+                            <configuration>
+                                <language>en</language>
+                                <ditaMap>${document.ditamap}</ditaMap>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <ditaSourceGenDir>${basedir}/src/main/dita/${project.artifactId}/gen</ditaSourceGenDir>
+                        <ditaCleanTemp>false</ditaCleanTemp>
+                    </configuration>
+                </plugin>
+
+
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <modules>
+        <module>ae-report</module>
+    </modules>
+
+</project>

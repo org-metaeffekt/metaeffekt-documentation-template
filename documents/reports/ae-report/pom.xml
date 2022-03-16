@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <artifactId>ae-reports</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>example-report</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <document.version>00.01</document.version>
+        <document.status_en>Draft</document.status_en>
+
+        <asset.id>Example Asset</asset.id>
+        <asset.name>Example Asset</asset.name>
+        <asset.version>${project.version}</asset.version>
+
+        <document.id>XXXX-YYY-ZZ-VR</document.id>
+
+        <document.version>0.1</document.version>
+        <document.status_en>Preview</document.status_en>
+        <document.classifier>vulnerability-report_en</document.classifier>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+				<plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>unpack-inventories</id>
+                            <goals>
+                                <goal>unpack-dependencies</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/inventories</outputDirectory>
+                                <includeScope>provided</includeScope>
+                                <includes>**/*-inventory*.xls</includes>
+                                <overWriteSnapshots>true</overWriteSnapshots>
+                            </configuration>
+                        </execution>
+					</executions>
+				</plugin>
+
+                <plugin>
+                    <groupId>org.metaeffekt.core</groupId>
+                    <artifactId>ae-inventory-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>create-report-ae</id>
+                            <goals>
+                                <goal>create-inventory-report</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                            <configuration>
+                                <sourceInventoryDir>${project.build.directory}/inventories/inventory</sourceInventoryDir>
+                                <sourceInventoryIncludes>example-advisor-inventory.xls</sourceInventoryIncludes>
+                                <inventory>${project.build.directory}/inventories/inventory/example-advisor-inventory.xls</inventory>
+                                <targetReportDir>${basedir}/src/main/dita/example-report/gen</targetReportDir>
+                            </configuration>
+                        </execution>
+                    </executions>
+
+                    <configuration>
+                        <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
+                        <sourceInventoryIncludes>**/*.xls</sourceInventoryIncludes>
+
+                        <inventory>${project.inventory}</inventory>
+
+                        <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
+
+                        <vulnerabilityScoreThreshold>7.0</vulnerabilityScoreThreshold>
+
+                        <enableVulnerabilityReport>true</enableVulnerabilityReport>
+
+                        <failOnError>false</failOnError>
+                        <failOnBanned>false</failOnBanned>
+                        <failOnInternal>false</failOnInternal>
+                        <failOnUnknownVersion>false</failOnUnknownVersion>
+                        <failOnUnknown>false</failOnUnknown>
+                        <failOnUpgrade>false</failOnUpgrade>
+                        <failOnDowngrade>false</failOnDowngrade>
+                        <failOnDevelopment>false</failOnDevelopment>
+                        <failOnMissingLicense>false</failOnMissingLicense>
+                        <failOnMissingLicenseFile>false</failOnMissingLicenseFile>
+                        <failOnMissingNotice>false</failOnMissingNotice>
+                        <failOnMissingSources>false</failOnMissingSources>
+                    </configuration>
+
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.metaeffekt.core</groupId>
+                <artifactId>ae-inventory-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.metaeffekt.dita</groupId>
+                <artifactId>ae-dita-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.metaeffekt.example.documentation</groupId>
+            <artifactId>example-advisor</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>

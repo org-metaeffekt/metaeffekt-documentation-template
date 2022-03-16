@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <artifactId>ae-documentation</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+	
+    <artifactId>ae-advisors</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <!-- Open Issues:
+            - we should be able to configure a simple pass-through option; it would produce the same outputs, but no aggregation of data would
+              happen; this enabled a static workflow; or we make in place modifications
+        -->
+
+        <!-- References the mirrored vulnerability databases -->
+        <!-- currently this is assumed to exist and to be up to date -->
+        <!-- Option:
+            - we could configure a plugin to load the updated database from the repository or another URL in case
+              the folder does not exist or is very old
+          -->
+        <input.database>${project.basedir}/.database/ae-vulnerability-mirror</input.database>
+
+        <output.inventory.dir>${project.build.directory}/classes/inventory/</output.inventory.dir>
+        <output.inventory.path>${project.artifactId}-inventory.xls</output.inventory.path>
+        <output.inventory>${output.inventory.dir}/${output.inventory.path}</output.inventory>
+
+        <inventory.id>ae-inventory</inventory.id>
+
+        <!-- the extracted settings enable to adapt the configuration on module level -->
+        <ae.dashboard.timeline>true</ae.dashboard.timeline>
+        <ae.dashboard.cpe.limit>-1</ae.dashboard.cpe.limit>
+
+        <correlation.dir>../correlation</correlation.dir>
+
+        <activate.dashboard>true</activate.dashboard>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>unpack-inventories</id>
+                            <goals>
+                                <goal>unpack-dependencies</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/input</outputDirectory>
+                                <includeScope>provided</includeScope>
+                                <includes>**/*-inventory*.xls</includes>
+                                <overWriteSnapshots>true</overWriteSnapshots>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>unpack-inventory</id>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/inventory-base</outputDirectory>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>org.metaeffekt.example.documentation</groupId>
+                                        <artifactId>${inventory.id}</artifactId>
+                                        <version>${project.version}</version>
+                                    </artifactItem>
+                                </artifactItems>
+                                <overWriteSnapshots>true</overWriteSnapshots>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.metaeffekt.core</groupId>
+                    <artifactId>ae-inventory-maven-plugin</artifactId>
+                    <version>${ae.core.version}</version>
+                    <executions>
+                        <execution>
+                            <id>enrich-with-reference-inventory</id>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>create-inventory-report</goal>
+                            </goals>
+                            <configuration>
+                                <inventory>${input.inventory}</inventory>
+                                <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
+                                <sourceInventoryIncludes>inventory/*.xls</sourceInventoryIncludes>
+                                <failOnError>false</failOnError>
+
+                                <targetInventoryDir>${project.build.directory}/inventories/</targetInventoryDir>
+                                <targetInventoryPath>${project.artifactId}-inventory_ref.xls</targetInventoryPath>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.metaeffekt.artifact.analysis</groupId>
+                    <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                    <version>${ae.artifact.analysis.version}</version>
+                    <executions>
+
+                        <execution>
+                            <id>artifact-yaml-data</id>
+                            <goals>
+                                <goal>enrich-artifact-yaml-data</goal>
+                            </goals>
+                            <configuration>
+                                <active>true</active>
+                                <artifactYamlData>${correlation.dir}</artifactYamlData>
+                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_ref.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls</outputInventory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>microsoft</id>
+                            <goals>
+                                <goal>enrich-microsoft</goal>
+                            </goals>
+                            <configuration>
+                                <active>${activate.enrichment}</active>
+                                <msDirectory>${input.database}/microsoft</msDirectory>
+                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_ms.xls</outputInventory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>cve</id>
+                            <goals>
+                                <goal>enrich-cve-metadata</goal>
+                            </goals>
+                            <configuration>
+                                <active>${activate.enrichment}</active>
+                                <nvdDirectory>${input.database}/nvd</nvdDirectory>
+
+                                <!-- HINT: currently this is required as the process accesses the MS data; to be validated -->
+                                <msDirectory>${input.database}/microsoft</msDirectory>
+
+                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_ms.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls</outputInventory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>certfr</id>
+                            <goals>
+                                <goal>enrich-certfr</goal>
+                            </goals>
+                            <configuration>
+                                <active>true</active>
+                                <certFrDirectory>${input.database}/certfr</certFrDirectory>
+                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls</outputInventory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>certsei</id>
+                            <goals>
+                                <goal>enrich-certsei</goal>
+                            </goals>
+                            <configuration>
+                                <active>${activate.enrichment}</active>
+                                <certSeiDirectory>${input.database}/certsei</certSeiDirectory>
+                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls</outputInventory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>update-status</id>
+                            <goals>
+                                <goal>enrich-cve-status</goal>
+                            </goals>
+                            <configuration>
+                                <active>${activate.enrichment}</active>
+                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls</inputInventory>
+                                <outputInventory>${output.inventory}</outputInventory>
+
+                                <cveStatusDirectory>${project.basedir}/assessment</cveStatusDirectory>
+                                <keywordsFile>${project.basedir}/context/keywords.yaml</keywordsFile>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>dashboard</id>
+                            <goals>
+                                <goal>generate-dashboard</goal>
+                            </goals>
+                            <configuration>
+                                <active>${activate.dashboard}</active>
+                                <inputInventory>${output.inventory}</inputInventory>
+
+                                <outputFile>${project.build.directory}/classes/dashboard/${project.artifactId}-dashboard.html</outputFile>
+                                <nvdDirectory>${input.database}/nvd</nvdDirectory>
+
+                                <minScore>-1.0</minScore>
+                                <insignificantThreshold>7.0</insignificantThreshold>
+
+                                <!-- use defaults -->
+                                <nvdLockFileTimeout>20</nvdLockFileTimeout>
+                                <timelineVulnerabilitiesPerCVELimit>72260</timelineVulnerabilitiesPerCVELimit>
+
+                                <!-- limits the CPEs evaluated for CVEs. CVE for CPE beyond the limit are not evaluated.
+                                    Rational: the dashboard shows all mapped CPEs and thereby supports correlation
+                                      improvements. By adding more correlation information the number of CPE is reused
+                                      sowing the effective vulnerabilities.
+                                 -->
+                                <cpePerVulnerabilityLimit>${ae.dashboard.cpe.limit}</cpePerVulnerabilityLimit>
+
+                                <generateVulnerabilityTimelines>${ae.dashboard.timeline}</generateVulnerabilityTimelines>
+                                <hideIrrelevantVulnerabilityTimelineVersions>true</hideIrrelevantVulnerabilityTimelineVersions>
+                                <vulnerabilityTimelineVersionLimit>72260</vulnerabilityTimelineVersionLimit>
+                                <reviewCERTs>all</reviewCERTs>
+
+                                <!-- activate once first assessment is complete -->
+                                <failOnCveWithoutSpecifiedRisk>false</failOnCveWithoutSpecifiedRisk>
+                                <failOnUnreviewed>false</failOnUnreviewed>
+
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <!-- FIXME: for some reason the maven dependency resolution is not resolving the correct version -->
+                        <dependency>
+                            <groupId>commons-io</groupId>
+                            <artifactId>commons-io</artifactId>
+                            <version>2.11.0</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <modules>
+        <module>example-advisor</module>
+    </modules>
+
+    <profiles>
+
+        <profile>
+            <id>update-dashboard</id>
+
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.metaeffekt.artifact.analysis</groupId>
+                            <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                            <version>${ae.artifact.analysis.version}</version>
+                            <executions>
+
+                                <execution>
+                                    <id>update-status</id>
+                                    <goals>
+                                        <goal>enrich-cve-status</goal>
+                                    </goals>
+                                    <phase>initialize</phase>
+                                    <configuration>
+                                        <active>true</active>
+                                        <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls</inputInventory>
+                                        <outputInventory>${output.inventory}</outputInventory>
+
+                                        <cveStatusDirectory>${project.basedir}/assessment</cveStatusDirectory>
+                                        <keywordsFile>${project.basedir}/context/keywords.yaml</keywordsFile>
+                                    </configuration>
+                                </execution>
+
+                                <execution>
+                                    <id>dashboard</id>
+                                    <goals>
+                                        <goal>generate-dashboard</goal>
+                                    </goals>
+                                    <phase>initialize</phase>
+                                    <configuration>
+                                        <active>${activate.dashboard}</active>
+                                        <inputInventory>${output.inventory}</inputInventory>
+
+                                        <!-- Keep configuration in sync with the above configuration -->
+
+                                        <outputFile>${project.build.directory}/classes/dashboard/${project.artifactId}-dashboard.html</outputFile>
+                                        <nvdDirectory>${input.database}/nvd</nvdDirectory>
+
+                                        <minScore>-1.0</minScore>
+                                        <insignificantThreshold>0.0</insignificantThreshold>
+
+                                        <!-- use defaults -->
+                                        <nvdLockFileTimeout>20</nvdLockFileTimeout>
+                                        <timelineVulnerabilitiesPerCVELimit>72260</timelineVulnerabilitiesPerCVELimit>
+
+                                        <!-- limits the CPEs evaluated for CVEs. CVE for CPE beyond the limit are not evaluated.
+                                            Rational: the dashboard shows all mapped CPEs and thereby supports correlation
+                                              improvements. By adding more correlation information the number of CPE is reused
+                                              sowing the effective vulnerabilities.
+                                         -->
+                                        <cpePerVulnerabilityLimit>${ae.dashboard.cpe.limit}</cpePerVulnerabilityLimit>
+
+                                        <generateVulnerabilityTimelines>${ae.dashboard.timeline}</generateVulnerabilityTimelines>
+                                        <hideIrrelevantVulnerabilityTimelineVersions>true</hideIrrelevantVulnerabilityTimelineVersions>
+                                        <vulnerabilityTimelineVersionLimit>100</vulnerabilityTimelineVersionLimit>
+                                        <reviewCERTs>all</reviewCERTs>
+
+                                        <!-- activate once first assessment is complete -->
+                                        <failOnCveWithoutSpecifiedRisk>false</failOnCveWithoutSpecifiedRisk>
+                                        <failOnUnreviewed>false</failOnUnreviewed>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+
+    </profiles>
+
+</project>

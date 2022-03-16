@@ -38,6 +38,7 @@
                 <groupId>org.metaeffekt.core</groupId>
                 <artifactId>ae-inventory-maven-plugin</artifactId>
                 <executions>
+                    <!-- FIXME: re-enable or split into several documents -->                   <!--
                     <execution>
                         <id>create-ae-container-report</id>
                         <goals>
@@ -51,6 +52,7 @@
                             <targetReportDir>${basedir}/src/main/dita/ae-container/gen</targetReportDir>
                         </configuration>
                     </execution>
+                    -->
 
                     <execution>
                         <id>create-ae-dependency-inventory</id>

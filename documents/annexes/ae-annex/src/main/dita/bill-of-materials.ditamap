@@ -40,12 +40,15 @@
         <topicref href="ae-dependency/gen/tpc_inventory-notices.dita" keys="license-notices" />
 	</chapter>
 
+<!-- FIXME: re-enable or split into several documents -->
+<!--
     <chapter href="ae-container/tpc_bill-of-materials.dita">
         <topicref href="ae-container/gen/tpc_inventory-artifact-report-effective.dita" />
         <topicref href="ae-container/gen/tpc_inventory-package-report-effective.dita" />
         <topicref href="ae-container/gen/tpc_inventory-licenses.dita" />
         <topicref href="ae-container/gen/tpc_inventory-notices.dita" />
 	</chapter>
+-->
 
 	<backmatter>
         <booklists>

@@ -5,12 +5,17 @@
 
     <parent>
         <groupId>org.metaeffekt.example.documentation</groupId>
-        <artifactId>ae-dependency-extractors</artifactId>
+        <artifactId>ae-advisors</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 	
-    <artifactId>ae-dependency-extractor</artifactId>
+    <artifactId>example-advisor</artifactId>
     <packaging>jar</packaging>
+
+    <properties>
+        <input.inventory>${project.build.directory}/input/inventory/ae-dependency-extractor-inventory.xls</input.inventory>
+        <correlation.dir>correlation</correlation.dir>
+    </properties>
 
     <build>
         <plugins>
@@ -18,25 +23,24 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
             </plugin>
-
             <plugin>
                 <groupId>org.metaeffekt.core</groupId>
                 <artifactId>ae-inventory-maven-plugin</artifactId>
+            </plugin>
+            <!-- FIXME: fix plugins; remove configuration on project level -->
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-inventory-enrichment-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>5.3.14</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.14.0</version>
+            <groupId>org.metaeffekt.example.documentation</groupId>
+            <artifactId>ae-dependency-extractor</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

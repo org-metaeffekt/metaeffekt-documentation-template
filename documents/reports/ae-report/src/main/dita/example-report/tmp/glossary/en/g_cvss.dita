@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE glossentry PUBLIC "-//OASIS//DTD DITA Glossary Entry//EN" "glossentry.dtd">
+<glossentry id="cvss">
+    <glossterm>Common Vulnerability Scoring System</glossterm>
+    <glossdef>
+        The severity of vulnerabilities is commonly measured applying the Common Vulnerability Scoring System (CVSS)
+        scoring system.
+        <p>
+            The scheme uses several individual metrics to capture different aspects of a vulnerability.
+        </p>
+    </glossdef>
+    <glossBody>
+        <glossSurfaceForm>Common Vulnerability Scoring System (CVSS)</glossSurfaceForm>
+        <glossAlt>
+            <glossAcronym>CVSS</glossAcronym>
+        </glossAlt>
+    </glossBody>
+</glossentry>
