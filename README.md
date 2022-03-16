@@ -18,7 +18,7 @@
 
 ## Build Instructions
 
-    mvn clean install -Pextract,advise,document
+    mvn clean install -Pextract,advise,document -Dinput.database=<path-to-vulnerability-mirror>
 
 With container enabled (currently disabled):
     
