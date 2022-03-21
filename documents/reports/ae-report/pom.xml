@@ -48,6 +48,19 @@
                                 <overWriteSnapshots>true</overWriteSnapshots>
                             </configuration>
                         </execution>
+                        <execution>
+                            <id>unpack-svg</id>
+                            <goals>
+                                <goal>unpack-dependencies</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <outputDirectory>${project.build.sourceDirectory}/../dita/example-report/gen</outputDirectory>
+                                <includeScope>provided</includeScope>
+                                <includes>**/resources/**/*.*</includes>
+                                <overWriteSnapshots>true</overWriteSnapshots>
+                            </configuration>
+                        </execution>
 					</executions>
 				</plugin>
 

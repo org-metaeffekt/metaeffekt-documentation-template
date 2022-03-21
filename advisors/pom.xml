@@ -234,7 +234,7 @@
                                 <failOnUnreviewed>false</failOnUnreviewed>
 
                                 <!-- renders the charts displayed in the dashboard into SVGs to a directory -->
-                                <generatedSvgDirectory>${project.build.directory}/classes/resources/svg/${project.artifactId}</generatedSvgDirectory>
+                                <generatedSvgDirectory>${project.build.directory}/classes/resources/${project.artifactId}/svg</generatedSvgDirectory>
 
                             </configuration>
                         </execution>
