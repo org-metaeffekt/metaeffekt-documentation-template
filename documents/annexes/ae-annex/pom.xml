@@ -12,7 +12,7 @@
 
     <artifactId>ae-annex</artifactId>
     <packaging>jar</packaging>
-	
+
     <properties>
 		<buildnumber.plugin.version>1.4</buildnumber.plugin.version>
 

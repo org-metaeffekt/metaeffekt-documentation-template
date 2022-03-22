@@ -11,33 +11,72 @@
 
         <section id="overview_charts">
             <title>Overview Charts</title>
-            <table id="overview_charts_table">
+            <p>
+                An overview is provided over the current artifact status and the severity categories of their
+                vulnerabilities.
+            </p>
+            <table id="overview_charts_table_upper">
+                <tgroup cols="2">
+                    <colspec colname="COLSPEC0" colnum="1" colwidth="2*" />
+                    <colspec colname="COLSPEC1" colnum="2" colwidth="2*" />
+                    <tbody>
+                        <row>
+                            <entry align="center">
+                                <p>
+                                    <b>Status per Vulnerability</b>
+                                </p>
+                                <p>
+                                    Every vulnerability can be classified into one of three categories: 'Applicable',
+                                    'Not Applicable', 'Insignificant'.
+                                    If no category is specified, 'None' is automatically set.
+                                </p>
+                                <image href="gen/resources/example-advisor/svg/overview_current_cve_status.svg" width="260" />
+                            </entry>
+                            <entry align="center">
+                                <p>
+                                    <b>CVSS Severity per Vulnerability</b>
+                                </p>
+                                <p>
+                                    The CVSS overall score is calculated for each vulnerability from a CVSS vector.
+                                    It is then used to determine the severity of the vulnerability.
+                                </p>
+                                <image href="gen/resources/example-advisor/svg/overview_cvss_per_vulnerability.svg" width="260" />
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+            <!-- starting a new table in order for both rows to have the same background color -->
+            <table id="overview_charts_table_lower">
                 <title>Overview Charts</title>
                 <tgroup cols="2">
                     <colspec colname="COLSPEC0" colnum="1" colwidth="2*" />
                     <colspec colname="COLSPEC1" colnum="2" colwidth="2*" />
                     <tbody>
                         <row>
-                            <entry><image href="gen/resources/example-advisor/svg/overview_current_cve_status.svg" width="210"></image></entry>
-                            <entry><image href="gen/resources/example-advisor/svg/overview_cvss_per_vulnerability.svg" width="210"></image></entry>
-                        </row>
-                        <row>
-                            <entry>Current vulnerability status</entry>
-                            <entry>CVSS Severity per vulnerability</entry>
-                        </row>
-                        <row>
-                            <entry><image href="gen/resources/example-advisor/svg/overview_cvss_per_applicable_vulnerability.svg" width="210"></image></entry>
-                            <entry><image href="gen/resources/example-advisor/svg/overview_cvss_per_artifact.svg" width="210"></image></entry>
-                        </row>
-                        <row>
-                            <entry>CVSS Severity per applicable vulnerability</entry>
-                            <entry>CVSS Severity per artifact</entry>
-                        </row>
-                        <row>
-                            <entry><image href="gen/resources/example-advisor/svg/overview_cvss_per_artifact_with_vulnerabilities.svg" width="210"></image></entry>
-                        </row>
-                        <row>
-                            <entry>CVSS Severity per artifact with vulnerabilities</entry>
+                            <entry align="center">
+                                <p>
+                                    <b>CVSS Severity per applicable Vulnerability</b>
+                                </p>
+                                <p>
+                                    The CVSS overall score is calculated for each vulnerability that is classified as
+                                    'Applicable'.
+                                    This score is then used to determine the severity of the vulnerability.
+                                </p>
+                                <image href="gen/resources/example-advisor/svg/overview_cvss_per_applicable_vulnerability.svg" width="260" />
+                            </entry>
+                            <entry align="center">
+                                <p>
+                                    <b>CVSS Severity per Artifact</b>
+                                </p>
+                                <p>
+                                    Every artifact calculates the CVSS overall scores for all vulnerabilities it
+                                    contains.
+                                    The highest score per artifact is then used to determine the severity of the
+                                    artifact.
+                                </p>
+                                <image href="gen/resources/example-advisor/svg/overview_cvss_per_artifact.svg" width="260" />
+                            </entry>
                         </row>
                     </tbody>
                 </tgroup>
