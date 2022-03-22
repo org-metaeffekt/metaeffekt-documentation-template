@@ -3,4 +3,5 @@
 **/target
 **/dita/**/gen
 **/ae-common-content
+**/.database
 /.local-README.md

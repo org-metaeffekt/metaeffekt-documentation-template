@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -12,6 +12,10 @@
     <artifactId>ae-advisors</artifactId>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>example-advisor</module>
+    </modules>
+
     <properties>
         <!-- Open Issues:
             - we should be able to configure a simple pass-through option; it would produce the same outputs, but no aggregation of data would
@@ -19,12 +23,8 @@
         -->
 
         <!-- References the mirrored vulnerability databases -->
-        <!-- currently this is assumed to exist and to be up to date -->
-        <!-- Option:
-            - we could configure a plugin to load the updated database from the repository or another URL in case
-              the folder does not exist or is very old
-          -->
-        <input.database>${project.basedir}/.database/ae-vulnerability-mirror</input.database>
+        <!-- run with the mirror-database profile active to download the database contents -->
+        <input.database>${project.basedir}/../../.database/ae-vulnerability-mirror</input.database>
 
         <output.inventory.dir>${project.build.directory}/classes/inventory/</output.inventory.dir>
         <output.inventory.path>${project.artifactId}-inventory.xls</output.inventory.path>
@@ -122,8 +122,12 @@
                             <configuration>
                                 <active>true</active>
                                 <artifactYamlData>${correlation.dir}</artifactYamlData>
-                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_ref.xls</inputInventory>
-                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls</outputInventory>
+                                <inputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_ref.xls
+                                </inputInventory>
+                                <outputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls
+                                </outputInventory>
                             </configuration>
                         </execution>
 
@@ -135,8 +139,12 @@
                             <configuration>
                                 <active>${activate.enrichment}</active>
                                 <msDirectory>${input.database}/microsoft</msDirectory>
-                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls</inputInventory>
-                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_ms.xls</outputInventory>
+                                <inputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls
+                                </inputInventory>
+                                <outputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_ms.xls
+                                </outputInventory>
                             </configuration>
                         </execution>
 
@@ -152,8 +160,12 @@
                                 <!-- HINT: currently this is required as the process accesses the MS data; to be validated -->
                                 <msDirectory>${input.database}/microsoft</msDirectory>
 
-                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_ms.xls</inputInventory>
-                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls</outputInventory>
+                                <inputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_ms.xls
+                                </inputInventory>
+                                <outputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls
+                                </outputInventory>
                             </configuration>
                         </execution>
 
@@ -165,8 +177,12 @@
                             <configuration>
                                 <active>true</active>
                                 <certFrDirectory>${input.database}/certfr</certFrDirectory>
-                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls</inputInventory>
-                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls</outputInventory>
+                                <inputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls
+                                </inputInventory>
+                                <outputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls
+                                </outputInventory>
                             </configuration>
                         </execution>
 
@@ -178,8 +194,12 @@
                             <configuration>
                                 <active>${activate.enrichment}</active>
                                 <certSeiDirectory>${input.database}/certsei</certSeiDirectory>
-                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls</inputInventory>
-                                <outputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls</outputInventory>
+                                <inputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls
+                                </inputInventory>
+                                <outputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls
+                                </outputInventory>
                             </configuration>
                         </execution>
 
@@ -190,7 +210,9 @@
                             </goals>
                             <configuration>
                                 <active>${activate.enrichment}</active>
-                                <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls</inputInventory>
+                                <inputInventory>
+                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls
+                                </inputInventory>
                                 <outputInventory>${output.inventory}</outputInventory>
 
                                 <cveStatusDirectory>${project.basedir}/assessment</cveStatusDirectory>
@@ -207,7 +229,9 @@
                                 <active>${activate.dashboard}</active>
                                 <inputInventory>${output.inventory}</inputInventory>
 
-                                <outputFile>${project.build.directory}/classes/dashboard/${project.artifactId}-dashboard.html</outputFile>
+                                <outputFile>
+                                    ${project.build.directory}/classes/dashboard/${project.artifactId}-dashboard.html
+                                </outputFile>
                                 <nvdDirectory>${input.database}/nvd</nvdDirectory>
 
                                 <minScore>-1.0</minScore>
@@ -224,8 +248,10 @@
                                  -->
                                 <cpePerVulnerabilityLimit>${ae.dashboard.cpe.limit}</cpePerVulnerabilityLimit>
 
-                                <generateVulnerabilityTimelines>${ae.dashboard.timeline}</generateVulnerabilityTimelines>
-                                <hideIrrelevantVulnerabilityTimelineVersions>true</hideIrrelevantVulnerabilityTimelineVersions>
+                                <generateVulnerabilityTimelines>${ae.dashboard.timeline}
+                                </generateVulnerabilityTimelines>
+                                <hideIrrelevantVulnerabilityTimelineVersions>true
+                                </hideIrrelevantVulnerabilityTimelineVersions>
                                 <vulnerabilityTimelineVersionLimit>72260</vulnerabilityTimelineVersionLimit>
                                 <reviewCERTs>all</reviewCERTs>
 
@@ -234,7 +260,9 @@
                                 <failOnUnreviewed>false</failOnUnreviewed>
 
                                 <!-- renders the charts displayed in the dashboard into SVGs to a directory -->
-                                <generatedSvgDirectory>${project.build.directory}/classes/resources/${project.artifactId}/svg</generatedSvgDirectory>
+                                <generatedSvgDirectory>
+                                    ${project.build.directory}/classes/resources/${project.artifactId}/svg
+                                </generatedSvgDirectory>
 
                             </configuration>
                         </execution>
@@ -253,12 +281,7 @@
         </pluginManagement>
     </build>
 
-    <modules>
-        <module>example-advisor</module>
-    </modules>
-
     <profiles>
-
         <profile>
             <id>update-dashboard</id>
 
@@ -279,7 +302,9 @@
                                     <phase>initialize</phase>
                                     <configuration>
                                         <active>true</active>
-                                        <inputInventory>${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls</inputInventory>
+                                        <inputInventory>
+                                            ${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls
+                                        </inputInventory>
                                         <outputInventory>${output.inventory}</outputInventory>
 
                                         <cveStatusDirectory>${project.basedir}/assessment</cveStatusDirectory>
@@ -299,7 +324,9 @@
 
                                         <!-- Keep configuration in sync with the above configuration -->
 
-                                        <outputFile>${project.build.directory}/classes/dashboard/${project.artifactId}-dashboard.html</outputFile>
+                                        <outputFile>
+                                            ${project.build.directory}/classes/dashboard/${project.artifactId}-dashboard.html
+                                        </outputFile>
                                         <nvdDirectory>${input.database}/nvd</nvdDirectory>
 
                                         <minScore>-1.0</minScore>
@@ -316,8 +343,10 @@
                                          -->
                                         <cpePerVulnerabilityLimit>${ae.dashboard.cpe.limit}</cpePerVulnerabilityLimit>
 
-                                        <generateVulnerabilityTimelines>${ae.dashboard.timeline}</generateVulnerabilityTimelines>
-                                        <hideIrrelevantVulnerabilityTimelineVersions>true</hideIrrelevantVulnerabilityTimelineVersions>
+                                        <generateVulnerabilityTimelines>${ae.dashboard.timeline}
+                                        </generateVulnerabilityTimelines>
+                                        <hideIrrelevantVulnerabilityTimelineVersions>true
+                                        </hideIrrelevantVulnerabilityTimelineVersions>
                                         <vulnerabilityTimelineVersionLimit>100</vulnerabilityTimelineVersionLimit>
                                         <reviewCERTs>all</reviewCERTs>
 
@@ -326,7 +355,9 @@
                                         <failOnUnreviewed>false</failOnUnreviewed>
 
                                         <!-- renders the charts displayed in the dashboard into SVGs to a directory -->
-                                        <generatedSvgDirectory>${project.build.directory}/classes/resources/svg/${project.artifactId}</generatedSvgDirectory>
+                                        <generatedSvgDirectory>
+                                            ${project.build.directory}/classes/resources/svg/${project.artifactId}
+                                        </generatedSvgDirectory>
 
                                     </configuration>
                                 </execution>
@@ -336,7 +367,6 @@
                 </pluginManagement>
             </build>
         </profile>
-
     </profiles>
 
 </project>

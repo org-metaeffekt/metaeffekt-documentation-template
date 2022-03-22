@@ -80,6 +80,12 @@
 				<module>scanners</module>
 			</modules>
 		</profile>
+		<profile>
+			<id>mirror-database</id>
+			<modules>
+				<module>mirror</module>
+			</modules>
+		</profile>
 	</profiles>
 
 </project>

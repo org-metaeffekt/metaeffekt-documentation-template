@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ae-documentation</artifactId>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ae-mirror</artifactId>
+
+    <properties>
+        <!-- run with the mirror-database profile active to download the database contents -->
+        <input.database>${project.basedir}/../.database/ae-vulnerability-mirror</input.database>
+        <proxy.host>none</proxy.host>
+        <proxy.port>none</proxy.port>
+        <proxy.user>none</proxy.user>
+        <proxy.pass>none</proxy.pass>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>mirror-database</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.metaeffekt.artifact.analysis</groupId>
+                        <artifactId>ae-mirror-plugin</artifactId>
+                        <version>${ae.artifact.analysis.version}</version>
+                        <executions>
+                            <execution>
+                                <id>nvd mirror</id>
+                                <goals>
+                                    <goal>update-nvd</goal>
+                                </goals>
+                                <configuration>
+                                    <nvdDirectory>${input.database}/nvd</nvdDirectory>
+
+                                    <nvdLockFileTimeout>20</nvdLockFileTimeout>
+                                    <resetCveDbFirst>false</resetCveDbFirst>
+
+                                    <proxyHost>${proxy.host}</proxyHost>
+                                    <proxyPort>${proxy.port}</proxyPort>
+                                    <proxyUsername>${proxy.user}</proxyUsername>
+                                    <proxyPassword>${proxy.pass}</proxyPassword>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>certfr mirror</id>
+                                <goals>
+                                    <goal>update-certfr</goal>
+                                </goals>
+                                <configuration>
+                                    <certFrDirectory>${input.database}/certfr</certFrDirectory>
+
+                                    <certFrArchivesUrl>https://www.cert.ssi.gouv.fr/tar</certFrArchivesUrl>
+                                    <certFrFeedUrl>https://www.cert.ssi.gouv.fr/feed</certFrFeedUrl>
+
+                                    <updateEveryHours>3</updateEveryHours>
+
+                                    <proxyHost>${proxy.host}</proxyHost>
+                                    <proxyPort>${proxy.port}</proxyPort>
+                                    <proxyUsername>${proxy.user}</proxyUsername>
+                                    <proxyPassword>${proxy.pass}</proxyPassword>
+                                    <proxyScheme>http</proxyScheme>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>certsei mirror</id>
+                                <goals>
+                                    <goal>update-certsei</goal>
+                                </goals>
+                                <configuration>
+                                    <certSeiDirectory>${input.database}/certsei</certSeiDirectory>
+
+                                    <updateEveryHours>3</updateEveryHours>
+
+                                    <proxyHost>${proxy.host}</proxyHost>
+                                    <proxyPort>${proxy.port}</proxyPort>
+                                    <proxyUsername>${proxy.user}</proxyUsername>
+                                    <proxyPassword>${proxy.pass}</proxyPassword>
+                                    <proxyScheme>http</proxyScheme>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>ms mirror</id>
+                                <goals>
+                                    <goal>update-mssecurity</goal>
+                                </goals>
+                                <configuration>
+                                    <msDirectory>${input.database}/microsoft</msDirectory>
+
+                                    <proxyHost>${proxy.host}</proxyHost>
+                                    <proxyPort>${proxy.port}</proxyPort>
+                                    <proxyUsername>${proxy.user}</proxyUsername>
+                                    <proxyPassword>${proxy.pass}</proxyPassword>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
