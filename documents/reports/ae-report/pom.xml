@@ -92,6 +92,7 @@
                         <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
                         <vulnerabilityScoreThreshold>7.0</vulnerabilityScoreThreshold>
+                        <vulnerabilityAdvisoryFilter></vulnerabilityAdvisoryFilter>
 
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
 
