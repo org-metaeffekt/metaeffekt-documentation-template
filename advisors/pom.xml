@@ -216,7 +216,7 @@
                                 <outputInventory>${output.inventory}</outputInventory>
 
                                 <cveStatusDirectory>${project.basedir}/assessment</cveStatusDirectory>
-                                <keywordsFile>${project.basedir}/context/keywords.yaml</keywordsFile>
+                                <vulnerabilityKeywordsDirectory>${project.basedir}/context/keywords.yaml</vulnerabilityKeywordsDirectory>
                             </configuration>
                         </execution>
 
@@ -308,7 +308,7 @@
                                         <outputInventory>${output.inventory}</outputInventory>
 
                                         <cveStatusDirectory>${project.basedir}/assessment</cveStatusDirectory>
-                                        <keywordsFile>${project.basedir}/context/keywords.yaml</keywordsFile>
+                                        <vulnerabilityKeywordsDirectory>${project.basedir}/context/keywords.yaml</vulnerabilityKeywordsDirectory>
                                     </configuration>
                                 </execution>
 
