@@ -137,7 +137,7 @@
                                 <goal>enrich-microsoft</goal>
                             </goals>
                             <configuration>
-                                <active>${activate.enrichment}</active>
+                                <active>false</active>
                                 <msDirectory>${input.database}/microsoft</msDirectory>
                                 <inputInventory>
                                     ${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls
@@ -154,7 +154,7 @@
                                 <goal>enrich-cve-metadata</goal>
                             </goals>
                             <configuration>
-                                <active>${activate.enrichment}</active>
+                                <active>true</active>
                                 <nvdDirectory>${input.database}/nvd</nvdDirectory>
 
                                 <!-- HINT: currently this is required as the process accesses the MS data; to be validated -->
@@ -175,7 +175,7 @@
                                 <goal>enrich-certfr</goal>
                             </goals>
                             <configuration>
-                                <active>true</active>
+                                <active>false</active>
                                 <certFrDirectory>${input.database}/certfr</certFrDirectory>
                                 <inputInventory>
                                     ${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls
@@ -192,7 +192,7 @@
                                 <goal>enrich-certsei</goal>
                             </goals>
                             <configuration>
-                                <active>${activate.enrichment}</active>
+                                <active>true</active>
                                 <certSeiDirectory>${input.database}/certsei</certSeiDirectory>
                                 <inputInventory>
                                     ${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls

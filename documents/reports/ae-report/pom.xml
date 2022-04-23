@@ -55,7 +55,7 @@
                             </goals>
                             <phase>generate-sources</phase>
                             <configuration>
-                                <outputDirectory>${project.build.sourceDirectory}/../dita/example-report/gen</outputDirectory>
+                                <outputDirectory>${project.basedir}/src/main/dita/example-report/gen</outputDirectory>
                                 <includeScope>provided</includeScope>
                                 <includes>**/resources/**/*.*</includes>
                                 <overWriteSnapshots>true</overWriteSnapshots>
