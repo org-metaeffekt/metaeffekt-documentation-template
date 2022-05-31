@@ -186,8 +186,13 @@
         </pluginManagement>
     </build>
 
-    <modules>
-        <module>ae-report</module>
-    </modules>
+    <profiles>
+        <profile>
+            <id>report</id>
+            <modules>
+                <module>ae-report</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

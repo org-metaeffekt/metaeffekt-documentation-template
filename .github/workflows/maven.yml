@@ -24,4 +24,4 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-      - run: mvn -B package --file pom.xml -Pextract
+      - run: mvn -B package --file pom.xml -Pextract,document
