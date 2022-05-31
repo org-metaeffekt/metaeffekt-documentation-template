@@ -38,7 +38,10 @@
 
         <correlation.dir>../correlation</correlation.dir>
 
-        <activate.dashboard>true</activate.dashboard>
+        <activate.msrc>false</activate.msrc>
+        <activate.nvd>true</activate.nvd>
+        <activate.certfr>false</activate.certfr>
+        <activate.certsei>true</activate.certsei>
     </properties>
 
     <build>
@@ -137,7 +140,7 @@
                                 <goal>enrich-microsoft</goal>
                             </goals>
                             <configuration>
-                                <active>false</active>
+                                <active>${activate.msrc}</active>
                                 <msDirectory>${input.database}/microsoft</msDirectory>
                                 <inputInventory>
                                     ${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls
@@ -154,11 +157,12 @@
                                 <goal>enrich-cve-metadata</goal>
                             </goals>
                             <configuration>
-                                <active>true</active>
+                                <active>${activate.nvd}</active>
                                 <nvdDirectory>${input.database}/nvd</nvdDirectory>
 
-                                <!-- HINT: currently this is required as the process accesses the MS data; to be validated -->
+                                <!-- HINT: currently this is required as the process accesses the MS data; to be validated
                                 <msDirectory>${input.database}/microsoft</msDirectory>
+                                -->
 
                                 <inputInventory>
                                     ${project.build.directory}/inventories/${project.artifactId}-inventory_ms.xls
@@ -175,7 +179,7 @@
                                 <goal>enrich-certfr</goal>
                             </goals>
                             <configuration>
-                                <active>false</active>
+                                <active>${activate.certfr}</active>
                                 <certFrDirectory>${input.database}/certfr</certFrDirectory>
                                 <inputInventory>
                                     ${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls
@@ -192,7 +196,7 @@
                                 <goal>enrich-certsei</goal>
                             </goals>
                             <configuration>
-                                <active>true</active>
+                                <active>${activate.certsei}</active>
                                 <certSeiDirectory>${input.database}/certsei</certSeiDirectory>
                                 <inputInventory>
                                     ${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls
@@ -209,7 +213,7 @@
                                 <goal>enrich-cve-status</goal>
                             </goals>
                             <configuration>
-                                <active>${activate.enrichment}</active>
+                                <active>true</active>
                                 <inputInventory>
                                     ${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls
                                 </inputInventory>
@@ -226,7 +230,7 @@
                                 <goal>generate-dashboard</goal>
                             </goals>
                             <configuration>
-                                <active>${activate.dashboard}</active>
+                                <active>true</active>
                                 <inputInventory>${output.inventory}</inputInventory>
 
                                 <outputFile>
@@ -319,7 +323,7 @@
                                     </goals>
                                     <phase>initialize</phase>
                                     <configuration>
-                                        <active>${activate.dashboard}</active>
+                                        <active>true</active>
                                         <inputInventory>${output.inventory}</inputInventory>
 
                                         <!-- Keep configuration in sync with the above configuration -->
