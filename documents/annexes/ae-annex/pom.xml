@@ -329,12 +329,14 @@
     </build>
 
     <dependencies>
+        <!-- split into separate annex
         <dependency>
             <groupId>org.metaeffekt.example.documentation</groupId>
             <artifactId>ae-container-extractor</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
+        -->
 
         <dependency>
             <groupId>org.metaeffekt.example.documentation</groupId>
