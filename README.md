@@ -33,16 +33,18 @@ folder. Rerun the process to update the data regularly.
 
 Run the extraction and advisories/documents generation using the `extract,advise,document` profiles:
 
-    mvn clean install -Pextract,advise,document
+    mvn clean install -Pextract,advise,document,report
+
+The profiles extract, advise, document and report have been split using profiles to be used separately from the command
+line.
+Profile `extract` is a prerequisite to `advise` and `document`.
+Profile `advise` is prerequisite for `report`.
 
 With container enabled (currently disabled):
 
-    mvn clean install -Pextract,advise,document -Dimage.repo=debian -Dimage.tag=latest
+    mvn clean install -Pextract,document -Dimage.repo=debian -Dimage.tag=latest
 
-The actions extract, advise and document have been split using profiles to be used separately from the command line.
-Extract is a prerequisite to advise and document. Advise is prerequisite for document.
-
-The process requires that docker is running and the container of interest was already pulled.
+The container enabled process requires that docker daemon is running and the container of interest was already pulled.
 
 ## DISCLAIMER
 
