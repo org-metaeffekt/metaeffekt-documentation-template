@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	
-	<modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
 
-	<!-- FIXME: use specific parent or replace package -->
-	<artifactId>ae-documentation</artifactId>
-	  
-	<packaging>pom</packaging>
+    <packaging>pom</packaging>
 
-	  <!-- FIXME: eliminate redundant information inherited by parent -->
+    <artifactId>ae-documentation</artifactId>
     <groupId>org.metaeffekt.example.documentation</groupId>
     <version>1.0.0-SNAPSHOT</version>
 
-	  <!-- FIXME: these SCM urls do not really exists; replace when applying this project as template -->
+    <!-- FIXME: these SCM urls do not really exists; replace when applying this project as template -->
     <scm>
         <connection>scm:git:git://xxxx.git</connection>
         <developerConnection>scm:git:ssh://xxxx.git</developerConnection>
@@ -21,71 +18,62 @@
     </scm>
 
     <properties>
-		<!-- FIXME: use released versions -->
-        <ae.core.version>HEAD-SNAPSHOT</ae.core.version>
+        <ae.core.version>0.53.0</ae.core.version>
         <ae.dita.version>0.29.0</ae.dita.version>
-
-		<!-- FIXME: use released versions -->
-		<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>
+        <ae.artifact.analysis.version>0.31.0</ae.artifact.analysis.version>
 
         <artifact.inventory.validation>false</artifact.inventory.validation>
         <artifact.annex.validation>false</artifact.annex.validation>        
         <artifact.extractor.validation>false</artifact.extractor.validation>          
         
-		<assembly.plugin.version>3.1.0</assembly.plugin.version>
+        <assembly.plugin.version>3.1.0</assembly.plugin.version>
     </properties>
 
-	<modules>
+    <modules>
         <module>inventories</module>
-	</modules>
+    </modules>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<version>${assembly.plugin.version}</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${assembly.plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-	<!-- profiles to activate different use cases -->
-	<profiles>
-		<profile>
-			<id>extract</id>
-			<modules>
-				<module>extractors</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>document</id>
-			<modules>
-				<!-- FIXME: add example branding
-				<module>branding</module>
-				-->
-				<module>documents</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>advise</id>
-			<modules>
-				<module>advisors</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>monitor</id>
-			<modules>
-				<module>scanners</module>
-			</modules>
-		</profile>
-		<profile>
-			<id>mirror-database</id>
-			<modules>
-				<module>mirror</module>
-			</modules>
-		</profile>
-	</profiles>
+    <!-- profiles to activate different use cases -->
+    <profiles>
+        <profile>
+            <id>extract</id>
+            <modules>
+                <module>extractors</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>document</id>
+            <modules>
+                <!-- FIXME: add example branding
+                <module>branding</module>
+                -->
+                <module>documents</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>advise</id>
+            <modules>
+                <module>advisors</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>mirror-database</id>
+            <modules>
+                <module>mirror</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

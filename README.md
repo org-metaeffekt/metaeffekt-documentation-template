@@ -8,13 +8,15 @@
 
 - illustrate extraction from containers
 - illustrate extraction from a POM
+- include configuration for creating local vulnerability mirror
 - generate vulnerability dashboard based on the extracted inventories
+- generate a software distribution annex containing a bill of materials
+- generate a vulnerability report including assessment data.
 
 ## Future Scope
 
 - illustrate extraction from NodeJS
 - illustrate local source scan for licenses
-- include configuration for creating local vulnerability mirror
 - generate CycloneDx BOM from inventories
 - ingest DependencyTrack results
 
@@ -24,7 +26,10 @@ Mirror the vulnerability databases once using the `mirror-database` profile:
 
     mvn clean install -Pmirror-database
 
-Then run the extraction and advisories/documents generation using the `extract,advise,document` profiles:
+This may take around 10 minutes. The process will create a local mirror of public vulnerability data in the `.database`
+folder. Rerun the process to update the data regularly.
+
+Run the extraction and advisories/documents generation using the `extract,advise,document` profiles:
 
     mvn clean install -Pextract,advise,document
 
@@ -32,8 +37,10 @@ With container enabled (currently disabled):
 
     mvn clean install -Pextract,advise,document -Dimage.repo=debian -Dimage.tag=latest
 
-The actions Extract, advise and document have been split using profiles to be used separately from the command line.
+The actions extract, advise and document have been split using profiles to be used separately from the command line.
 Extract is a prerequisite to advise and document. Advise is prerequisite for document.
+
+The process requires that docker is running and the container of interest was already pulled.
 
 ## DISCLAIMER
 
