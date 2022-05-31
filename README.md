@@ -1,3 +1,5 @@
+[![Java 11 Build with Maven](https://github.com/org-metaeffekt/metaeffekt-documentation-template/actions/workflows/maven.yml/badge.svg)](https://github.com/org-metaeffekt/metaeffekt-documentation-template/actions/workflows/maven.yml)
+
 # metaeffekt-documentation-template
 
 ## Overview
