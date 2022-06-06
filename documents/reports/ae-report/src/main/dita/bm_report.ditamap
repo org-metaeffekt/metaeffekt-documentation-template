@@ -28,6 +28,7 @@
     </frontmatter>
 
     <chapter href="example-report/tpc_vulnerabilities.dita">
+    	<topicref href="example-report/gen/tpc_inventory-vulnerability-statistics.dita" />
     	<topicref href="example-report/gen/tpc_inventory-vulnerability-report.dita" />
         <topicref href="example-report/gen/tpc_inventory-vulnerability-details.dita" />
     </chapter>

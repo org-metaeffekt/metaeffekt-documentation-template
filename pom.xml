@@ -18,9 +18,9 @@
     </scm>
 
     <properties>
-        <ae.core.version>0.53.0</ae.core.version>
+        <ae.core.version>0.57.0</ae.core.version>
         <ae.dita.version>0.29.0</ae.dita.version>
-        <ae.artifact.analysis.version>0.31.0</ae.artifact.analysis.version>
+        <ae.artifact.analysis.version>0.33.0</ae.artifact.analysis.version>
 
         <artifact.inventory.validation>false</artifact.inventory.validation>
         <artifact.annex.validation>false</artifact.annex.validation>        

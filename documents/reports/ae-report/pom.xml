@@ -49,7 +49,7 @@
                             </configuration>
                         </execution>
                         <execution>
-                            <id>unpack-svg</id>
+                            <id>unpack-advisor-resource</id>
                             <goals>
                                 <goal>unpack-dependencies</goal>
                             </goals>
@@ -108,6 +108,8 @@
                         <failOnMissingLicenseFile>false</failOnMissingLicenseFile>
                         <failOnMissingNotice>false</failOnMissingNotice>
                         <failOnMissingSources>false</failOnMissingSources>
+
+                        <generateOverviewTablesForAdvisories>CERT-SEI</generateOverviewTablesForAdvisories>
                     </configuration>
 
                 </plugin>

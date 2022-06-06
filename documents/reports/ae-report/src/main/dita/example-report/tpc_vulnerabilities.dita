@@ -5,15 +5,16 @@
     <body>
         <p>
             For the third-party components contained in ${product.name} vulnerabilities have been queried from
-            public vulnerability databases. The following sections cover the vulnerabilities for the different
-            software parts.
+            public vulnerability databases. The following sections cover the vulnerabilities for the
+            software parts included in ${product.name}.
         </p>
 
         <section id="overview_charts">
             <title>Overview Charts</title>
             <p>
-                An overview is provided over the current artifact status and the severity categories of their
-                vulnerabilities.
+                A set of charts depicts the vulnerabilities correlated with ${product.name}. The following
+                illustration convey insights on the initial vulnerability situation, the assessment status and
+                the severity of the correlated vulnerabilities in the given context.
             </p>
             <table id="overview_charts_table_upper">
                 <tgroup cols="2">
@@ -23,24 +24,22 @@
                         <row>
                             <entry align="center">
                                 <p>
-                                    <b>Status per Vulnerability</b>
+                                    <b>Initial Vulnerability Severity</b>
                                 </p>
                                 <p>
-                                    Every vulnerability can be classified into one of three categories: 'Applicable',
-                                    'Not Applicable', 'Insignificant'.
-                                    If no category is specified, 'None' is automatically set.
+                                    The chart depicts the vulnerability severity distribution without context information.
                                 </p>
-                                <image href="gen/resources/example-advisor/svg/overview_current_cve_status.svg" width="260" />
+                                <image href="gen/resources/svg/chart_cvss-by-associated-vulnerability.svg" width="260" />
                             </entry>
                             <entry align="center">
                                 <p>
-                                    <b>CVSS Severity per Vulnerability</b>
+                                    <b>Resulting Vulnerability Severity</b>
                                 </p>
                                 <p>
-                                    The CVSS overall score is calculated for each vulnerability from a CVSS vector.
-                                    It is then used to determine the severity of the vulnerability.
+                                    The chart provides the distribution of vulnerability severity after evaluation of the
+                                    vulnerabilities in the given context.
                                 </p>
-                                <image href="gen/resources/example-advisor/svg/overview_cvss_per_vulnerability.svg" width="260" />
+                                <image href="gen/resources/svg/chart_cvss-by-effective-vulnerability.svg" width="260" />
                             </entry>
                         </row>
                     </tbody>
@@ -56,26 +55,22 @@
                         <row>
                             <entry align="center">
                                 <p>
-                                    <b>CVSS Severity per applicable Vulnerability</b>
+                                    <b>Vulnerability Assessment Status</b>
                                 </p>
                                 <p>
-                                    The CVSS overall score is calculated for each vulnerability that is classified as
-                                    'Applicable'.
-                                    This score is then used to determine the severity of the vulnerability.
+                                    The illustration provides information on the current assessment status.
                                 </p>
-                                <image href="gen/resources/example-advisor/svg/overview_cvss_per_applicable_vulnerability.svg" width="260" />
+                                <image href="gen/resources/svg/chart_cve-assessment-status.svg" width="260" />
                             </entry>
                             <entry align="center">
                                 <p>
                                     <b>CVSS Severity per Artifact</b>
                                 </p>
                                 <p>
-                                    Every artifact calculates the CVSS overall scores for all vulnerabilities it
-                                    contains.
-                                    The highest score per artifact is then used to determine the severity of the
-                                    artifact.
+                                    The chart visualizes the distribution of vulnerabilities on artifacts and
+                                    components included in ${product.name}.
                                 </p>
-                                <image href="gen/resources/example-advisor/svg/overview_cvss_per_artifact.svg" width="260" />
+                                <image href="gen/resources/svg/chart_cvss-by-artifact.svg" width="260" />
                             </entry>
                         </row>
                     </tbody>

@@ -35,6 +35,7 @@
         <!-- the extracted settings enable to adapt the configuration on module level -->
         <ae.dashboard.timeline>true</ae.dashboard.timeline>
         <ae.dashboard.cpe.limit>-1</ae.dashboard.cpe.limit>
+        <ae.dashboard.insignificant.threshold>7.0</ae.dashboard.insignificant.threshold>
 
         <correlation.dir>../correlation</correlation.dir>
 
@@ -233,29 +234,25 @@
                                 <active>true</active>
                                 <inputInventory>${output.inventory}</inputInventory>
 
-                                <outputFile>
-                                    ${project.build.directory}/classes/dashboard/${project.artifactId}-dashboard.html
-                                </outputFile>
+                                <outputFile>${project.build.directory}/classes/dashboard/${project.artifactId}-dashboard.html</outputFile>
                                 <nvdDirectory>${input.database}/nvd</nvdDirectory>
 
                                 <minScore>-1.0</minScore>
-                                <insignificantThreshold>7.0</insignificantThreshold>
+                                <insignificantThreshold>${ae.dashboard.insignificant.threshold}</insignificantThreshold>
 
                                 <!-- use defaults -->
                                 <nvdLockFileTimeout>20</nvdLockFileTimeout>
                                 <timelineVulnerabilitiesPerCVELimit>72260</timelineVulnerabilitiesPerCVELimit>
 
                                 <!-- limits the CPEs evaluated for CVEs. CVE for CPE beyond the limit are not evaluated.
-                                    Rational: the dashboard shows all mapped CPEs and thereby supports correlation
+                                    Rational: the dashboard showsx all mapped CPEs and thereby supports correlation
                                       improvements. By adding more correlation information the number of CPE is reused
                                       sowing the effective vulnerabilities.
                                  -->
                                 <cpePerVulnerabilityLimit>${ae.dashboard.cpe.limit}</cpePerVulnerabilityLimit>
 
-                                <generateVulnerabilityTimelines>${ae.dashboard.timeline}
-                                </generateVulnerabilityTimelines>
-                                <hideIrrelevantVulnerabilityTimelineVersions>true
-                                </hideIrrelevantVulnerabilityTimelineVersions>
+                                <generateVulnerabilityTimelines>${ae.dashboard.timeline}</generateVulnerabilityTimelines>
+                                <hideIrrelevantVulnerabilityTimelineVersions>true</hideIrrelevantVulnerabilityTimelineVersions>
                                 <vulnerabilityTimelineVersionLimit>72260</vulnerabilityTimelineVersionLimit>
                                 <reviewCERTs>all</reviewCERTs>
 
@@ -264,9 +261,9 @@
                                 <failOnUnreviewed>false</failOnUnreviewed>
 
                                 <!-- renders the charts displayed in the dashboard into SVGs to a directory -->
-                                <generatedSvgDirectory>
-                                    ${project.build.directory}/classes/resources/${project.artifactId}/svg
-                                </generatedSvgDirectory>
+                                <generatedSvgDirectory>${project.build.directory}/classes/resources/svg</generatedSvgDirectory>
+
+                                <generateOverviewTablesForAdvisories>CERT-SEI</generateOverviewTablesForAdvisories>
 
                             </configuration>
                         </execution>
@@ -334,7 +331,7 @@
                                         <nvdDirectory>${input.database}/nvd</nvdDirectory>
 
                                         <minScore>-1.0</minScore>
-                                        <insignificantThreshold>0.0</insignificantThreshold>
+                                        <insignificantThreshold>ae.dashboard.insignificant.threshold</insignificantThreshold>
 
                                         <!-- use defaults -->
                                         <nvdLockFileTimeout>20</nvdLockFileTimeout>
@@ -359,9 +356,7 @@
                                         <failOnUnreviewed>false</failOnUnreviewed>
 
                                         <!-- renders the charts displayed in the dashboard into SVGs to a directory -->
-                                        <generatedSvgDirectory>
-                                            ${project.build.directory}/classes/resources/svg/${project.artifactId}
-                                        </generatedSvgDirectory>
+                                        <generatedSvgDirectory>${project.build.directory}/classes/resources/svg</generatedSvgDirectory>
 
                                     </configuration>
                                 </execution>
