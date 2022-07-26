@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/topic.dtd">
 <topic id="tpc_bill-of-material" xmlns:ditaarch="http://dita.oasis-open.org/architecture/2005/">
-    <title>Vulnerabilities</title>
+    <title>Vulnerability Overview</title>
     <body>
         <p>
             For the third-party components contained in ${product.name} vulnerabilities have been queried from
@@ -13,7 +13,7 @@
             <title>Overview Charts</title>
             <p>
                 A set of charts depicts the vulnerabilities correlated with ${product.name}. The following
-                illustration convey insights on the initial vulnerability situation, the assessment status and
+                illustrations convey insights on the initial vulnerability situation, the assessment status and
                 the severity of the correlated vulnerabilities in the given context.
             </p>
             <table id="overview_charts_table_upper">

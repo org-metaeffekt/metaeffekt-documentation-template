@@ -12,6 +12,10 @@
     <artifactId>ae-reports</artifactId>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>example-report</module>
+    </modules>
+
     <properties>
         <document.name>Vulnerability Report</document.name>
         <document.ditamap>bm_report.ditamap</document.ditamap>
@@ -185,14 +189,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <profiles>
-        <profile>
-            <id>report</id>
-            <modules>
-                <module>ae-report</module>
-            </modules>
-        </profile>
-    </profiles>
 
 </project>

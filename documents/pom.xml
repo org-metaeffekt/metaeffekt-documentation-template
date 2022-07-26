@@ -29,11 +29,6 @@
         <dita.source.dir>${basedir}/src/main/dita</dita.source.dir>
     </properties>
 
-	<modules>
-        <module>annexes</module>
-        <module>reports</module>
-	</modules>
-
     <build>
         <pluginManagement>
             <plugins>
@@ -258,5 +253,20 @@
             <version>${ae.dita.version}</version>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>document</id>
+            <modules>
+                <module>annexes</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>report</id>
+            <modules>
+                <module>reports</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

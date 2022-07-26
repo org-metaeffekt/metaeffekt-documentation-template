@@ -39,10 +39,12 @@
 
         <correlation.dir>../correlation</correlation.dir>
 
-        <activate.msrc>false</activate.msrc>
+        <activate.msrc>true</activate.msrc>
         <activate.nvd>true</activate.nvd>
         <activate.certfr>false</activate.certfr>
         <activate.certsei>true</activate.certsei>
+
+        <ae.advisor.phase>process-resources</ae.advisor.phase>
     </properties>
 
     <build>
@@ -104,9 +106,10 @@
                                 <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
                                 <sourceInventoryIncludes>inventory/*.xls</sourceInventoryIncludes>
                                 <failOnError>false</failOnError>
+                                <failOnUnknown>false</failOnUnknown>
 
                                 <targetInventoryDir>${project.build.directory}/inventories/</targetInventoryDir>
-                                <targetInventoryPath>${project.artifactId}-inventory_ref.xls</targetInventoryPath>
+                                <targetInventoryPath>01_${project.artifactId}-inventory_ref.xls</targetInventoryPath>
                             </configuration>
                         </execution>
                     </executions>
@@ -119,22 +122,19 @@
                     <executions>
 
                         <execution>
-                            <id>artifact-yaml-data</id>
+                            <id>add-artifact-yaml-data</id>
                             <goals>
                                 <goal>enrich-artifact-yaml-data</goal>
                             </goals>
                             <configuration>
                                 <active>true</active>
                                 <artifactYamlData>${correlation.dir}</artifactYamlData>
-                                <inputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_ref.xls
-                                </inputInventory>
-                                <outputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls
-                                </outputInventory>
+                                <inputInventory>${project.build.directory}/inventories/01_${project.artifactId}-inventory_ref.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/02_${project.artifactId}-inventory_yaml.xls</outputInventory>
                             </configuration>
                         </execution>
 
+                        <!-- manages ms products and kbs in artifact inventory -->
                         <execution>
                             <id>microsoft</id>
                             <goals>
@@ -143,68 +143,25 @@
                             <configuration>
                                 <active>${activate.msrc}</active>
                                 <msDirectory>${input.database}/microsoft</msDirectory>
-                                <inputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_yaml.xls
-                                </inputInventory>
-                                <outputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_ms.xls
-                                </outputInventory>
+                                <inputInventory>${project.build.directory}/inventories/02_${project.artifactId}-inventory_yaml.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/03_${project.artifactId}-inventory_yaml-msproduct.xls</outputInventory>
                             </configuration>
                         </execution>
 
+                        <!-- correlated and query msrc and nvd -->
                         <execution>
-                            <id>cve</id>
+                            <id>query-msrc-nvd</id>
                             <goals>
                                 <goal>enrich-cve-metadata</goal>
                             </goals>
                             <configuration>
                                 <active>${activate.nvd}</active>
+
+                                <msDirectory>${input.database}/microsoft</msDirectory>
                                 <nvdDirectory>${input.database}/nvd</nvdDirectory>
 
-                                <!-- HINT: currently this is required as the process accesses the MS data; to be validated
-                                <msDirectory>${input.database}/microsoft</msDirectory>
-                                -->
-
-                                <inputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_ms.xls
-                                </inputInventory>
-                                <outputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls
-                                </outputInventory>
-                            </configuration>
-                        </execution>
-
-                        <execution>
-                            <id>certfr</id>
-                            <goals>
-                                <goal>enrich-certfr</goal>
-                            </goals>
-                            <configuration>
-                                <active>${activate.certfr}</active>
-                                <certFrDirectory>${input.database}/certfr</certFrDirectory>
-                                <inputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_nvd.xls
-                                </inputInventory>
-                                <outputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls
-                                </outputInventory>
-                            </configuration>
-                        </execution>
-
-                        <execution>
-                            <id>certsei</id>
-                            <goals>
-                                <goal>enrich-certsei</goal>
-                            </goals>
-                            <configuration>
-                                <active>${activate.certsei}</active>
-                                <certSeiDirectory>${input.database}/certsei</certSeiDirectory>
-                                <inputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_certfr.xls
-                                </inputInventory>
-                                <outputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls
-                                </outputInventory>
+                                <inputInventory>${project.build.directory}/inventories/03_${project.artifactId}-inventory_yaml-msproduct.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/04_${project.artifactId}-inventory_msrc-nvd.xls</outputInventory>
                             </configuration>
                         </execution>
 
@@ -213,15 +170,62 @@
                             <goals>
                                 <goal>enrich-cve-status</goal>
                             </goals>
+                            <phase>${ae.advisor.phase}</phase>
                             <configuration>
                                 <active>true</active>
-                                <inputInventory>
-                                    ${project.build.directory}/inventories/${project.artifactId}-inventory_certsei.xls
-                                </inputInventory>
-                                <outputInventory>${output.inventory}</outputInventory>
+                                <inputInventory>${project.build.directory}/inventories/04_${project.artifactId}-inventory_msrc-nvd.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/05_${project.artifactId}-inventory_status.xls</outputInventory>
+
+                                <!-- required to query details for vulnerabilities not yet in nvd, but available in msrc -->
+                                <msDirectory>${input.database}/microsoft</msDirectory>
 
                                 <cveStatusDirectory>${project.basedir}/assessment</cveStatusDirectory>
                                 <vulnerabilityKeywordsDirectory>${project.basedir}/context/keywords.yaml</vulnerabilityKeywordsDirectory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>certfr</id>
+                            <goals>
+                                <goal>enrich-certfr</goal>
+                            </goals>
+                            <phase>${ae.advisor.phase}</phase>
+                            <configuration>
+                                <active>${activate.certfr}</active>
+                                <certFrDirectory>${input.database}/certfr</certFrDirectory>
+                                <inputInventory>${project.build.directory}/inventories/05_${project.artifactId}-inventory_status.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/06_${project.artifactId}-inventory_certfr.xls</outputInventory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>certsei</id>
+                            <goals>
+                                <goal>enrich-certsei</goal>
+                            </goals>
+                            <phase>${ae.advisor.phase}</phase>
+                            <configuration>
+                                <active>${activate.certsei}</active>
+                                <certSeiDirectory>${input.database}/certsei</certSeiDirectory>
+                                <inputInventory>${project.build.directory}/inventories/06_${project.artifactId}-inventory_certfr.xls</inputInventory>
+                                <outputInventory>${project.build.directory}/inventories/07_${project.artifactId}-inventory_certsei.xls</outputInventory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>update-vulnerability-metadata</id>
+                            <goals>
+                                <goal>update-cve-metadata</goal>
+                            </goals>
+                            <phase>${ae.advisor.phase}</phase>
+                            <configuration>
+                                <active>${activate.enrichment}</active>
+
+                                <msDirectory>${input.database}/microsoft</msDirectory>
+                                <nvdDirectory>${input.database}/nvd</nvdDirectory>
+
+                                <inputInventory>${project.build.directory}/inventories/07_${project.artifactId}-inventory_certsei.xls</inputInventory>
+                                <outputInventory>${output.inventory}</outputInventory>
                             </configuration>
                         </execution>
 
@@ -230,6 +234,7 @@
                             <goals>
                                 <goal>generate-dashboard</goal>
                             </goals>
+                            <phase>${ae.advisor.phase}</phase>
                             <configuration>
                                 <active>true</active>
                                 <inputInventory>${output.inventory}</inputInventory>
@@ -344,10 +349,8 @@
                                          -->
                                         <cpePerVulnerabilityLimit>${ae.dashboard.cpe.limit}</cpePerVulnerabilityLimit>
 
-                                        <generateVulnerabilityTimelines>${ae.dashboard.timeline}
-                                        </generateVulnerabilityTimelines>
-                                        <hideIrrelevantVulnerabilityTimelineVersions>true
-                                        </hideIrrelevantVulnerabilityTimelineVersions>
+                                        <generateVulnerabilityTimelines>${ae.dashboard.timeline}</generateVulnerabilityTimelines>
+                                        <hideIrrelevantVulnerabilityTimelineVersions>true</hideIrrelevantVulnerabilityTimelineVersions>
                                         <vulnerabilityTimelineVersionLimit>100</vulnerabilityTimelineVersionLimit>
                                         <reviewCERTs>all</reviewCERTs>
 

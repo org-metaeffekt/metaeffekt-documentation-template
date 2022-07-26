@@ -250,24 +250,19 @@
                         </execution>
 
                         <execution>
-                            <id>infer-inventory</id>
-                            <phase>test-compile</phase>
+                            <id>include-asset-details</id>
                             <goals>
-                                <goal>update-inventory</goal>
+                                <goal>extract-container-asset</goal>
                             </goals>
+                            <phase>test-compile</phase>
                             <configuration>
-                                <sourceInventoryPath>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</sourceInventoryPath>
-                                <targetInventoryPath>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</targetInventoryPath>
-                                <processors>
-                                    <processor>
-                                        <className>org.metaeffekt.core.inventory.processor.RemoveFilesWithoutChecksumProcessor</className>
-                                    </processor>
-                                    <processor>
-                                        <className>org.metaeffekt.core.inventory.processor.InferMetaDataProcessor</className>
-                                    </processor>
-                                </processors>
+                                <inventoryFile>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</inventoryFile>
+                                <repo>${image.repo}</repo>
+                                <tag>${image.tag}</tag>
+                                <assetQualifier>${image.repo}:${image.tag}</assetQualifier>
                             </configuration>
                         </execution>
+
                     </executions>
 
                     <dependencies>
@@ -330,28 +325,28 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.25</version>
+            <version>1.7.36</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>1.7.36</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.11.0</version>
+            <version>2.18.0</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.11.0</version>
+            <version>2.18.0</version>
             <scope>test</scope>
         </dependency>
 

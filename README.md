@@ -15,12 +15,14 @@
 - generate a software distribution annex containing a bill of materials
 - generate a vulnerability report including assessment data.
 
-## Future Scope
+## Future Scope / Work in Progress
 
 - illustrate extraction from NodeJS
 - illustrate local source scan for licenses
-- generate CycloneDx BOM from inventories
+- generate CycloneDx SBOM from inventories
+- generate inventory from CycloneDx SBOM
 - ingest DependencyTrack results
+- generate periodic vulnerability report
 
 ## Build Instructions
 

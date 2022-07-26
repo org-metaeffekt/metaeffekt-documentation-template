@@ -1,0 +1,27 @@
+- Id: openssl-1.1.1a
+  Version: 1.1.1a
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
+- Id: openssl-1.1.1o
+  Version: 1.1.1o
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
+- Id: openssl-3.0.3
+  Version: 3.0.3
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
+- Id: openssl-3.0.0
+  Version: 3.0.0
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
+- Id: openssl-1.1.1q
+  Version: 1.1.1q
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
+- Id: openssl-1.0.2k
+  Version: 1.0.2k
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
+- Id: openssl-1.1.0l
+  Version: 1.1.0l
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
+- Id: openssl-1.1.1g
+  Version: 1.1.1g
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
+- Id: openssl-1.1.1k
+  Version: 1.1.1k
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl

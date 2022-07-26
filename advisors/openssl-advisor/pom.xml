@@ -9,11 +9,11 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 	
-    <artifactId>ae-example-advisor</artifactId>
+    <artifactId>ae-openssl-advisor</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <input.inventory>${project.build.directory}/input/inventory/ae-dependency-extractor-inventory.xls</input.inventory>
+        <input.inventory>${project.build.directory}/input/inventory/ae-inventory-extractor-inventory.xls</input.inventory>
         <correlation.dir>correlation</correlation.dir>
     </properties>
 
@@ -38,7 +38,7 @@
     <dependencies>
         <dependency>
             <groupId>org.metaeffekt.example.documentation</groupId>
-            <artifactId>ae-dependency-extractor</artifactId>
+            <artifactId>ae-inventory-extractor</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>

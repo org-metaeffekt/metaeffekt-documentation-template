@@ -55,9 +55,10 @@
     </profiles>
 
     <modules>
-       <!-- FIXME: reintroduce container example -->
-       <!-- <module>container-extractors</module> -->
-       <module>dependency-extractors</module>
+        <!-- FIXME: reintroduce container example -->
+        <!-- <module>container-extractors</module> -->
+        <module>dependency-extractors</module>
+        <module>inventory-extractors</module>
     </modules>
 
 </project>
