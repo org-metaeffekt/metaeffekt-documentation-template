@@ -45,8 +45,8 @@
                     </tbody>
                 </tgroup>
             </table>
-            <!-- starting a new table in order for both rows to have the same background color -->
-            <table id="overview_charts_table_lower">
+
+            <table id="overview_charts_table_mid">
                 <title>Overview Charts</title>
                 <tgroup cols="2">
                     <colspec colname="COLSPEC0" colnum="1" colwidth="2*" />
@@ -71,6 +71,27 @@
                                     components included in ${product.name}.
                                 </p>
                                 <image href="gen/resources/svg/chart_cvss-by-artifact.svg" width="260" />
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+
+            <table id="overview_charts_table_lower">
+                <title>Overview Charts</title>
+                <tgroup cols="1">
+                    <colspec colname="COLSPEC0" colnum="1" colwidth="1*" />
+                    <tbody>
+                        <row>
+                            <entry align="center">
+                                <p>
+                                    <b>Vulnerability Assessment Status (Abstracted)</b>
+                                </p>
+                                <p>
+                                    The illustration provides information on the current assessment status using
+                                    abstracted category identifiers.
+                                </p>
+                                <image href="gen/resources/svg/chart_cvss-by-associated-vulnerability-status-unmodified-abstracted.svg" width="260" />
                             </entry>
                         </row>
                     </tbody>

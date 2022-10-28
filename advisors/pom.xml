@@ -110,6 +110,8 @@
 
                                 <targetInventoryDir>${project.build.directory}/inventories/</targetInventoryDir>
                                 <targetInventoryPath>01_${project.artifactId}-inventory_ref.xls</targetInventoryPath>
+
+                                <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
                             </configuration>
                         </execution>
                     </executions>

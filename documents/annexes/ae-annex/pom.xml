@@ -96,6 +96,7 @@
                     <enableBomReport>true</enableBomReport>
                     <enableVulnerabilityReport>true</enableVulnerabilityReport>
                     <enableDiffReport>false</enableDiffReport>
+                    <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
                 </configuration>
 
             </plugin>

@@ -97,6 +97,11 @@
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
 
+                        <!-- [default, abstracted] -->
+                        <overviewTablesVulnerabilityStatusMappingFunction>default</overviewTablesVulnerabilityStatusMappingFunction>
+                        <!-- [latest, max, [custom expression]]-->
+                        <cvssScoringPreference>latest</cvssScoringPreference>
+
                         <failOnError>false</failOnError>
                         <failOnBanned>false</failOnBanned>
                         <failOnInternal>false</failOnInternal>
