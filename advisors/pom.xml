@@ -250,7 +250,7 @@
                                 <timelineVulnerabilitiesPerCVELimit>72260</timelineVulnerabilitiesPerCVELimit>
 
                                 <!-- limits the CPEs evaluated for CVEs. CVE for CPE beyond the limit are not evaluated.
-                                    Rational: the dashboard showsx all mapped CPEs and thereby supports correlation
+                                    Rational: the dashboard shows all mapped CPEs and thereby supports correlation
                                       improvements. By adding more correlation information the number of CPE is reused
                                       sowing the effective vulnerabilities.
                                  -->
