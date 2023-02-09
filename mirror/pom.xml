@@ -18,7 +18,7 @@
         <proxy.scheme>none</proxy.scheme>
         <proxy.host>none</proxy.host>
         <proxy.port>-1</proxy.port>
-        <proxy.user>nπone</proxy.user>
+        <proxy.user>none</proxy.user>
         <proxy.pass>none</proxy.pass>
     </properties>
 
