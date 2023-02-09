@@ -29,7 +29,7 @@
                                 <p>
                                     The chart depicts the vulnerability severity distribution without context information.
                                 </p>
-                                <image href="gen/resources/svg/chart_cvss-by-associated-vulnerability.svg" width="260" />
+                                <image href="gen/resources/svg/chart_cvss-by-unmodified-vulnerability.svg" width="260" />
                             </entry>
                             <entry align="center">
                                 <p>
@@ -60,7 +60,7 @@
                                 <p>
                                     The illustration provides information on the current assessment status.
                                 </p>
-                                <image href="gen/resources/svg/chart_cve-assessment-status.svg" width="260" />
+                                <image href="gen/resources/svg/chart_vulnerability-status-per-vulnerability.svg" width="260" />
                             </entry>
                             <entry align="center">
                                 <p>
@@ -71,27 +71,6 @@
                                     components included in ${product.name}.
                                 </p>
                                 <image href="gen/resources/svg/chart_cvss-by-artifact.svg" width="260" />
-                            </entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-
-            <table id="overview_charts_table_lower">
-                <title>Overview Charts</title>
-                <tgroup cols="1">
-                    <colspec colname="COLSPEC0" colnum="1" colwidth="1*" />
-                    <tbody>
-                        <row>
-                            <entry align="center">
-                                <p>
-                                    <b>Vulnerability Assessment Status (Abstracted)</b>
-                                </p>
-                                <p>
-                                    The illustration provides information on the current assessment status using
-                                    abstracted category identifiers.
-                                </p>
-                                <image href="gen/resources/svg/chart_cvss-by-associated-vulnerability-status-unmodified-abstracted.svg" width="260" />
                             </entry>
                         </row>
                     </tbody>
