@@ -7,19 +7,27 @@ Assessment Dashboard (single page HTML) and Vulnerability Report (PDF).
 Data sources include:
 
 - [NVD](https://nvd.nist.gov/vuln)
-  - Vulnerability (CVE)
-  - Vendor/product (CPE)
+    - Vulnerability (CVE)
+    - Vendor/product (CPE)
 - [CERT-FR](https://www.cert.ssi.gouv.fr/)
-  - Advisories
+    - Advisories
 - [CERT-SEI](https://www.sei.cmu.edu/about/divisions/cert/)
-  - Advisories
+    - Advisories
 - [MSRC](https://msrc.microsoft.com/update-guide/vulnerability)
-  - Advisories
-  - Microsoft products
-  - Knowledge Base (Security Updates)
+    - Advisories
+    - Microsoft products
+    - Knowledge Base (Security Updates)
 
 In order to reduce the amount of requests that are made during runtime to increase performance and to prevent tracing of
-activities by data providers or via networks tracking, these data sources are first downloaded and then indexed into a
-local data structure.
+activities by data providers or via networks tracking, these data sources are first fully downloaded into a local
+directory and then indexed into a data structure.
+
+To improve performance and prevent tracing of activities by data providers, data sources are fully downloaded into a
+local directory. Then, they are indexed into a data structure to reduce the number of requests made during runtime.
 
 ![Process overview](inventory-enrichment-overview.svg)
+
+Read these chapters to better understand the process:
+
+- [**Mirroring**](mirror/mirror-overview.md)
+- [**Enrichment**](enrichment/steps.md)
