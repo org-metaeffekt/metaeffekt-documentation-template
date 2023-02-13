@@ -48,6 +48,14 @@ With container enabled (currently disabled):
 
 The container enabled process requires that docker daemon is running and the container of interest was already pulled.
 
+## Documentation
+
+For more information on the process, you can start with one of the documents located in the `doc` directory.
+
+- [Inventory Enrichment Overview](doc/inventory-enrichment/inventory-enrichment-overview.md)
+- [Data Source Mirroring](doc/inventory-enrichment/mirror/mirror-overview.md)
+- [Inventory Enrichment Steps](doc/inventory-enrichment/enrichment/steps.md)
+
 ## DISCLAIMER
 
 Currently, the provided inventory does only contain minimal information. We promise to add more data to better

@@ -1,5 +1,20 @@
 # Data sources mirror overview
 
+<!-- TOC -->
+
+* [Data sources mirror overview](#data-sources-mirror-overview)
+    * [Download](#download)
+        * [Some more context for downloading](#some-more-context-for-downloading)
+    * [Index](#index)
+    * [Examples](#examples)
+
+<!-- TOC -->
+
+Subpages:
+
+- [dowmload.md](dowmload.md)
+- [index.md](index.md)
+
 The purpose of the data mirror is to download data (JSON, XML, ...) from a variety of sources into a local directory and
 create an index using Lucene Index from it. The index makes it easy to quickly search for data when it's needed during
 the enrichment process.

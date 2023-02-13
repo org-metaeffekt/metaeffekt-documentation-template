@@ -25,9 +25,9 @@ directory and then indexed into a data structure.
 To improve performance and prevent tracing of activities by data providers, data sources are fully downloaded into a
 local directory. Then, they are indexed into a data structure to reduce the number of requests made during runtime.
 
-![Process overview](inventory-enrichment-overview.svg)
-
 Read these chapters to better understand the process:
 
 - [**Mirroring**](mirror/mirror-overview.md)
 - [**Enrichment**](enrichment/steps.md)
+
+![Process overview](inventory-enrichment-overview.svg)
