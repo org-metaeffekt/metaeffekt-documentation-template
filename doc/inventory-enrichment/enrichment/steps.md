@@ -1,4 +1,4 @@
 
 ### Todo
 
-![todo](inventory-enrichment-process-overview.drawio.svg)
+![todo](../inventory-enrichment-overview.svg)

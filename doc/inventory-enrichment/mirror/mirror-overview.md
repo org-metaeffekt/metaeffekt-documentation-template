@@ -1,5 +1,12 @@
 # Data sources mirror overview
 
+The general mirroring process description can be found in this document, the individual steps in these documents:
+
+- [download.md](download.md)
+- [index.md](index.md)
+
+Table of contents:
+
 <!-- TOC -->
 
 * [Data sources mirror overview](#data-sources-mirror-overview)
@@ -9,11 +16,6 @@
     * [Examples](#examples)
 
 <!-- TOC -->
-
-The general mirroring process description can be found in this document, the individual steps in these documents:
-
-- [download.md](download.md)
-- [index.md](index.md)
 
 The purpose of the data mirror is to download data (JSON, XML, ...) from a variety of sources into a local directory and
 create an index using Lucene Index from it. The index makes it easy to quickly search for data when it's needed during
@@ -135,6 +137,7 @@ A full list of all index processes can be found in [index.md](index.md).
   new CpeDictionaryDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
   new NvdDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
   new MsrcDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
+  new MsrcManualCsvDownload(MIRROR_DIRECTORY).performDownloadIfRequired(); // manual download
   
   new CertSeiAdvisorIndex(MIRROR_DIRECTORY).createIndexIfRequired();
   new CertFrAdvisorIndex(MIRROR_DIRECTORY).createIndexIfRequired();
@@ -180,6 +183,7 @@ A full list of all index processes can be found in [index.md](index.md).
                          <proxyPort>${proxy.port}</proxyPort>
 
                          <msrcDownload/>
+                         <msrcCsvDownload/>
                          <cpeDictionaryDownload/>
                          <certSeiDownload/>
                          <certFrDownload/>
