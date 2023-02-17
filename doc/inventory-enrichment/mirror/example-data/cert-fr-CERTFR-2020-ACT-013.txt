@@ -1,0 +1,233 @@
+PREMIER MINISTRE
+
+Paris, le 23 novembre 2020
+N° CERTFR-2020-ACT-013
+
+S . G . D . S . N
+Agence nationale
+de la sécurité des
+
+systèmes d'information
+
+Affaire suivie par: CERT-FR
+
+BULLETIN D'ACTUALITÉ DU CERT-FR
+
+Objet: Bulletin d’actualité CERTFR-2020-ACT-013
+
+Gestion du document
+
+Référence
+
+Titre
+
+CERTFR-2020-ACT-013
+
+Bulletin d’actualité CERTFR-2020-ACT-013
+
+Date de la première version
+
+23 novembre 2020
+
+Date de la dernière version
+
+23 novembre 2020
+
+Source(s)
+
+Pièce(s) jointe(s)
+
+Aucune(s)
+
+Tableau 1:(cid:160)Gestion du document
+
+Une gestion de version détaillée se trouve à la fin de ce document.
+
+Ce bulletin d’actualité du CERT-FR revient sur les vulnérabilités significatives de la semaine 
+passée pour souligner leurs criticités. Il ne remplace pas l’analyse de l’ensemble des avis et 
+alertes publiés par le CERT-FR dans le cadre d’une analyse de risques pour prioriser 
+l’application des correctifs.
+
+Toutes les vulnérabilités évoquées dans les avis du CERT-FR doivent être prises en compte et 
+faire l’objet d’un plan d’action lorsqu’elles génèrent des risques sur le système d’information.
+
+Veuillez-vous référer aux avis des éditeurs pour obtenir les correctifs.
+
+Vulnérabilités significatives de la semaine 47
+
+CVE-2020-25705 : Vulnérabilités dans le noyau Linux de SUSE
+
+Secrétariat général de la défense et de la sécurité nationale – ANSSI – CERT-FR
+
+51, bd de La Tour-Maubourg
+75700 Paris 07 SP
+
+Tél.:  +33 1 71 75 84 68
+Fax:  +33 1 84 82 40 70
+
+Web:  https://www.cert.ssi.gouv.fr
+Mél:  cert-fr.cossi@ssi.gouv.fr
+
+Une vulnérabilité critique a été déclarée dans le noyau Linux de SUSE avec un score supérieur à 
+9. Cette vulnérabilité est basée sur les réponses du protocole ICMP et appelée Side-channel 
+AttackeD DNS, elle rend possible des attaques de type DNS cache poisoning et ainsi permet à 
+un attaquant de pouvoir atteindre à la confidentialité des échanges (man-in-the-middle).
+
+Liens :
+
+https://www.suse.com/security/cve/CVE-2020-25705/
+https://www.suse.com/support/kb/doc/?id=000019786
+https://www.cert.ssi.gouv.fr/avis/CERTFR-2020-AVI-750/
+https://www.cert.ssi.gouv.fr/avis/CERTFR-2020-AVI-754/
+
+CVE-2020-27131, CVE-2020-27130 : Multiples vulnérabilités dans le produit 
+Cisco Security Manager (CSM)
+
+L’éditeur a déclaré deux vulnérabilités dans Cisco Security Manager. La première vulnérabilité 
+(CVE-2020-27130) est de type Path Traversal et dispose d’un score CVSSv3 à 9.1. Elle permet 
+à un attaquant non authentifié de pouvoir télécharger arbitrairement des fichiers potentiellement 
+sensibles. L’éditeur a attribué un score CVSSv3 de 8.1 pour la seconde vulnérabilité (CVE-
+2020-27131) qui se trouve dans une fonction de désérialisation Java. Elle permet a un attaquant 
+non authentifié de pouvoir exécuter du code arbitraire à distance. Par ailleurs, un code 
+d’exploitation est disponible publiquement pour ces vulnérabilités.
+
+Liens :
+
+https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-csm-path-trav-NgeRnqgR
+https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-csm-java-rce-mWJEedcD
+https://www.cert.ssi.gouv.fr/avis/CERTFRCVE-2020-27130-2020-AVI-753/
+
+CVE-2020-3470 : Vulnérabilité dans l’API des Cisco Integrated Management 
+Controller (IMC)
+
+L’éditeur a attribué le score CVSSv3 de 9.8 à cette vulnérabilité. Elle permet à un attaquant non 
+authentifié, par le biais d’une exploitation d’un dépassement de tampon (buffer overflow) 
+dans l’API du produit, de pouvoir exécuter du code à distance sur le système exploitation sous-
+jacent avec des privilèges root.
+
+Liens :
+
+https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-ucs-api-rce-UXwpeDHd
+https://www.cert.ssi.gouv.fr/avis/CERTFR-2020-AVI-758/
+
+CVE-2020-3586 : Vulnérabilité dans l’interface de gestion des Cisco DNA 
+Spaces Connector
+
+L’éditeur a attribué le score CVSSv3 de 9.4 à cette vulnérabilité. Elle se base sur une 
+vérification insuffisante des entrées de l’utilisateur de l’interface de gestion et permet a un 
+attaquant non authentifié d’exécuter du code arbitraire sur le système d’exploitation sous-jacent 
+avec les privilèges de l’application de gestion. L’exploitation de cette vulnérabilité peut 
+impacter l’intégrité et la disponibilité de l’application.
+
+Page 2 / 5
+
+Liens :
+
+https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-dna-cmd-injection-rrAYzOwc
+https://www.cert.ssi.gouv.fr/avis/CERTFR-2020-AVI-758/
+
+CVE-2020-3531 : Vulnérabilité dans Cisco IoT Field Network Director 
+(FND) 
+
+L’éditeur a déclaré une vulnérabilité critique de type cross-site request forgery (CSRF) 
+dans Cisco IoT Field Network Director avec un score CVSSv3 à 9.8. Cette vulnérabilité permet 
+à l’attaquant de pouvoir réaliser des requêtes avec API REST et ainsi pouvoir accéder, altérer ou 
+modifier des données sensibles de l’équipement affecté.
+
+Liens :
+
+https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-FND-BCK-GHkPNZ5F
+https://www.cert.ssi.gouv.fr/avis/CERTFR-2020-AVI-758/
+
+CVE-2020-4004 : Vulnérabilité dans les produits VMware
+
+Une vulnérabilité critique a été corrigée dans plusieurs produits VMware. L’éditeur a attribué à 
+cette vulnérabilité le score CVSSv3 de 9.4. Elle permet a un attaquant avec les privilèges 
+administrateur dans la machine virtuelle de pouvoir, en tant que processus VMX (Virtual 
+Machine Executable), exécuter du code arbitraire sur le système hôte.
+
+Liens :
+
+https://www.vmware.com/security/advisories/VMSA-2020-0026.html
+https://www.cert.ssi.gouv.fr/avis/CERTFR-2020-AVI-767/
+
+Vulnérabilités antérieures
+
+CVE-2020-0674 : Vulnérabilité dans Microsoft Internet Explorer – 
+Découverte de code d’exploitation publique
+
+Pour le Patch Tuesday de février 2020, Microsoft a corrigé une vulnérabilité de type 0 jour qui 
+permet à un attaquant d’exécuter du code arbitraire à distance avec les privilèges de l’utilisateur 
+concerné. Un code d’exploitation est publiquement disponible.
+
+Liens :
+
+https://msrc.microsoft.com/update-guide/fr-FR/vulnerability/ADV200001
+https://www.cert.ssi.gouv.fr/alerte/CERTFR-2020-ALE-006/
+
+CVE-2020-8271 : Vulnérabilité dans les produits Citrix – Découverte de code 
+d’exploitation publique
+
+Cette vulnérabilité a été corrigée le 12 novembre 2020 par l’éditeur et permet l’exécution de 
+code arbitraire à distance avec les privilèges root. Un code d’exploitation est publiquement 
+disponible.
+
+Page 3 / 5
+
+Liens :
+
+https://support.citrix.com/article/CTX285061
+https://www.cert.ssi.gouv.fr/avis/CERTFR-2020-AVI-731/
+
+CVE-2020-16846, CVE-2020-25592: Multiples vulnérabilités dans SaltStack 
+– Découverte de code d’exploitation publique
+
+Deux vulnérabilités critiques ont été découvertes par l’éditeur et déclarées le 3 novembre 2020. 
+Pour rappel, ces vulnérabilités permettent l’exécution de code arbitraire sans authentification 
+dans l’API Salt du client Salt SSH (CVE-2020-16846) et un contournement dans 
+l’authentification lors de l’utilisation de l’API Salt (CVE-2020-25592). Un code d’exploitation 
+publique a été découvert.
+
+Liens :
+
+https://www.cert.ssi.gouv.fr/actualite/CERTFR-2020-ACT-011/
+https://www.saltstack.com/blog/on-november-3-2020-saltstack-publicly-disclosed-three-new-cves/
+
+Rappel des avis émis
+
+Dans la période du 16 au 22 novembre 2020, le CERT-FR a émis les publications suivantes :
+
+CERTFR-2020-AVI-750 : Multiples vulnérabilités dans le noyaux linux de SUSE
+CERTFR-2020-AVI-751 : Multiples vulnérabilités dans Moodle
+CERTFR-2020-AVI-752 : Multiples vulnérabilités dans Microsoft Edge
+CERTFR-2020-AVI-753 : Multiples vulnérabilités dans Cisco Security Manager
+CERTFR-2020-AVI-754 : Vulnérabilité dans le noyaux Linux de SUSE
+CERTFR-2020-AVI-755 : Multiples vulnérabilités dans les produits Mozilla
+CERTFR-2020-AVI-756 : Multiples vulnérabilités dans Google Chrome
+CERTFR-2020-AVI-757 : Multiples vulnérabilités dans IBM Db2
+CERTFR-2020-AVI-758 : Multiples vulnérabilités dans les produits Cisco
+CERTFR-2020-AVI-759 : Vulnérabilité dans Symantec Endpoint Detection & Response
+CERTFR-2020-AVI-760 : Vulnérabilité dans Drupal Core
+CERTFR-2020-AVI-761 : Multiples vulnérabilités dans VMware SD-WAN Orchestrator
+CERTFR-2020-AVI-762 : Vulnérabilité dans F5 BIG-IP
+CERTFR-2020-AVI-763 : Vulnérabilité dans IBM Db2
+CERTFR-2020-AVI-764 : Multiples vulnérabilités dans le noyau Linux de SUSE
+CERTFR-2020-AVI-765 : Vulnérabilité dans IBM Db2
+CERTFR-2020-AVI-766 : Multiples vulnérabilités dans Microsoft Edge
+CERTFR-2020-AVI-767 : Multiples vulnérabilités dans les produits VMware
+CERTFR-2020-AVI-768 : Multiples vulnérabilités dans F5 BIG-IP
+
+Gestion détaillée du document
+
+le 23 novembre 2020
+Version initiale
+
+Conditions d’utilisation de ce document : https://www.cert.ssi.gouv.fr
+
+Page 4 / 5
+
+Dernière version de ce document : https://www.cert.ssi.gouv.fr/actualite/CERTFR-2020-ACT-013/
+
+Page 5 / 5
+
+

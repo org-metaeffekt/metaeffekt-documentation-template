@@ -65,6 +65,8 @@
                                         </resourceLocations>
                                     </msrcDownload>
 
+                                    <msrcCsvDownload/>
+
                                     <cpeDictionaryDownload>
                                         <resourceLocations>
                                             <!-- The official CPE dictionary: https://nvd.nist.gov/products/cpe -->
@@ -139,11 +141,7 @@
                                     <cpeDictionaryVendorProductIndex/>
                                     <msrcProductIndex/>
                                     <msrcAdvisorIndex/>
-                                    <msrcKbChainIndex>
-                                        <msrcUpdateGuideDownloadCsvFiles>
-                                            <!--<file></file>-->
-                                        </msrcUpdateGuideDownloadCsvFiles>
-                                    </msrcKbChainIndex>
+                                    <msrcKbChainIndex/>
                                     <nvdLegacyVulnerabilityIndex/>
                                     <nvdVulnerabilityIndex>
                                         <active>false</active>
