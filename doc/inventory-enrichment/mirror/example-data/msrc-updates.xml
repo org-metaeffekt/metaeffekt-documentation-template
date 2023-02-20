@@ -1,0 +1,41 @@
+<ArrayOfUpdate xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://schemas.datacontract.org/2004/07/CvrfWeb.Models">
+    <Update>
+        <Alias>2016-Apr</Alias>
+        <CurrentReleaseDate>2018-04-10T07:00:00Z</CurrentReleaseDate>
+        <CvrfUrl>https://api.msrc.microsoft.com/cvrf/v2.0/document/2016-Apr</CvrfUrl>
+        <DocumentTitle>April 2016 Security Updates</DocumentTitle>
+        <ID>2016-Apr</ID>
+        <InitialReleaseDate>2016-04-12T07:00:00Z</InitialReleaseDate>
+        <Severity i:nil="true"/>
+    </Update>
+    <Update>
+        <Alias>2016-Aug</Alias>
+        <CurrentReleaseDate>2017-09-12T07:00:00Z</CurrentReleaseDate>
+        <CvrfUrl>https://api.msrc.microsoft.com/cvrf/v2.0/document/2016-Aug</CvrfUrl>
+        <DocumentTitle>August 2016 Security Updates</DocumentTitle>
+        <ID>2016-Aug</ID>
+        <InitialReleaseDate>2016-08-09T07:00:00Z</InitialReleaseDate>
+        <Severity i:nil="true"/>
+    </Update>
+    <!-- ... Update ... -->
+    <Update>
+        <Alias>2018-May</Alias>
+        <CurrentReleaseDate>2019-01-08T08:00:00Z</CurrentReleaseDate>
+        <CvrfUrl>https://api.msrc.microsoft.com/cvrf/v2.0/document/2018-May</CvrfUrl>
+        <DocumentTitle>May 2018 Security Updates</DocumentTitle>
+        <ID>2018-May</ID>
+        <InitialReleaseDate>2018-05-08T07:00:00Z</InitialReleaseDate>
+        <Severity i:nil="true"/>
+    </Update>
+    <!-- ... Update ... -->
+    <Update>
+        <Alias>2023-Jan</Alias>
+        <CurrentReleaseDate>2023-02-06T08:00:00Z</CurrentReleaseDate>
+        <CvrfUrl>https://api.msrc.microsoft.com/cvrf/v2.0/document/2023-Jan</CvrfUrl>
+        <DocumentTitle>January 2023 Security Updates</DocumentTitle>
+        <ID>2023-Jan</ID>
+        <InitialReleaseDate>2023-01-10T08:00:00Z</InitialReleaseDate>
+        <Severity i:nil="true"/>
+    </Update>
+</ArrayOfUpdate>

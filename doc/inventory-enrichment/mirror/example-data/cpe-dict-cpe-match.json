@@ -1,0 +1,190 @@
+{
+  "matches": [
+    {
+      "cpe23Uri": "cpe:2.3:h:*:5400rmp_oem_harddrive:-:*:*:*:*:*:*:*",
+      "cpe_name": []
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:\\$0.99_kindle_books_project:\\$0.99_kindle_books:6:*:*:*:*:android:*:*",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:\\$0.99_kindle_books_project:\\$0.99_kindle_books:6:*:*:*:*:android:*:*"
+        }
+      ]
+    },
+    {
+      "cpe23Uri": "cpe:2.3:o:-:-:-:*:*:*:*:*:*:*",
+      "cpe_name": []
+    },
+    {
+      "cpe23Uri": "cpe:2.3:h:-:wireless_ip_camera_360:-:*:*:*:*:*:*:*",
+      "cpe_name": []
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:.bbsoftware:bb_flashback:*:*:*:*:*:*:*:*",
+      "cpe_name": []
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:.joomclan:com_joomclip:*:*:*:*:*:*:*:*",
+      "cpe_name": []
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:.matteoiammarrone:iamma_simple_gallery:1.0:*:*:*:*:*:*:*",
+      "cpe_name": []
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:.matteoiammarrone:iamma_simple_gallery:2.0:*:*:*:*:*:*:*",
+      "cpe_name": []
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:\\@mail:\\@mail:5.42:*:*:*:*:*:*:*",
+      "cpe_name": []
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:*:*:*:*:*:node.js:*:*",
+      "versionEndExcluding": "0.4.0",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:-:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.1.0:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.2.0:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.2.1:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.2.2:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.0:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.1:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.2:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.3:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.4:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.5:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.6:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.7:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.8:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.9:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.10:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.11:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.12:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.13:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.17:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.18:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.19:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.20:*:*:*:*:node.js:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\@thi.ng\\/egf_project:\\@thi.ng\\/egf:0.3.21:*:*:*:*:node.js:*:*"
+        }
+      ]
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:\\[gwa\\]_autoresponder_project:\\[gwa\\]_autoresponder:*:*:*:*:*:wordpress:*:*",
+      "versionEndIncluding": "2.3",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:\\[gwa\\]_autoresponder_project:\\[gwa\\]_autoresponder:-:*:*:*:*:wordpress:*:*"
+        },
+        {
+          "cpe23Uri": "cpe:2.3:a:\\[gwa\\]_autoresponder_project:\\[gwa\\]_autoresponder:2.3:*:*:*:*:wordpress:*:*"
+        }
+      ]
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.6.1:*:*:*:*:*:*:*",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.6.1:*:*:*:*:*:*:*"
+        }
+      ]
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.6.3:*:*:*:*:*:*:*",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.6.3:*:*:*:*:*:*:*"
+        }
+      ]
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.7.1:*:*:*:*:*:*:*",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.7.1:*:*:*:*:*:*:*"
+        }
+      ]
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.7.2:*:*:*:*:*:*:*",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.7.2:*:*:*:*:*:*:*"
+        }
+      ]
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.7.3:*:*:*:*:*:*:*",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.7.3:*:*:*:*:*:*:*"
+        }
+      ]
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.8.0:*:*:*:*:*:*:*",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:1.8.0:*:*:*:*:*:*:*"
+        }
+      ]
+    },
+    {
+      "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:2.1.0:*:*:*:*:*:*:*",
+      "cpe_name": [
+        {
+          "cpe23Uri": "cpe:2.3:a:zzzcms:zzzphp:2.1.0:*:*:*:*:*:*:*"
+        }
+      ]
+    }
+  ]
+}
