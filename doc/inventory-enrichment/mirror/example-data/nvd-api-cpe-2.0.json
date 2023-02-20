@@ -1,0 +1,179 @@
+{
+  "resultsPerPage": 10000,
+  "startIndex": 10000,
+  "totalResults": 1027676,
+  "format": "NVD_CPE",
+  "version": "2.0",
+  "timestamp": "2023-02-20T10:52:51.313",
+  "products": [
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:epolicy_orchestrator:3.6.0:*:*:*:*:*:*:*",
+        "cpeNameId": "78BBFC57-6795-4882-A74A-B8F21B53D983",
+        "lastModified": "2007-09-14T17:36:49.090",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee ePolicy Orchestrator 3.6.0",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:epolicy_orchestrator:3.6.1:*:*:*:*:*:*:*",
+        "cpeNameId": "A15F2643-EDA1-47EB-B618-9DEE7BD729FF",
+        "lastModified": "2007-09-14T17:36:49.090",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee ePolicy Orchestrator 3.6.1",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:antivirus_engine:4.3.20:*:*:*:*:*:*:*",
+        "cpeNameId": "E7A6C0BB-D1B1-4C5D-A6A1-48083DA242DA",
+        "lastModified": "2008-04-01T16:39:38.423",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee McAfee Antivirus Engine 4.3.20",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:scan_engine:4.4.00:*:*:*:*:*:*:*",
+        "cpeNameId": "A3FBE47B-B6B4-4354-A8B4-6605CD51DCB6",
+        "lastModified": "2008-04-01T16:39:39.063",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee McAfee Scan Engine 4.4.00",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:privacy_service:2004:*:*:*:*:*:*:*",
+        "cpeNameId": "B3E1FEFF-EFF3-4019-B31A-6A26D6277509",
+        "lastModified": "2007-09-14T17:36:49.090",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee Privacy Service 2004",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:privacy_service:2005:*:*:*:*:*:*:*",
+        "cpeNameId": "A0A7242D-22E2-42E3-9FAA-974CE43C0748",
+        "lastModified": "2007-09-14T17:36:49.090",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee Privacy Service 2005",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:privacy_service:2006:*:*:*:*:*:*:*",
+        "cpeNameId": "F2048A6F-00E9-49D2-B6A2-28CA8AD005CE",
+        "lastModified": "2007-09-14T17:36:49.090",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee Privacy Service 2006",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:protectionpilot:1.1.1:*:*:*:*:*:*:*",
+        "cpeNameId": "4FB789A1-BE45-4111-9D6E-1D6AB700B350",
+        "lastModified": "2007-09-14T17:36:49.090",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee ProtectionPilot 1.1.1",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:protectionpilot:1.1.1:p3:*:*:*:*:*:*",
+        "cpeNameId": "D343C5F8-F9E4-4FC2-B252-1826C471C0EA",
+        "lastModified": "2008-04-08T15:08:40.187",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee ProtectionPilot 1.1.1 Patch 3",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:protectionpilot:1.5.0:*:*:*:*:*:*:*",
+        "cpeNameId": "4C3F8066-6A8D-45D0-A08A-B69AC20879B3",
+        "lastModified": "2007-09-14T17:36:49.090",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee ProtectionPilot 1.5.0",
+            "lang": "en"
+          }
+        ]
+      }
+    },
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:mcafee:security_center:4.3:*:*:*:*:*:*:*",
+        "cpeNameId": "6FB30C0E-C312-464D-9A48-9AD9C1318FF3",
+        "lastModified": "2012-05-10T15:20:22.080",
+        "created": "2007-08-23T21:16:59.567",
+        "titles": [
+          {
+            "title": "McAfee SecurityCenter 4.3",
+            "lang": "en"
+          },
+          {
+            "title": "マカフィー セキュリティセンター 4.3",
+            "lang": "ja"
+          }
+        ]
+      }
+    }
+  ]
+}

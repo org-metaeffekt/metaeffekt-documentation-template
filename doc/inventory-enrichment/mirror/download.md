@@ -14,21 +14,16 @@ It will not go into detail about the actual file contents of the downloads, as t
 step of the mirroring process. These descriptions only reflect the actual downloading part of the downloads, for the
 wrapping process, view [common steps](#common-steps) below.
 
-<!-- TOC -->
-
-* [Downloads](#downloads)
-    * [Common steps](#common-steps)
-        * [Some more context for downloading](#some-more-context-for-downloading)
-    * [List of downloads](#list-of-downloads)
-        * [CERT-SEI (advisory data) (`certsei`)](#cert-sei--advisory-data---certsei-)
-        * [CERT-FR (advisory data) (`certfr`)](#cert-fr--advisory-data---certfr-)
-        * [MSRC (advisory data/product mappings) (`msrc`)](#msrc--advisory-dataproduct-mappings---msrc-)
-        * [MSRC CSV (KB chains) (`msrc-csv`)](#msrc-csv--kb-chains---msrc-csv-)
-        * [NVD CPE Dictionary (`cpe-dict-legacy-feed`)](#nvd-cpe-dictionary--cpe-dict-legacy-feed-)
-        * [NVD CVE Information (`nvd-legacy-feed`)](#nvd-cve-information--nvd-legacy-feed-)
-        * [NVD CPE API (`cpe-dict`) and NVD CVE API (`nvd`)](#nvd-cpe-api--cpe-dict--and-nvd-cve-api--nvd-)
-
-<!-- TOC -->
+* [Common steps](#common-steps)
+* [List of downloads](#list-of-downloads)
+    * CERT-SEI (advisory data) (`certsei`)
+    * CERT-FR (advisory data) (`certfr`)
+    * MSRC (advisory data/product mappings) (`msrc`)
+    * MSRC CSV (KB chains) (`msrc-csv`)
+    * NVD CPE Dictionary (`cpe-dict-legacy-feed`)
+    * NVD CVE Information (`nvd-legacy-feed`)
+    * NVD CVE API (`nvd`)
+    * NVD CPE API (`cpe-dict`)
 
 ## Common steps
 
@@ -101,7 +96,158 @@ description of all of them can be found, as well as their default values.
 
 ## List of downloads
 
-### CERT-SEI (advisory data) (`certsei`)
+Please do note that whenever local example files are provided, they might be cropped to only show the most relevant data
+structures from the original files.
+
+## Legacy NVD CVE/CPE Information
+
+> :warning: In late 2023, the NVD will retire its legacy data feeds while working to guide any remaining data feed users
+> to updated application-programming interfaces (APIs).
+
+References:
+
+- NVD Data Feeds: [NVD - Data Feeds](https://nvd.nist.gov/vuln/data-feeds)
+
+### NVD CPE Dictionary (`cpe-dict-legacy-feed`)
+
+References:
+
+- CPE Dictionary: [NVD - CPE](https://nvd.nist.gov/products/cpe)
+- CPE Match Feed: [NVD - Data Feeds](https://nvd.nist.gov/vuln/data-feeds#cpeMatch)
+
+The NVD provides two files that, when combined, contain all versioned CPE:
+
+- The **CPE Dictionary** contains most base CPE, many without all the versions  
+  [https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.2.xml.zip](https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.2.xml.zip)
+- The **Match File** mainly contains versioned CPE with a reference to their base CPE  
+  [https://nvd.nist.gov/feeds/json/cpematch/1.0/nvdcpematch-1.0.json.zip](https://nvd.nist.gov/feeds/json/cpematch/1.0/nvdcpematch-1.0.json.zip)
+
+These two files are downloaded and extracted into `cpe-dict.xml` and `cpe-match.json`.
+
+```
+.
+├── cpe-dict.xml
+└── cpe-match.json
+```
+
+Examples:
+
+- CPE Dictionary: [local copy](example-data/cpe-dict-cpe-dict.xml)
+- CPE Match: [local copy](example-data/cpe-dict-cpe-match.json)
+
+*These files are heavily trimmed, as they are usually ~600 MB each.*
+
+### NVD CVE Information (`nvd-legacy-feed`)
+
+References:
+
+- NVD Vulnerability Feed: [NVD - Data Feeds/JSON](https://nvd.nist.gov/vuln/data-feeds#JSON_FEED)
+
+The NVD provides
+
+- multiple archives `year` each containing one year worth of vulnerabilities. The `year` feeds are updated once per day.
+- two files `recent` and `modified` that contain what vulnerabilities have been updated lately. These feeds are updated
+  every two hours.
+
+If the download does not exist yet, all `year` archives are downloaded and extracted. If year files are missing, it is
+re-downloaded and extracted. The `modified` is checked for new vulnerabilities and if there are new ones, they are
+integrated into the year files.
+
+In order to be able to compare the last `modified` file with the latest, it is also downloaded and stored. The `year`
+files are plainly stored in the download directory.
+
+```
+.
+├── nvd-2002.json
+├── nvd-2003.json
+├── nvd-2004.json
+...
+├── nvd-2022.json
+├── nvd-2023.json
+└── nvd-modified.json
+```
+
+Examples:
+
+- Year file 2003: [local copy](example-data/nvd-cve-nvd-2003.json) or
+  [https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2003.json.gz](https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2003.json.gz)
+- Modified file: Same structure as [year files local copy](example-data/nvd-cve-nvd-2003.json), or
+  [https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz](https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz)
+
+## NVD API
+
+> :heavy_check_mark: This is the new and preferred way of mirroring the NVD data, as the old data feeds are retired end
+> of 2023. Note that you will need an API Key to get reasonable rates from the API.
+
+References:
+
+- API endpoint reference: [Vulnerability API](https://nvd.nist.gov/developers/vulnerabilities)
+- API endpoint reference: [Product CPE API](https://nvd.nist.gov/developers/products)
+- API functionality overview: [Developers - Start here](https://nvd.nist.gov/developers/start-here)
+- API workflow: [API User Workflow](https://nvd.nist.gov/developers/api-workflows)
+- Request an API Key: [NVD - API Request](https://nvd.nist.gov/developers/request-an-api-key)
+
+The new NVD API provides access to CVE and CPE. This download will use the CVE API to create one JSON file per year from
+1999 to the current year. Note that you will need to
+[request an API Key](https://nvd.nist.gov/developers/request-an-api-key) to increase the rate limit:
+
+- without key: **5** requests in a rolling **30**-second window (delay: 6400ms)
+- with key: **50** requests in a rolling **30**-second window (delay: 600ms)
+
+The API works on a pagination principle: It will only return the first (CVE: 2000, CPE: 10000) matching entries from a
+query, for the rest,
+further requests with a `startIndex` parameter have to be made.
+
+The advantages of this new API are not seen on an initial mirror (it takes quite a bit longer, actually), but rather on
+successive calls, where only few new/updated vulnerabilities are pulled using the `lastModStartDate` and
+`lastModEndDate` parameters.
+
+### NVD CVE API (`nvd`)
+
+With the total amount of vulnerabilities being ~200000 at the moment, this leads to a total of ~100 requests made. In
+the best-case scenario, this would lead to a mirroring time of 1 minute with an API key and 20 minutes without. Both of
+these numbers are not realistic, as receiving and extracting the contents are quite time-consuming, even if spread
+across multiple threads.
+
+The actual implementation of this works on a supplier-consumer pattern. It starts multiple threads that will
+continuously make requests to the API (as long as there are requests to be made) and append those to a list of cached
+JSON responses. As soon as this list reaches a size of 10 or if the end is reached, a consumer thread will take these
+and sort them into yearly JSON files, where they are merged with existing ones in case of an update or appended in case
+of a new vulnerability.
+
+This multi-file approach drastically reduces the amount of searching and loading of vulnerabilities when checking
+whether the vulnerability already exists. The threshold of 10 requests has been picked as it showed to be the most
+memory/speed efficient one.
+
+In the end, files from 1999 to the current year will be present in the download directory:
+
+```
+.
+├── 1999.json
+├── 2000.json
+├── 2001.json
+├── 2002.json
+...
+├── 2022.json
+└── 2023.json
+```
+
+Examples:
+
+- Start index 0: [local copy](example-data/nvd-api-cve-2.0.json) or
+  [https://services.nvd.nist.gov/rest/json/cves/2.0?startIndex=0](https://services.nvd.nist.gov/rest/json/cves/2.0?startIndex=0)
+
+### NVD CPE API (`cpe-dict`)
+
+Just with the CVE API, multiple requests have to be made. There are ~1000000 CPE entries as of now, which means that
+again, ~100 requests have to be made.
+
+Examples:
+
+- Start index 10000: [local copy](example-data/nvd-api-cpe-2.0.json) or
+  [https://services.nvd.nist.gov/rest/json/cpes/2.0?startIndex=10000](https://services.nvd.nist.gov/rest/json/cpes/2.0?startIndex=10000)
+
+## CERT-SEI (advisory data) (`certsei`)
 
 References:
 
@@ -136,7 +282,7 @@ Examples:
 - Advisor VU#975041: [local copy](example-data/cert-sei-advisor-VU%23975041.json) or
   [https://kb.cert.org/vuls/id/975041](https://kb.cert.org/vuls/id/975041)
 
-### CERT-FR (advisory data) (`certfr`)
+## CERT-FR (advisory data) (`certfr`)
 
 References:
 
@@ -168,7 +314,7 @@ Examples:
 - Advisory CERTFR-2020-ACT-013: [local copy](example-data/cert-fr-CERTFR-2020-ACT-013.txt) or HTML version
   [https://www.cert.ssi.gouv.fr/actualite/CERTFR-2020-ACT-013/](https://www.cert.ssi.gouv.fr/actualite/CERTFR-2020-ACT-013/)
 
-### MSRC (advisory data/product mappings) (`msrc`)
+## MSRC (advisory data/product mappings) (`msrc`)
 
 References:
 
@@ -208,7 +354,7 @@ Examples:
 - Document: msrc-2016-Apr.xml: [local copy](example-data/msrc-2016-Apr.xml) or
   [https://api.msrc.microsoft.com/cvrf/v2.0/document/2016-Apr](https://api.msrc.microsoft.com/cvrf/v2.0/document/2016-Apr)
 
-### MSRC CSV (KB chains) (`msrc-csv`)
+## MSRC CSV (KB chains) (`msrc-csv`)
 
 References:
 
@@ -239,101 +385,3 @@ into this directory. The index will automatically pick up any CSV file provided 
 Examples:
 
 - CSV file 2023: [local copy](example-data/msrc-csv-2023.csv)
-
-### NVD CPE Dictionary (`cpe-dict-legacy-feed`)
-
-> :warning: In late 2023, the NVD will retire its legacy data feeds while working to guide any remaining data feed users
-> to updated application-programming interfaces (APIs).
-
-References:
-
-- NVD Data Feeds: [NVD - Data Feeds](https://nvd.nist.gov/vuln/data-feeds)
-- CPE Dictionary: [NVD - CPE](https://nvd.nist.gov/products/cpe)
-- CPE Match Feed: [NVD - Data Feeds](https://nvd.nist.gov/vuln/data-feeds#cpeMatch)
-
-The NVD provides two files that, when combined, contain all versioned CPE:
-
-- The **CPE Dictionary** contains most base CPE, many without all the versions  
-  [https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.2.xml.zip](https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.2.xml.zip)
-- The **Match File** mainly contains versioned CPE with a reference to their base CPE  
-  [https://nvd.nist.gov/feeds/json/cpematch/1.0/nvdcpematch-1.0.json.zip](https://nvd.nist.gov/feeds/json/cpematch/1.0/nvdcpematch-1.0.json.zip)
-
-These two files are downloaded and extracted into `cpe-dict.xml` and `cpe-match.json`.
-
-```
-.
-├── cpe-dict.xml
-└── cpe-match.json
-```
-
-Examples:
-
-- CPE Dictionary: [local copy](example-data/cpe-dict-cpe-dict.xml)
-- CPE Match: [local copy](example-data/cpe-dict-cpe-match.json)
-
-*These files are heavily trimmed, as they are usually ~600 MB each.*
-
-### NVD CVE Information (`nvd-legacy-feed`)
-
-> :warning: In late 2023, the NVD will retire its legacy data feeds while working to guide any remaining data feed users
-> to updated application-programming interfaces (APIs).
-
-References:
-
-- NVD Data Feeds: [NVD - Data Feeds](https://nvd.nist.gov/vuln/data-feeds)
-- NVD Vulnerability Feed: [NVD - Data Feeds/JSON](https://nvd.nist.gov/vuln/data-feeds#JSON_FEED)
-
-The NVD provides
-
-- multiple archives `year` each containing one year worth of vulnerabilities. The `year` feeds are updated once per day.
-- two files `recent` and `modified` that contain what vulnerabilities have been updated lately. These feeds are updated
-  every two hours.
-
-If the download does not exist yet, all `year` archives are downloaded and extracted. If year files are missing, it is
-re-downloaded and extracted. The `modified` is checked for new vulnerabilities and if there are new ones, they are
-integrated into the year files.
-
-In order to be able to compare the last `modified` file with the latest, it is also downloaded and stored. The `year`
-files are plainly stored in the download directory.
-
-```
-.
-├── nvd-2002.json
-├── nvd-2003.json
-├── nvd-2004.json
-...
-├── nvd-2022.json
-├── nvd-2023.json
-└── nvd-modified.json
-```
-
-Examples:
-
-- Year file 2003: [local copy](example-data/nvd-cve-nvd-2003.json) or
-  [https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2003.json.gz](https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2003.json.gz)
-- Modified file: Same structure as [year files local copy](example-data/nvd-cve-nvd-2003.json), or
-  [https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz](https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.json.gz)
-
-### NVD CVE API (`nvd`)
-
-> :heavy_check_mark: This is the new and preferred way of mirroring the NVD data, as the old data feeds are retired end
-> of 2023.
-
-References:
-
-- TODO
-
-```
-.
-├── 1999.json
-├── 2000.json
-├── 2001.json
-├── 2002.json
-...
-├── 2022.json
-└── 2023.json
-```
-
-## NVD CPE API (`cpe-dict`)
-
-TODO
