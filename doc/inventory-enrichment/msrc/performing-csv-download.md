@@ -1,3 +1,5 @@
+> [Vulnerability Monitoring](../inventory-enrichment-overview.md) > [KB research](understanding-data.md) > CSV Download
+
 # MSRC CSV download: how to
 
 [https://msrc.microsoft.com/update-guide](https://msrc.microsoft.com/update-guide)
@@ -7,14 +9,14 @@ The data can be manually downloaded by starting with the most recent year (e.g. 
 
 1. download the csv for these options:
    ```
-   Start of the month   January   start year
+   Start of the month    January     start year
    Today
    ```
 
 2. then download the csv for all years until 2016:
    ```
-   Start of the month   January    decrement year by 1
-   End of the month     December   decrement year by 1
+   Start of the month    January     decrement year by 1
+   End of the month      December    decrement year by 1
    ```
 
 This can be a bit tedious, as the file download can take quite some time to generate the file you want to download, but

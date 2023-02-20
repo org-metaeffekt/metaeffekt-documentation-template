@@ -1,8 +1,10 @@
+> [Vulnerability Monitoring](../inventory-enrichment-overview.md) > KB research
+
 # KB Research
 
 Understanding the MSRC KB Chain hierarchy data.
 
-![Thumbnail](kb-chain-thumb.png)
+<img alt="Thumbnail" src="kb-chain-thumb.png" width="600"/>
 
 One of the more convoluted segments of the node tree
 
@@ -12,7 +14,27 @@ References:
 - Main MSRC page:
   [Security Update Guide - Microsoft Security Response Center](https://msrc.microsoft.com/update-guide/vulnerability)
 - API reference: [Microsoft Security Updates API | MSRC](https://api.msrc.microsoft.com/cvrf/v2.0/swagger/index)
-- [From KBs to CVEs: Understanding the Relationships Between Windows Security Updates and Vulnerabilities](https://claroty.com/team82/blog/from-kbs-to-cves-understanding-the-relationships-between-windows-security-updates-and-vulnerabilities)
+- Article:
+  [From KBs to CVEs: Understanding the Relationships Between Windows Security Updates and Vulnerabilities](https://claroty.com/team82/blog/from-kbs-to-cves-understanding-the-relationships-between-windows-security-updates-and-vulnerabilities)
+
+Table of contents:
+
+<!-- TOC -->
+
+* [Definitions & Facts](#definitions--facts)
+* [Data Sources](#data-sources)
+    * [Sources](#sources)
+    * [Problems with the data sources](#problems-with-the-data-sources)
+* [Data mirror](#data-mirror)
+    * [Getting the data](#getting-the-data)
+    * [Data inconsistencies](#data-inconsistencies)
+* [Understanding the data](#understanding-the-data)
+    * [Supersedence](#supersedence)
+    * [What KBs do I need to fix a CVE?](#what-kbs-do-i-need-to-fix-a-cve)
+    * [What CVEs are in my product with KBs?](#what-cves-are-in-my-product-with-kbs)
+* [Summary](#summary)
+
+<!-- TOC -->
 
 ## Definitions & Facts
 
@@ -73,13 +95,14 @@ References:
 - the data in between the different sources is inconsistent. Every data source either contains `CVE/ADV → KB`
   or `KB → KB`relations that are missing in the other sources. The Update Catalog knows about this information, but is
   inconsistent in itself.  
-  An example for `KB4499409`:  
-  **In the API**: the KB replaces (`4487259` and `4487081`) and is replaced by `4507423`
-  ![Example](kb-chain-example-1.png)
-  **In the Update Catalog**:
-  [Update Catalog](https://www.catalog.update.microsoft.com/ScopedViewInline.aspx?updateid=1237f59d-2dcf-4be5-ad58-3448a5b99491#PackageDetails)
-  `4499409` replaces (`4487259` and `4487081`), but is not replaced by `4507423`. When looking at the entry `4507423`,
-  it can be seen that it replaces `4499409`.
+  An example for `KB4499409`:
+    - **In the Update Catalog**:
+      [Update Catalog](https://www.catalog.update.microsoft.com/ScopedViewInline.aspx?updateid=1237f59d-2dcf-4be5-ad58-3448a5b99491#PackageDetails)
+      `4499409` replaces (`4487259` and `4487081`), but is not replaced by `4507423`. When looking at the
+      entry `4507423`,
+      it can be seen that it replaces `4499409`.
+    - **In the API**: the KB replaces (`4487259` and `4487081`) and is replaced by `4507423`
+      ![Example](kb-chain-example-1.png)
 - this means, our data will never be complete unless considering all three data sources, which is impossible to
   automate. it is reasonable to manually download the csv files from the MSRC, but scraping the Update Catalog is not
   feasible, manually or automated.
@@ -105,8 +128,9 @@ References:
     - `Set<Node> supersededBy`
     - `Set<Node> supersedes`
 2. **Get KBs from MSRC Security Update Guide**
-    - go to the Security Update
-      Guides [Security Update Guide - Microsoft Security Response Center](https://msrc.microsoft.com/update-guide)
+    - Also see [performing-csv-download.md](performing-csv-download.md).  
+      Go to the Security Update Guides
+      [Security Update Guide - Microsoft Security Response Center](https://msrc.microsoft.com/update-guide)
       website. Make sure to be in the `All` section.  
       You cannot download all entries at once - only ones in a certain time frame (max. one year). Download the csv
       files from as many time-frames as you need.
@@ -177,16 +201,25 @@ References:
   "kbId": "5008631",
   "rel": {
     "11908": {
-      "vuln": ["CVE-2022-21855", "CVE-2022-21846", "CVE-2022-21969"],
+      "vuln": [
+        "CVE-2022-21855",
+        "CVE-2022-21846",
+        "CVE-2022-21969"
+      ],
       "supBy": [],
       "sup": []
     },
     "11682": {
-      "vuln": ["CVE-2022-21855", "CVE-2022-21846", "CVE-2022-21969"],
+      "vuln": [
+        "CVE-2022-21855",
+        "CVE-2022-21846",
+        "CVE-2022-21969"
+      ],
       "supBy": [],
       "sup": []
     }
-  }, ...
+  },
+  ...
 }
 ```
 
@@ -197,14 +230,30 @@ References:
   "kbId": "3203467",
   "rel": {
     "10528": {
-      "vuln": ["CVE-2017-8508", "CVE-2017-8507", "CVE-2017-8506"],
-      "supBy": ["2956078"],
-      "sup": ["3118388"]
+      "vuln": [
+        "CVE-2017-8508",
+        "CVE-2017-8507",
+        "CVE-2017-8506"
+      ],
+      "supBy": [
+        "2956078"
+      ],
+      "sup": [
+        "3118388"
+      ]
     },
     "10527": {
-      "vuln": ["CVE-2017-8508", "CVE-2017-8507", "CVE-2017-8506"],
-      "supBy": ["2956078"],
-      "sup": ["3118388"]
+      "vuln": [
+        "CVE-2017-8508",
+        "CVE-2017-8507",
+        "CVE-2017-8506"
+      ],
+      "supBy": [
+        "2956078"
+      ],
+      "sup": [
+        "3118388"
+      ]
     }
   }
 }
@@ -286,4 +335,171 @@ Meaning in total, there are:
   Windows versions, which is referenced by almost every monthly API document in the
   notes: [https://msrc.microsoft.com/update-guide/en-us/vulnerability/ADV990001](https://msrc.microsoft.com/update-guide/en-us/vulnerability/ADV990001)
 
-*... TODO ...*
+What can we learn from this? The sheer amount of data prevents one from checking every entry, but here are some general
+rules:
+
+- We do not miss out on any new vulnerabilities if we do not include the Update Guide CSV data.
+
+- The most important quality of the Update Guide CSV data is the fact, that it contains a whole lot of relations between
+  vulnerabilities and fixing KBs.  
+  This can also be seen in the roughly 70.000 relations on the KB identifiers, which on almost all of them look like
+  this:  
+  KB `5012170` → which fixes on product `2472-10855` the vulnerabilities
+  `CVE-2022-34303, CVE-2022-34302, CVE-2022-34301` Without this information, on many vulnerabilities, we would not know
+  what KB could fix it.
+
+## Understanding the data
+
+If you followed the steps above, you should now have a pretty complete dataset of the `KB ↔︎ KB` and `KB ↔︎ CVE/ADV`
+relations. There are two main use-cases this data can be used for. But first, let’s explore what supersedence means in
+this context.
+
+### Supersedence
+
+In the context of MSRC data, "supersedence" refers to the relationship between KB Ids, whereby if a KB, that supersedes
+another KB, is installed on a system, the installed KB will address the vulnerabilities associated with both entries.
+
+To determine all KB Ids that are included in the update with the original KB entry, it is necessary to follow the KB
+chain in the direction of the "supersedes" set.
+This behavior changes if a product Id is given: relations can now only be used if the relation includes that product Id.
+
+An example: If you have the update referencing `KB5002115` installed on your system, you will also have the KB5002099
+installed ([Microsoft Update Catalog](https://www.catalog.update.microsoft.com/ScopedViewInline.aspx?updateid=1ce31df8-5ff8-4633-b9da-54c6e3e78fdd#PackageDetails)).
+As seen in the image below, this fix is only available on product `10753` and `10754`, meaning the KB is only superseded
+if a product with one of the product Ids is in use. This can obviously be ignored if you do not care for what product
+the fix is for.
+
+![KB5002115 supersedes KB5002099](kb-chain-example-2-supersedence.png)
+
+### What KBs do I need to fix a CVE?
+
+**Input**: a vulnerability (CVE/ADV) and optionally a product Id
+**Output**: KB identifiers
+
+This is a relatively easy task:
+
+- map the product name(s) to product Id(s) (e.g. using the `MsrcProductIndexQuery`)
+- create two lists to store KB Ids (`Nodes`) in: a target list kbIds for all the KB Ids that fix the vulnerability and
+  one`toCheckKbIds` that contains only the ones that still need to be checked for supersedence
+- add all KB Ids that contain the vulnerability in `affectedVulnerabilities` to `kbIds` and their superseded by `Nodes`
+  to`toCheckKbIds`; if a product Id is given, use only the relations with the according product Id, otherwise use all
+- until the `toCheckKbIds` are empty:
+    - pop a KB Id off the list
+    - perform step 2, but ignore the requirement that the vulnerability has to be in `affectedVulnerabilities`
+
+<details>
+  <summary>Example code</summary>
+
+```
+final Set<MsrcSupersedeNode> kbIds = new HashSet<>(findNodesByVulnerability(vulnerability, productId));
+final Set<MsrcSupersedeNode> toCheckKbIds = new HashSet<>();
+for (MsrcSupersedeNode node : kbIds) {
+    toCheckKbIds.addAll(findNodesBySupersedesKbId(node.getKbId(), productId));
+}
+
+while (!toCheckKbIds.isEmpty()) {
+    final MsrcSupersedeNode node = toCheckKbIds.iterator().next();
+    toCheckKbIds.remove(node);
+
+    kbIds.add(node);
+    toCheckKbIds.addAll(findNodesBySupersedesKbId(node.getKbId(), productId));
+}
+
+return kbIds;
+```
+
+</details>
+
+An example: You want to check for the vulnerability `CVE-2022-26928` and the product `Windows 10 for x64-based Systems`.
+
+1. `Windows 10 for x64-based Systems` has the Id `10735`
+2. the vulnerability CVE-2022-26928 is contained in the KB
+   identifiers `5017328, 5017327, 5017392, 5017308, 5017305, 5017316, 5017315`, but only `5017327` fixes the product
+   Id `10735`
+3. find additional KB Ids for the already found ones by following the supersedes chain: `5018425` supersedes `5017327`
+   with product Id `10735`
+4. continue: `5018425` is superseded by `5019970` is superseded by `5021243` each with product `10735`
+5. no more new KBs
+
+→ the `CVE-2022-26928` on `Windows 10 for x64-based Systems` is fixed by any of `5017327, 5018425, 5019970, 5021243`:
+
+![KB Ids fixing CVE-2022-26928 on Windows 10 for x64-based Systems](kb-chain-example-3-fixing-vulnerability.png)
+
+This chart contains all the KBs, no matter what product Id, to give more context:
+
+![KB Ids fixing CVE-2022-26928](kb-chain-example-4-fixing-vulnerability.png)
+
+### What CVEs are in my product with KBs?
+
+**Input**: a product Id and optionally KB identifiers
+**Output**: CVE/ADV
+
+This task requires a few more steps. Follow these steps to determine the vulnerabilities associated with a given product
+Id:
+
+1. identify all nodes that reference the product Id
+2. collect all vulnerabilities associated with these nodes, but only from the relationships that involve the product Id
+3. for each vulnerability, use the previously described algorithm to determine the KB Ids that can fix it
+4. iterate over all vulnerabilities and determine if the list of fixed KB Ids obtained in step 3 includes any of the KB
+   Ids provided as a parameter. If so, add the vulnerability to a list of fixed vulnerabilities.
+5. remove all fixed vulnerabilities from the overall list of vulnerabilities
+
+<details>
+  <summary>Example code</summary>
+
+```
+final Set<String> vulnerabilities = new HashSet<>();
+
+for (MsrcSupersedeNode node : findNodesByProductId(productId)) {
+    vulnerabilities.addAll(node.getProductRelationsByProduct(productId).getAffectsVulnerabilities());
+}
+
+final Map<String, Set<String>> vulnerabilitiesFixedByKb = new HashMap<>();
+for (String vulnerability : vulnerabilities) {
+    final Set<MsrcSupersedeNode> fixingKbIds = findFixingKbIds(vulnerability, productId);
+    for (MsrcSupersedeNode fixingKbId : fixingKbIds) {
+        vulnerabilitiesFixedByKb.computeIfAbsent(vulnerability, k -> new HashSet<>()).add(fixingKbId.getKbId());
+    }
+}
+
+final Set<String> fixedVulnerabilities = new HashSet<>();
+for (Map.Entry<String, Set<String>> entry : vulnerabilitiesFixedByKb.entrySet()) {
+    if (kbIds.stream().anyMatch(fixedKb -> entry.getValue().contains(fixedKb))) {
+        fixedVulnerabilities.add(entry.getKey());
+    }
+}
+
+final List<String> remainingVulnerabilities = new ArrayList<>(vulnerabilities);
+remainingVulnerabilities.removeAll(fixedVulnerabilities);
+
+return remainingVulnerabilities;
+```
+
+</details>
+
+The resulting vulnerability list of this process tends to grow pretty fast, so I will only make a small example here:
+
+To determine the vulnerabilities present in Microsoft SharePoint Server 2013 Service Pack 1 with product Id 10607,
+knowing that KB 3172445 is installed on the system, the following steps should be taken:
+
+1. identify all KB entries with product
+   Id: `3039736, 5002218, 4092472, 3213560, 3172445, 3203387, 4018391, 3054862, 4462202, 4022236, 4011586, 4011113, 5002203, 4018392, 3114503, 4484264, 4462139, 4484157, 4461596, 5002219, 4462143`
+2. identify all vulnerabilities associated with the relationships of the product
+   Id: `CVE-2018-8628, CVE-2017-8629, CVE-2016-0011, CVE-2016-3360, CVE-2022-30158, CVE-2017-8742, CVE-2017-8511, CVE-2016-3357, CVE-2017-8512, CVE-2019-0604, CVE-2018-8378, CVE-2020-0693, CVE-2020-0694, CVE-2018-1028`
+3. determine the KB IDs that can fix these vulnerabilities. (too big of a list, I will not list them here)
+4. compare the KB Ids passed as parameters to the list of fixing KB Ids to determine which vulnerabilities have been
+   fixed by the supersedence chains: `CVE-2017-8511, CVE-2016-3357, CVE-2017-8512, CVE-2016-3360`
+5. remove the fixed vulnerabilities from the list, resulting in the final
+   vulnerabilities: `CVE-2018-8628, CVE-2017-8629, CVE-2016-0011, CVE-2022-30158, CVE-2017-8742, CVE-2019-0604, CVE-2018-8378, CVE-2020-0693, CVE-2020-0694, CVE-2018-1028`
+
+This means these vulnerabilities are in still in the system and can be fixed by applying the listed KB Ids:
+
+<img alt="Vulnerabilities in Microsoft SharePoint Server 2013 Service Pack 1 with already fixed KB3172445" src="kb-chain-example-5-vuln-in-product.png" width="333"/>
+
+## Summary
+
+It is important to note that while Microsoft does offer various methods for accessing their public data, it can be
+challenging to create a complete and accurate knowledge base mirror due to inconsistencies between data sources and
+difficulty accessing some of the sources. Additionally, understanding the connections and the concept of supersedence in
+this context is not a straightforward task. However, as demonstrated, a dataset of this nature can provide the
+foundation for a variety of useful applications.
