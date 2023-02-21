@@ -16,13 +16,18 @@ local directory. Then, they are indexed into a data structure to reduce the numb
 This process is split into multiple parts, that are each described in their own document:
 
 - [Mirroring the data sources](mirror/mirror-overview.md)
-  - [Individual downloads](mirror/download.md)
-  - [Individual indexes](mirror/index.md)
-  - MSRC
-    - [KB-Research](msrc/understanding-data.md)
-    - [Downloading the CSV files](msrc/performing-csv-download.md)
+    - [Individual downloads](mirror/download.md)
+    - [Individual indexes](mirror/index.md)
+    - MSRC
+        - [KB-Research](msrc/understanding-data.md)
+        - [Downloading the CSV files](msrc/performing-csv-download.md)
 - [Inventory Enrichment Pipeline](enrichment/steps.md)
 
 This image provides a high-level overview over the process:
 
 ![Process overview](inventory-enrichment-overview.svg)
+
+This image provides a list of all classes that are involved and their dependencies/data flow. Open the image in a new
+tab to see all details.
+
+![List of related classes and data flow](dependants.svg)
