@@ -20,6 +20,11 @@
         <proxy.port>-1</proxy.port>
         <proxy.user>none</proxy.user>
         <proxy.pass>none</proxy.pass>
+
+        <!-- you will need an API key in order to download the NVD data:
+             https://nvd.nist.gov/developers/request-an-api-key
+             more information: https://nvd.nist.gov/developers/start-here -->
+        <nvd.apikey>cda5ccec-4245-4784-b654-2665c4894f8c</nvd.apikey>
     </properties>
 
     <profiles>
@@ -51,31 +56,7 @@
                                     <proxyPassword>${proxy.pass}</proxyPassword>
                                     <proxyPort>${proxy.port}</proxyPort>
 
-                                    <msrcDownload>
-                                        <resourceLocations>
-                                            <!-- List of all monthly documents. Contains last update date used to determine whether an update is required.
-                                                 When viewed in a browser, the content will be displayed as XML, but when accessed via the API, the content
-                                                 will be returned as JSON. -->
-                                            <MSRC_UPDATES_URL>https://api.msrc.microsoft.com/cvrf/v2.0/updates</MSRC_UPDATES_URL>
-                                            <!-- REST-API for the Microsoft Security Response Center (MSRC) Common Vulnerability Reporting Framework (CVRF) v2.0.
-                                                 https://api.msrc.microsoft.com/cvrf/v2.0/swagger/index
-                                                 - %s CVRF document ID (yyyy-mmm) (example: 2021-dec)
-                                             -->
-                                            <MSRC_CVRF_BASE_URL>https://api.msrc.microsoft.com/cvrf/v2.0/cvrf/%s</MSRC_CVRF_BASE_URL>
-                                        </resourceLocations>
-                                    </msrcDownload>
-
-                                    <msrcCsvDownload/>
-
-                                    <cpeDictionaryDownload>
-                                        <resourceLocations>
-                                            <!-- The official CPE dictionary: https://nvd.nist.gov/products/cpe -->
-                                            <CPE_DICTIONARY_URL>https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.2.xml.zip</CPE_DICTIONARY_URL>
-                                            <!-- The CPE match data feed contains additional information on the specific CPE metadata:
-                                                 https://nvd.nist.gov/vuln/data-feeds#cpeMatch -->
-                                            <CPE_MATCH_URL>https://nvd.nist.gov/feeds/json/cpematch/1.0/nvdcpematch-1.0.json.zip</CPE_MATCH_URL>
-                                        </resourceLocations>
-                                    </cpeDictionaryDownload>
+                                    <!-- Downloads -->
 
                                     <certSeiDownload>
                                         <resourceLocations>
@@ -98,7 +79,79 @@
                                         </resourceLocations>
                                     </certFrDownload>
 
+                                    <nvdCveDownload>
+                                        <!-- you will need an API key in order to download the NVD data:
+                                             https://nvd.nist.gov/developers/request-an-api-key
+                                             more information: https://nvd.nist.gov/developers/start-here -->
+                                        <apiKey>${nvd.apikey}</apiKey>
+
+                                        <resourceLocations>
+                                            <!-- - %d startIndex: 0-based index of the first CVE to be returned in the response data -->
+                                            <CVE_API_LIST_ALL>https://services.nvd.nist.gov/rest/json/cves/2.0?startIndex=%d</CVE_API_LIST_ALL>
+                                            <!-- The maximum allowable range when using any date range parameters is 120 consecutive days.
+                                                 Values must be entered in the extended ISO-8061 date/time format: [YYYY][“-”][MM][“-”][DD][“T”][HH][“:”][MM][“:”][SS][Z]
+                                                 - %d startIndex: 0-based index of the first CVE to be returned in the response data
+                                                 - %s lastModStartDate: the start date
+                                                 - %s lastModEndDate: the end date
+                                            -->
+                                            <CVE_API_START_END_DATE>https://services.nvd.nist.gov/rest/json/cves/2.0/?startIndex=%d&amp;lastModStartDate=%s&amp;lastModEndDate=%s</CVE_API_START_END_DATE>
+                                        </resourceLocations>
+                                    </nvdCveDownload>
+
+                                    <nvdCpeDownload>
+                                        <!-- you will need an API key in order to download the NVD data:
+                                             https://nvd.nist.gov/developers/request-an-api-key
+                                             more information: https://nvd.nist.gov/developers/start-here -->
+                                        <apiKey>${nvd.apikey}</apiKey>
+
+                                        <resourceLocations>
+                                            <!-- API URL for the NVD CPE API (cpes) with a start index parameter.
+                                                 - %d startIndex 0-based index of the first CPE to be returned in the response data -->
+                                            <CPE_API_LIST_ALL>https://services.nvd.nist.gov/rest/json/cpes/2.0?startIndex=%d</CPE_API_LIST_ALL>
+                                            <!-- API URL for the NVD CPE API (cpes) with a start index and start/end timestamp parameter.
+                                                 The maximum allowable range when using any date range parameters is 120 consecutive days.
+                                                 Values must be entered in the extended ISO-8061 date/time format:
+                                                 [YYYY][“-”][MM][“-”][DD][“T”][HH][“:”][MM][“:”][SS][Z]
+                                                 - %d startIndex 0-based index of the first CPE to be returned in the response data
+                                                 - %s lastModStartDate the start date
+                                                 - %s lastModEndDate the end date
+                                            -->
+                                            <CPE_API_START_END_DATE>https://services.nvd.nist.gov/rest/json/cpes/2.0?startIndex=%d&amp;lastModStartDate=%s&amp;lastModEndDate=%s</CPE_API_START_END_DATE>
+                                            <!-- API URL for the NVD CPE API (cpematch) with a start index parameter.
+                                                 - startIndex 0-based index of the first CPE to be returned in the response data -->
+                                            <CPE_MATCH_API_LIST_ALL>https://services.nvd.nist.gov/rest/json/cpematch/2.0?startIndex=%d</CPE_MATCH_API_LIST_ALL>
+                                            <!-- API URL for the NVD CPE API (cpematch) with a start index and start/end timestamp parameter.
+                                                 The maximum allowable range when using any date range parameters is 120 consecutive days.
+                                                 Values must be entered in the extended ISO-8061 date/time format:
+                                                 [YYYY][“-”][MM][“-”][DD][“T”][HH][“:”][MM][“:”][SS][Z]
+                                                 - %d startIndex 0-based index of the first CPE to be returned in the response data
+                                                 - %s lastModStartDate the start date
+                                                 - %s lastModEndDate the end date
+                                            -->
+                                            <CPE_MATCH_API_START_END_DATE>https://services.nvd.nist.gov/rest/json/cpematch/2.0?startIndex=%d&amp;lastModStartDate=%s&amp;lastModEndDate=%s</CPE_MATCH_API_START_END_DATE>
+                                        </resourceLocations>
+                                    </nvdCpeDownload>
+
+                                    <msrcDownload>
+                                        <resourceLocations>
+                                            <!-- List of all monthly documents. Contains last update date used to determine whether an update is required.
+                                                 When viewed in a browser, the content will be displayed as XML, but when accessed via the API, the content
+                                                 will be returned as JSON. -->
+                                            <MSRC_UPDATES_URL>https://api.msrc.microsoft.com/cvrf/v2.0/updates</MSRC_UPDATES_URL>
+                                            <!-- REST-API for the Microsoft Security Response Center (MSRC) Common Vulnerability Reporting Framework (CVRF) v2.0.
+                                                 https://api.msrc.microsoft.com/cvrf/v2.0/swagger/index
+                                                 - %s CVRF document ID (yyyy-mmm) (example: 2021-dec)
+                                             -->
+                                            <MSRC_CVRF_BASE_URL>https://api.msrc.microsoft.com/cvrf/v2.0/cvrf/%s</MSRC_CVRF_BASE_URL>
+                                        </resourceLocations>
+                                    </msrcDownload>
+
+                                    <msrcCsvDownload/>
+
+                                    <!-- deprecated, use nvdCveDownload -->
                                     <nvdLegacyDownload>
+                                        <active>false</active>
+
                                         <resourceLocations>
                                             <!-- The URL to retrieve the recently modified and added CVE entries (last 8 days) using the JSON data feeds.
                                                  modified feeds are updated every two hours. -->
@@ -115,37 +168,51 @@
                                         </resourceLocations>
                                     </nvdLegacyDownload>
 
-                                    <!-- you will need an API key in order to download the NVD data:
-                                         https://nvd.nist.gov/developers/request-an-api-key
-                                         more information: https://nvd.nist.gov/developers/start-here -->
-                                    <nvdCveDownload>
+                                    <!-- deprecated, use nvdCpeDownload -->
+                                    <cpeDictionaryDownload>
                                         <active>false</active>
 
-                                        <apiKey></apiKey>
                                         <resourceLocations>
-                                            <!-- - %d startIndex: 0-based index of the first CVE to be returned in the response data -->
-                                            <CVE_API_LIST_ALL>https://services.nvd.nist.gov/rest/json/cves/2.0?startIndex=%d</CVE_API_LIST_ALL>
-                                            <!-- The maximum allowable range when using any date range parameters is 120 consecutive days.
-                                                 Values must be entered in the extended ISO-8061 date/time format: [YYYY][“-”][MM][“-”][DD][“T”][HH][“:”][MM][“:”][SS][Z]
-                                                 - %d startIndex: 0-based index of the first CVE to be returned in the response data
-                                                 - %s lastModStartDate: the start date
-                                                 - %s lastModEndDate: the end date
-                                            -->
-                                            <CVE_API_START_END_DATE>https://services.nvd.nist.gov/rest/json/cves/2.0/?startIndex=%damp;lastModStartDate=%samp;lastModEndDate=%s</CVE_API_START_END_DATE>
+                                            <!-- The official CPE dictionary: https://nvd.nist.gov/products/cpe -->
+                                            <CPE_DICTIONARY_URL>https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.2.xml.zip</CPE_DICTIONARY_URL>
+                                            <!-- The CPE match data feed contains additional information on the specific CPE metadata:
+                                                 https://nvd.nist.gov/vuln/data-feeds#cpeMatch -->
+                                            <CPE_MATCH_URL>https://nvd.nist.gov/feeds/json/cpematch/1.0/nvdcpematch-1.0.json.zip</CPE_MATCH_URL>
                                         </resourceLocations>
-                                    </nvdCveDownload>
+                                    </cpeDictionaryDownload>
+
+                                    <!-- Indexers -->
 
                                     <certSeiAdvisorIndex/>
+
                                     <certFrAdvisorIndex/>
-                                    <cpeDictionaryIndex/>
-                                    <cpeDictionaryVendorProductIndex/>
+
+                                    <nvdVulnerabilityIndex/>
+
+                                    <nvdCpeIndex/>
+
+                                    <nvdCpeVendorProductIndex/>
+
                                     <msrcProductIndex/>
+
                                     <msrcAdvisorIndex/>
+
                                     <msrcKbChainIndex/>
-                                    <nvdLegacyVulnerabilityIndex/>
-                                    <nvdVulnerabilityIndex>
+
+                                    <!-- deprecated, use nvdVulnerabilityIndex -->
+                                    <nvdLegacyVulnerabilityIndex>
                                         <active>false</active>
-                                    </nvdVulnerabilityIndex>
+                                    </nvdLegacyVulnerabilityIndex>
+
+                                    <!-- deprecated, use nvdCpeIndex -->
+                                    <cpeDictionaryIndex>
+                                        <active>false</active>
+                                    </cpeDictionaryIndex>
+
+                                    <!-- deprecated, use nvdCpeVendorProductIndex -->
+                                    <cpeDictionaryVendorProductIndex>
+                                        <active>false</active>
+                                    </cpeDictionaryVendorProductIndex>
                                 </configuration>
                             </execution>
                         </executions>
