@@ -1,4 +1,4 @@
 > [Vulnerability Monitoring](../inventory-enrichment-overview.md) > [Inventory Enrichment](inventory-enrichment.md) >
-> Inventory Enrichment Steps
+> Maven POM
 
-# Inventory Enrichment Steps
+# Maven POM

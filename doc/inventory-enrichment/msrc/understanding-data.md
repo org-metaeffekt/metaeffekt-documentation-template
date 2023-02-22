@@ -390,7 +390,7 @@ This is a relatively easy task:
 <details>
   <summary>Example code</summary>
 
-```
+```java
 final Set<MsrcSupersedeNode> kbIds = new HashSet<>(findNodesByVulnerability(vulnerability, productId));
 final Set<MsrcSupersedeNode> toCheckKbIds = new HashSet<>();
 for (MsrcSupersedeNode node : kbIds) {
@@ -447,7 +447,7 @@ Id:
 <details>
   <summary>Example code</summary>
 
-```
+```java
 final Set<String> vulnerabilities = new HashSet<>();
 
 for (MsrcSupersedeNode node : findNodesByProductId(productId)) {

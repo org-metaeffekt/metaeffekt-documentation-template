@@ -89,7 +89,7 @@ This allows the user to customize the data sources, in case the data is stored o
 one. When using the `DownloadInitializer` class within the `ae-inventory-enrichment-plugin` POM, a list of
 `resourceLocations` can be provided, like this:
 
-```
+```xml
 <certSeiDownload>
     <resourceLocations>
         <SUMMARY_API_URL>https://kb.cert.org/vuls/api/%d/summary/</SUMMARY_API_URL>

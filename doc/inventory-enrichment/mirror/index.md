@@ -94,7 +94,7 @@ References:
 - API workflow: [API User Workflow](https://nvd.nist.gov/developers/api-workflows)
 - Request an API Key: [NVD - API Request](https://nvd.nist.gov/developers/request-an-api-key)
 
-The new NVD API does not provide yearly files, like the old data feeds used to, which is why the format the CPEs are
+The new NVD API does not provide yearly files like the old data feeds used to, which is why the format the CPEs/CVEs are
 saved in is already a custom format. To see how the roughly 100 API responses are merged into multiple yearly files, I
 highly recommend checking out the [NVD Downloaders](download.md#nvd-api).
 

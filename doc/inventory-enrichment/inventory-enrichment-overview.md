@@ -21,7 +21,7 @@ This process is split into multiple parts, that are each described in their own 
     - MSRC
         - [KB-Research](msrc/understanding-data.md)
         - [Downloading the CSV files](msrc/performing-csv-download.md)
-- [Inventory Enrichment Pipeline](enrichment/steps.md)
+- [Inventory Enrichment Pipeline](enrichment/inventory-enrichment.md)
 
 This image provides a high-level overview over the process:
 
