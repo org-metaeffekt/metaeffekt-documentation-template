@@ -84,3 +84,44 @@ All enrichment steps have been applied successfully:
  3. NVD CVE from CPE  . . . . . . . . . . . . . . . . . . . [    197ms]
 ----------------< Done: Inventory Enrichment Pipeline >-----------------
 ```
+
+Almost more interesting than that is the log when the process failed. It shows exactly where the error happened and
+what resume-at ID to use if you want to retry from that step only. More information on that can be found in the Java
+and Maven POM examples.
+
+```java
+-------------------< Inventory Enrichment Pipeline >--------------------
+Enriching inventory with [1 artifact] and [0 vulnerabilities]
+Enrichment order:
+ 1. CPE URI derivation
+ 2. MSRC Vulnerabilities by Products
+ 3. NVD CVE from CPE
+
+-------------------------< CPE URI derivation >-------------------------
+Enriching inventory with [1 artifact] and [0 vulnerabilities]
+Configuration:
+  maxCorrelatedCpePerArtifact: 2147483647
+Starting up to [15] threads at once, [1] to run in total. Delay of [0] between each thread and [0] between each batch
+Started [1 / 1] threads [100 %]
+Deriving CPE URIs for artifact [1 / 1] [cups-filesystem-1.7.5: cups-filesystem 1.7.5]
+All threads finished
+----------------------< Done: CPE URI derivation >----------------------
+
+
+------------------< MSRC Vulnerabilities by Products >------------------
+Enriching inventory with [1 artifact] and [0 vulnerabilities]
+Added [1] vulnerability to inventory: [ADV220005]
+Added [320] vulnerabilities to inventory: [CVE-2022-44678, CVE-2022-41047, CVE-2022-44677, CVE-2022-41048, CVE-2022-44676, CVE-2022-41045, CVE-2022-44675, CVE-2023-21527, CVE-2022-41049,
+Artifact [cups-filesystem-1.7.5] with product [11929] ([11929]) and [1] KB has [320 vulnerabilities] [1 advisories] [331 fixed by KB] from [652 & 649 -> 652] vulnerabilities/advisories
+Failed to enrich inventory on step [MSRC Vulnerabilities by Products], see stack trace below for more information.
+--------------< FAILED: MSRC Vulnerabilities by Products >--------------
+
+To resume from failed step, use id [msrc-vulnerabilities-by-product-enrichment]
+ 1. CPE URI derivation  . . . . . . . . . . . . . . . . . . [ 1s 771ms]
+Failed at:
+ 2. MSRC Vulnerabilities by Products  . . . . . . . . . . . [ 1s 801ms]
+ 3. NVD CVE from CPE  . . . . . . . . . . . . . . . . . . . [      0ms]
+
+java.lang.RuntimeException: Failed to enrich inventory on step MSRC Vulnerabilities by Products
+    ... stack trace ...
+```
