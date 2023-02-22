@@ -20,16 +20,16 @@ This diagram shows the data flow in between the different Mirror phases:
 Data sources include:
 
 - [NVD](https://nvd.nist.gov/vuln)
-  - Vulnerability (CVE)
-  - Vendor/product (CPE)
+    - Vulnerability (CVE)
+    - Vendor/product (CPE)
 - [CERT-FR](https://www.cert.ssi.gouv.fr/)
-  - Advisories
+    - Advisories
 - [CERT-SEI](https://www.sei.cmu.edu/about/divisions/cert/)
-  - Advisories
+    - Advisories
 - [MSRC](https://msrc.microsoft.com/update-guide/vulnerability)
-  - Advisories
-  - Microsoft products
-  - Knowledge Base (KB/Security Updates)
+    - Advisories
+    - Microsoft products
+    - Knowledge Base (KB/Security Updates)
 
 ## Examples
 
@@ -63,66 +63,66 @@ The proxy information can be specified on a global level or for each download in
 ```xml
 
 <build>
-  <!-- ... -->
-  <plugins>
-    <plugin>
-      <groupId>com.metaeffekt.artifact.analysis</groupId>
-      <artifactId>ae-mirror-plugin</artifactId>
-      <version>${ae.artifact.analysis.version}</version>
+    <!-- ... -->
+    <plugins>
+        <plugin>
+            <groupId>com.metaeffekt.artifact.analysis</groupId>
+            <artifactId>ae-mirror-plugin</artifactId>
+            <version>${ae.artifact.analysis.version}</version>
 
-      <executions>
-        <execution>
-          <id>data-mirror</id>
-          <goals>
-            <goal>data-mirror</goal>
-          </goals>
+            <executions>
+                <execution>
+                    <id>data-mirror</id>
+                    <goals>
+                        <goal>data-mirror</goal>
+                    </goals>
 
-          <configuration>
-            <mirrorDirectory>
-              ${input.database}
-            </mirrorDirectory>
+                    <configuration>
+                        <mirrorDirectory>
+                            ${input.database}
+                        </mirrorDirectory>
 
-            <proxyScheme>${proxy.scheme}</proxyScheme>
-            <proxyHost>${proxy.host}</proxyHost>
-            <proxyUsername>${proxy.user}</proxyUsername>
-            <proxyPassword>${proxy.pass}</proxyPassword>
-            <proxyPort>${proxy.port}</proxyPort>
+                        <proxyScheme>${proxy.scheme}</proxyScheme>
+                        <proxyHost>${proxy.host}</proxyHost>
+                        <proxyUsername>${proxy.user}</proxyUsername>
+                        <proxyPassword>${proxy.pass}</proxyPassword>
+                        <proxyPort>${proxy.port}</proxyPort>
 
-            <msrcDownload/>
-            <msrcCsvDownload/>
-            <cpeDictionaryDownload/>
-            <certSeiDownload/>
-            <certFrDownload/>
-            <!-- is deprecated, will stop working at the end of 2023 -->
-            <nvdLegacyDownload/>
-            <!-- you will need an API key in order to download the NVD data:
-                 https://nvd.nist.gov/developers/request-an-api-key
-                 more information: https://nvd.nist.gov/developers/start-here -->
-            <nvdCveDownload>
-              <active>false</active>
-              <apiKey></apiKey>
-            </nvdCveDownload>
+                        <msrcDownload/>
+                        <msrcCsvDownload/>
+                        <cpeDictionaryDownload/>
+                        <certSeiDownload/>
+                        <certFrDownload/>
+                        <!-- is deprecated, will stop working at the end of 2023 -->
+                        <nvdLegacyDownload/>
+                        <!-- you will need an API key in order to download the NVD data:
+                             https://nvd.nist.gov/developers/request-an-api-key
+                             more information: https://nvd.nist.gov/developers/start-here -->
+                        <nvdCveDownload>
+                            <active>false</active>
+                            <apiKey></apiKey>
+                        </nvdCveDownload>
 
-            <certSeiAdvisorIndex/>
-            <certFrAdvisorIndex/>
-            <cpeDictionaryIndex/>
-            <cpeDictionaryVendorProductIndex/>
-            <msrcProductIndex/>
-            <msrcAdvisorIndex/>
-            <msrcKbChainIndex>
-              <msrcUpdateGuideDownloadCsvFiles>
-                <!--<file></file>-->
-              </msrcUpdateGuideDownloadCsvFiles>
-            </msrcKbChainIndex>
-            <nvdLegacyVulnerabilityIndex/>
-            <nvdVulnerabilityIndex>
-              <active>false</active>
-            </nvdVulnerabilityIndex>
-          </configuration>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-  <!-- ... -->
+                        <certSeiAdvisorIndex/>
+                        <certFrAdvisorIndex/>
+                        <cpeDictionaryIndex/>
+                        <cpeDictionaryVendorProductIndex/>
+                        <msrcProductIndex/>
+                        <msrcAdvisorIndex/>
+                        <msrcKbChainIndex>
+                            <msrcUpdateGuideDownloadCsvFiles>
+                                <!--<file></file>-->
+                            </msrcUpdateGuideDownloadCsvFiles>
+                        </msrcKbChainIndex>
+                        <nvdLegacyVulnerabilityIndex/>
+                        <nvdVulnerabilityIndex>
+                            <active>false</active>
+                        </nvdVulnerabilityIndex>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+    <!-- ... -->
 </build>
 ```
