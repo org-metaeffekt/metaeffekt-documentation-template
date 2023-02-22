@@ -15,13 +15,19 @@ local directory. Then, they are indexed into a data structure to reduce the numb
 
 This process is split into multiple parts, that are each described in their own document:
 
-- [Mirroring the data sources](mirror/mirror-overview.md)
+- [**Mirroring** the data sources](mirror/mirror-overview.md)
     - [Individual downloads](mirror/download.md)
     - [Individual indexes](mirror/index.md)
     - MSRC
         - [KB-Research](msrc/understanding-data.md)
         - [Downloading the CSV files](msrc/performing-csv-download.md)
-- [Inventory Enrichment Pipeline](enrichment/inventory-enrichment.md)
+- [**Inventory Enrichment**](enrichment/inventory-enrichment.md)
+    - [Inventory Enrichment Steps](enrichment/steps.md)
+    - [Maven POM](enrichment/maven.md)
+    - [Java process](enrichment/java.md)
+    - [Superclasses](enrichment/java-super-classes.md) (useful background information for understanding the process)
+
+## Overview graphs
 
 This image provides a high-level overview over the process:
 

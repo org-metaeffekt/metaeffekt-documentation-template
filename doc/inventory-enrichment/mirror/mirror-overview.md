@@ -33,7 +33,7 @@ Data sources include:
 
 ## Examples
 
-Java:
+### Java
 
 Commented out download/index classes are deprecated
 
@@ -75,7 +75,8 @@ new MsrcAdvisorIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 new MsrcKbChainIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 ```
 
-Maven:  
+### Maven
+
 A full example with all configuration options can be [found here](../../../mirror/pom.xml).  
 As mentioned above, a single goal is enough to create both the download and the index for all data sources. Only
 mentioning a mirror phase like `<msrcDownload/>` is enough to trigger it. All of them can be found below.  
