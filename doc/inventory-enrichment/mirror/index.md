@@ -7,8 +7,8 @@ TODO
 <!-- TOC -->
 
 * [Index](#index)
-    * [Common steps](#common-steps)
-    * [List of indexes](#list-of-indexes)
+  * [Common steps](#common-steps)
+  * [List of indexes](#list-of-indexes)
 
 <!-- TOC -->
 
@@ -31,9 +31,9 @@ variety of formats. This is the main structure:
 - lock the directory to prevent other processes to write/read the index information in parallel.
 - check whether indexing is required at all using the criteria listed above. If not, abort the process now.
 - create the index:
-    - assert that the required downloads and indexes exist
-    - create the index documents (different from index to index)
-    - if at least one document has been created, write them to the index directory
+  - assert that the required downloads and indexes exist
+  - create the index documents (different from index to index)
+  - if at least one document has been created, write them to the index directory
 - unlock the directory
 
 Some more information:

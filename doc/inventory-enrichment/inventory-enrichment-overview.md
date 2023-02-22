@@ -26,3 +26,8 @@ This process is split into multiple parts, that are each described in their own 
 This image provides a high-level overview over the process:
 
 ![Process overview](inventory-enrichment-overview.svg)
+
+This image provides a list of all classes that are involved and their dependencies/data flow. Open the image in a new
+tab to see all details.
+
+![List of related classes and data flow](dependants.svg)
