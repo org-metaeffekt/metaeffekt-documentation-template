@@ -10,15 +10,15 @@ shown in the following documents.
 
 ## Sub-Chapters
 
+And about all Inventory Enrichment steps with their configuration parameters:
+
+- [Inventory Enrichment Steps](steps.md)
+- [Superclasses](java-super-classes.md) (useful background information for understanding the process)
+
 Learn more about how to build a pipeline yourself here:
 
 - [Java process](java.md)
 - [Maven POM](maven.md)
-
-And about all Inventory Enrichment steps with their configuration parameters:
-
-- [Superclasses](java-super-classes.md) (useful background information for understanding the process)
-- [Inventory Enrichment Steps](steps.md)
 
 ## Overview / Data flow
 
