@@ -193,13 +193,54 @@ Examples:
 
 ### MSRC Products (`msrc-products` / `msrcProductIndex`)
 
+When downloading the Microsoft Security Response Center data (MSRC), a list of affected products is included. The
+majority of these products are developed by Microsoft. Each monthly file within the download contains only the products
+that are affected by the advisories in that particular file. As a result, there may be multiple files with the same
+product, each containing varying amounts of information. To generate a comprehensive list, all files must be parsed.
+
+The product tree consists of two layers: vendors > multiple products with product families. Not all products have a
+family, some are listed on the upper layer.
+
+The product tree is organized into two layers: vendors and multiple products with product families. Most products are
+child nodes of the vendors, but not all products have a family/vendor: some are listed on the upper layer directly.
+
+| XML                                               | data structure |
+|:--------------------------------------------------|:---------------|
+| `FullProductName` > attribute `ProductID`         | `id`           |
+| `FullProductName`                                 | `name`         |
+| `Branch` > where `Type="Product Family"` > `Name` | `family`       |
+| `Branch` > where `Type="Vendor"` > `Name`         | `vendor`       |
+
 ---
 
 ### MSRC Advisors (advisory data) (`msrc-advisors` / `msrcAdvisorIndex`)
 
+The advisories provided in the MSRC download are each almost always linked to at least one CVE, which is also their ID.
+Very rarely however, the ID may be an ADV\d+ identifier, that is not related a specific CVE.
+
+Some of the AdvisorEntry-related fields such as workarounds, … cannot be filled out, as they relate to a specific
+product.
+
+| XML                                                              | MsrcAdvisorEntry     |
+|:-----------------------------------------------------------------|:---------------------|
+| `CVE` (with `MSRC` prefix)                                       | `id`                 |
+| `RevisionHistory` > first `Revision` > `Date`                    | `createDate`         |
+| `RevisionHistory` > latest `Revision` > `Date`                   | `updateDate`         |
+| all CVE-IDs in the note elements                                 | `referenceIds`       |
+| `CVSSScoreSets` > each `ScoreSet` > `Vector` & `ProductID`       | `productCvssVectors` |
+| `Threats` > each `Threat` > `Type` & `Description` & `ProductID` | `msThreats`          |
+| `Remediations` > each `Remediation` > multiple tags              | `msRemediations`     |
+| `ProductStatuses` > each `Status` > `ProductID`                  | `affectedProducts`   |
+| `Title`                                                          | `summary`            |
+| `Notes` > each `Note` > (`Type` & `Title`) & (Text content)      | `description`        |
+| `Threats` > first `Threat` without `ProductId`                   | `threat`             |
+
 ---
 
 ### MSRC KB Chains (`msrc-kb-chains` / `msrcKbChainIndex`)
+
+For more details on how this index is built and how it can be used, see
+[Understanding the MSRC data](../msrc/understanding-data.md) and related pages.
 
 ---
 
@@ -218,12 +259,44 @@ These downloads either have already or will stop working in the future, due to A
 
 ### CPE Dictionary (CPEs) (`cpe-dict-legacy-feed` / `cpeDictionaryIndex`)
 
+The downloaded files come in JSON for the dictionary and XML for the match file. The JSON contains an array of objects,
+that each have a CPE URI and multiple child-CPEs. The XML contains a list of cpe-item entries with a CPE as name and
+multiple other CPEs in several data structure formats.
+
+| JSON/XML                                                           | data structure                                                                                                           |
+|:-------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------|
+| if JSON: `cpe23Uri`<br/>else if XML: `cpe-item` > attribute `name` | `cpe23Uri`                                                                                                               |
+| split CPE URI into parts                                           | `part`, `vendor`, `product`, `version`, `update`, `edition`, `language`, `sw_edition`, `target_sw`, `target_hw`, `other` |
+
+| **XML**                                            | **data structure**  |
+|:---------------------------------------------------|:--------------------|
+| `title`                                            | `title`             |
+| `references` > multiple reference                  | `references`        |
+| `item-metadata` > attribute `nvd-id`               | `nvdId`             |
+| `item-metadata` > attribute `deprecated-by-nvd-id` | `deprecatedByNvdId` |
+| `item-metadata` > attribute `modification-date`    | `updateDate`        |
+
 ---
 
 ### CPE Dictionary Vendor Product (Vendor/Product pairs) (`cpe-dict-vp-legacy-feed` / `cpeDictionaryVendorProductIndex`)
 
+For all vendors, store a set of their products.  
+For all products, store a set of their vendors.
+
+This is used for quickly accessing all vendors/products of a product/vendor. The list of entries is in CSV. The
+information is extracted from the CPE Dictionary index, making the index required to be completed before this one.
+
+| **index**                                                                      | **data structure** |
+|:-------------------------------------------------------------------------------|:-------------------|
+| if `vendor → products`: `vp`<br>else if `product → vendors`: `pv`              | `type`             |
+| if `vp`: a single vendor<br>else if pv: a CSV list of vendors for the product  | `vendor`           |
+| if `pv`: a single product<br>else if vp: a CSV list of products for the vendor | `product`          |
+
 ---
 
 ### NVD Vulnerabilities (CVE) (`nvd-cve-legacy-feed` / `nvdLegacyVulnerabilityIndex`)
+
+No detail is provided for this index. If you want to know more, see `Vulnerability#fromNvdMirrorCveItem1_0()` in the
+artifact analysis project.
 
 ---
