@@ -94,17 +94,69 @@ References:
 - API workflow: [API User Workflow](https://nvd.nist.gov/developers/api-workflows)
 - Request an API Key: [NVD - API Request](https://nvd.nist.gov/developers/request-an-api-key)
 
+The new NVD API does not provide yearly files, like the old data feeds used to, which is why the format the CPEs are
+saved in is already a custom format. To see how the roughly 100 API responses are merged into multiple yearly files, I
+highly recommend checking out the [NVD Downloaders](download.md#nvd-api).
+
 ---
 
 ### NVD CPE API (CPEs) (`cpe-dict` / `nvdCpeIndex`)
+
+All entries from the API have been normalized to match the CPE Dictionary format in the downloader step, which is why
+all CPE entries can be parsed in the same way.
+
+All entries have these fields: `cpeName`, `cpeNameId`, `deprecated`, `titles`, `refs`  
+`lastModified` and `created` are dropped in this step.
+
+| JSON/XML                     | data structure                                                                                                           |
+|:-----------------------------|:-------------------------------------------------------------------------------------------------------------------------|
+| `cpeName`                    | `cpe23Uri`                                                                                                               |
+| split CPE URI into parts     | `part`, `vendor`, `product`, `version`, `update`, `edition`, `language`, `sw_edition`, `target_sw`, `target_hw`, `other` |
+| `cpeNameId`                  | `nvdId`                                                                                                                  |
+| `deprecated`                 | `deprecated` (bool)                                                                                                      |
+| `titles` > multiple titles   | `titles` (JSON Array)                                                                                                    |
+| `references` > multiple refs | `refs` (JSON Array)                                                                                                      |
+
+The NVD ID, titles, references and deprecated information can be queried later, where the titles and refs will be
+properly parsed as language-specific titles and reference instances.
 
 ---
 
 ### NVD CPE API (Vendor/Product pairs) (`cpe-dict-vp` / `nvdCpeVendorProductIndex`)
 
+For all vendors, store a set of their products.  
+For all products, store a set of their vendors.
+
+This is used for quickly accessing all vendors/products of a product/vendor. The list of entries is in CSV. The
+information is extracted from the NVD CPE API index, making the index required to be completed before this one.
+
+| **index**                                                                      | **data structure** |
+|:-------------------------------------------------------------------------------|:-------------------|
+| if `vendor → products`: `vp`<br>else if `product → vendors`: `pv`              | `type`             |
+| if `vp`: a single vendor<br>else if pv: a CSV list of vendors for the product  | `vendor`           |
+| if `pv`: a single product<br>else if vp: a CSV list of products for the vendor | `product`          |
+
+Note that this process is (as of now) 100% identical to the deprecated CPE Dictionary Vendor/Product Index, as the CPE
+Dictionary and NVD CPE API interface are the same.
+
 ---
 
 ### NVD CVE API (`nvd-cve` / `nvdVulnerabilityIndex`)
+
+Every file contained in the download directory is parsed and processed in the same way. An entry in the parsed JSON
+Array has these fields: `sourceIdentifier`, `references`, `configurations`, `weaknesses`, `id`, `published`,
+`lastModified`, `metrics`, `vulnStatus`, `descriptions`.
+
+| JSON                                                                       | Vulnerability       |
+|:---------------------------------------------------------------------------|:--------------------|
+| `descriptions` > multiple `lang`/`value` --> find `en` or fallback to any  | description         |
+| `published`                                                                | create date         |
+| `lastModified`                                                             | update date         |
+| `references` > multiple `source` & `url` & `tags`                          | references          |
+| `weaknesses` > multiple `description` > multiple `value`                   | cwe                 |
+| `metrics` > `cvssMetricV2` > `cvssData` > `vectorString`                   | cvss v2             |
+| `metrics` > `cvssMetricV30`, `cvssMetricV31` > `cvssData` > `vectorString` | cvss v3             |
+| `configurations` > `nodes` (parse nodes)                                   | vulnerable software |
 
 ---
 
