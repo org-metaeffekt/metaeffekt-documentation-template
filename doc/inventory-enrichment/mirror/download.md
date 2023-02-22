@@ -95,7 +95,7 @@ one. When using the `DownloadInitializer` class within the `ae-inventory-enrichm
 </certSeiDownload>
 ```
 
-For all download resource locations, see the [mirror pom.xml file line ~55](../../../mirror/pom.xml), where a short
+For all download resource locations, see the [mirror pom.xml file line ~59](../../../mirror/pom.xml), where a short
 description of all of them can be found, as well as their default values.
 
 ## List of downloads
