@@ -15,17 +15,23 @@ local directory. Then, they are indexed into a data structure to reduce the numb
 
 This process is split into multiple parts, that are each described in their own document:
 
-- [**Mirroring** the data sources](mirror/mirror-overview.md)
-    - [Individual downloads](mirror/download.md)
-    - [Individual indexes](mirror/index.md)
-    - MSRC
+- [**Data Sources Mirroring**](mirror/mirror-overview.md)
+    - [List of individual downloads](mirror/download.md)
+    - [List of individual indexes](mirror/index.md)
+    - MSRC (Microsoft Security Response Center)
         - [KB-Research](msrc/understanding-data.md)
         - [Downloading the CSV files](msrc/performing-csv-download.md)
 - [**Inventory Enrichment**](enrichment/inventory-enrichment.md)
-    - [Inventory Enrichment Steps](enrichment/steps.md)
-    - [Maven POM](enrichment/maven.md)
-    - [Java process](enrichment/java.md)
-    - [Superclasses](enrichment/java-super-classes.md) (useful background information for understanding the process)
+    - [List of Inventory Enrichment Steps](enrichment/steps.md)
+    - [Example: Maven POM](enrichment/maven.md)
+    - [Example: Java process](enrichment/java.md)
+    - [Inventory Enrichment process (1): Correlation step](enrichment/artifact-correlation.md)
+    - [Architecture: Superclasses](enrichment/java-super-classes.md) (useful background information for understanding
+      the process)
+    - [Custom Vulnerability Data Sources](enrichment/custom-vulnerabilities.md)
+    - [Inventory CPE data and effective CPE](enrichment/parsing-effective-cpe.md)
+    - [Vulnerability Status files](enrichment/vulnerability-status.md)
+    - [Vulnerability Keywords files](enrichment/vulnerability-keywords.md)
 
 ## Overview graphs
 

@@ -275,13 +275,45 @@ All detail filling steps provide two methods:
 - `fillDetailsOnVulnerability(vulnerability)`: the actual method that fills the details. This is different from step to
   step, but it usually involves adding a description, URL, references, CVSS data, advisor data and more.
 
-The reason for this seemingly unnecessary split between finding vulnerability and filling their  This is also why
-These steps have to be repeated, whenever new vulnerabilities are introduced to the inventory or new data has been
-appended to already processed vulnerabilities.
+The reason for this seemingly unnecessary split between finding vulnerability and filling their vulnerability data is
+that this allows an arbitrary number of enrichment steps to find vulnerability identifiers on artifacts before and then
+only have one step that fills all the vulnerability information. As they skip already processed entries, they can be
+used multiple times without repeating the process multiple times on the same vulnerabilities.
+
+If you look at the list above, you will notice that some of these steps appear multiple times. Whenever new
+vulnerabilities are introduced to the inventory, their details have to be filled again. Seeing as the status and keyword
+enrichment can add new vulnerabilities, but require vulnerability information themselves, the enrichment steps have to
+be performed after those.
 
 ### NVD CVE details filling
 
 → `NvdCveDetailsFillingEnrichment` / `nvdCveFillDetailsEnrichment`
+
+For every vulnerability that misses detailed information, append the generally available NVD CVE information. This
+includes NVD URL, description, CWE, source, CVSS scores and references.
+
+For all `VulnerabilityMetaData` that have a CVE-identifier and are missing both `Description` and `Url`:
+
+1. Find the vulnerability in the NVD database
+2. Create the `Url` from `https://nvd.nist.gov/vuln/detail/ + name`
+3. Join the CWE as a CSV string into `Weaknesses`
+4. Join the vulnerability sources as a CSV string into `Source`
+5. Apply the CVSS information as non-modified vectors
+6. Join the references as JSONArray into `References`
+7. Add the description into `Description`
+
+#### Affected attributes
+
+- `Vulnerabilities`
+    - read :mag_right:
+        - Name
+    - write :memo:
+        - Description
+        - Url
+        - Weaknesses
+        - Source
+        - References
+        - (multiple CVSS-scoring related fields)
 
 ---
 
@@ -289,11 +321,12 @@ appended to already processed vulnerabilities.
 
 → `CustomVulnerabilitiesDetailsFillingEnrichment` / `customVulnerabilitiesFillDetailsEnrichment`
 
----
+This process works the same and affects the same attributes as `NVD CVE details filling` above, except the `Url` might
+be a custom URL.
 
-### MSRC Advisor details filling
+#### Affected attributes
 
-→ `MsrcAdvisorFillDetailsEnrichment` / `msrcAdvisorFillDetailsEnrichment`
+See `NVD CVE details filling`.
 
 ---
 
@@ -303,25 +336,132 @@ appended to already processed vulnerabilities.
 
 → `VulnerabilityStatusEnrichment` / `vulnerabilityStatusEnrichment`
 
+See [Vulnerability Status](vulnerability-status.md) to learn more about vulnerability status files.
+
+Adds status information to the vulnerabilities in the inventory.
+
+1. Parse all status files provided by the configuration parameter `yamlFiles`
+2. Append all vulnerabilities that are not yet known to the inventory to the `Vulnerabilities` sheet as status `void`
+   with the current timestamp and appends a `Tags` value `added by status`
+3. Use the [CPE URIs](parsing-effective-cpe.md) and the vulnerability name to find affected `VulnerabilityStatus`
+   entries
+4. Apply the first matching entry. If there is at least one more matching, warn the user.
+
+#### Affected attributes
+
+- `Vulnerabilities`
+    - read :mag_right:
+        - Name
+    - write :memo:
+        - Reviewed Advisories
+        - Status history
+        - Accepted by
+        - Reported by
+        - Title
+        - multiple CVSS-scoring related fields
+        - Status
+        - Rationale
+        - Risk
+        - Measures
+
 ---
 
 ### Vulnerability Keywords
 
 → `VulnerabilityKeywordsEnrichment` / `vulnerabilityKeywordsEnrichment`
 
+See [Vulnerability Keywords](vulnerability-keywords.md) to learn more about vulnerability keyword files.
+
+1. Parse all keyword sets from the `yamlFiles` configuration parameter
+2. Iterate over all vulnerabilities from the inventory:
+    1. Find the matching keyword sets using the `Description` and `Weakness` from the vulnerability (case-insensitive
+       search)
+    2. Write the keyword information into the `Matched Keyword Sets` attribute. The data is stored in a json array and
+       may contain score, name, category and notes.
+    3. If at least one keyword set has a score, write the total score it into `Matched Keyword Total Score`
+    4. A keyword file may reference a status entry. If this is the case, apply the status to the matching vulnerability.
+       See the `vulnerabilityStatusEnrichment` above for more details.
+
+#### Affected attributes
+
+- `Vulnerabilities`
+    - read :mag_right:
+        - Description
+        - Weakness
+        - Title
+        - Advisories
+    - write :memo:
+        - Matched Keyword Sets
+        - Matched Keyword Total Score
+        - (… all Vulnerability Status attributes)
+
 ---
 
 ## Step 4: fill vulnerability meta data and add advisory data if available
 
+Optionally, advisory information can be appended to the inventory. This currently includes data from the CERT-FR,
+CERT-SEI and MSRC (Microsoft Security Response Center). These enrichment steps all work similarly, as they all inherit
+from the `VulnerabilityDetailsFillingEnrichment` class, which is also the basis for the _Step 2_ enrichment steps.
+
+1. For every vulnerability, check whether `shouldMissingInformationBeFilled` is true. For the steps below, this is
+   always if the `Advisories`attributes do not contain and advisory entry of the given type
+   (`MSRC`, `CERT_FR`, `CERT_SEI`), as this would mean that the process has already run on the vulnerability.
+2. If an enrichment is required, call the `fillDetailsOnVulnerability` method:
+3. Collect all advisor entries with either the `Name` of the vulnerability as id, or as fallback, all entries that
+   reference the current vulnerability `Name` in the referenced ids.
+4. Use the `appendToVulnerabilityMetaData` method to apply the entry to the vulnerability.
+    1. Use the `toJson` method of the advisory entry to merge existing advisor entries with the new one in `Advisories`
+    2. If the vulnerability is missing `Url` or `Description`, fill the data
+    3. Merge the references with any existing `References`
+
+### MSRC Advisor details filling
+
+→ `MsrcAdvisorFillDetailsEnrichment` / `msrcAdvisorFillDetailsEnrichment`
+
+This step uses the general step (Step 4) from above.
+
+Adds MSRC Advisor information to the vulnerabilities in the inventory. This is done by finding all CVE/ADV
+vulnerabilities that have not been processed by this process yet and using these names to match advisories from the MSRC
+index.
+
+Collect all `VulnerabilityMetaData` with a `CVE` or `ADV` identifier, but without matched MSRC advisory.
+
+1. Find all advisories that contain the CVE/ADV from the vulnerability as id
+2. Append the advisor source to the `Source` field
+3. If no `Url` present, set it to the advisor URL
+4. If no `Description` present, set it to the summary or description as fallback
+5. Append the Advisor URL and all other references to the `References` field
+6. If present, apply the CVSS information as modified information
+7. Use the `toJson` method to append the entire advisory entry in `Advisories`. This includes data like descriptions,
+   modified date, references and more. This data can then be used in later steps.
+
+#### Affected attributes
+
+See `NVD CVE details filling`.
+
+---
+
 ### CERT-FR Advisors details filling
 
 → `CertFrAdvisorFillDetailsEnrichment` / `certFrAdvisorEnrichment`
+
+This step uses the general step (Step 4) from above.
+
+#### Affected attributes
+
+See `NVD CVE details filling`.
 
 ---
 
 ### CERT-SEI Advisors details filling
 
 → `CertSeiAdvisorFillDetailsEnrichment` / `certSeiAdvisorEnrichment`
+
+This step uses the general step (Step 4) from above.
+
+#### Affected attributes
+
+See `NVD CVE details filling`.
 
 ---
 
@@ -331,6 +471,14 @@ appended to already processed vulnerabilities.
 
 → `VulnerabilityAssessmentDashboard` / `vulnerabilityAssessmentDashboardEnrichment`
 
+The Vulnerability Assessment Dashboard is one of the resulting documents that results from the Inventory Enrichment
+Pipeline. It is a single-page HTML document that contains a summary of all vulnerabilities, their metadata and
+references. It allows for sorting and filtering the information contained within.
+
+One of the core features, the vulnerability timeline, can make generating the dashboard take quite a long time if many
+unreviewed vulnerabilities are present in the inventory, which is why the `vulnerabilityTimelinesGlobalEnabled`
+configuration parameter can initially be set to `false` in case this information is not yet required.
+
 ---
 
 ## Other
@@ -338,3 +486,5 @@ appended to already processed vulnerabilities.
 ### Advisor Periodic
 
 → `AdvisorPeriodicEnrichment` / `advisorPeriodicEnrichment`
+
+TODO

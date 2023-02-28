@@ -2,8 +2,8 @@
 
 # Data sources mirror overview
 
-- [download.md](download.md)
-- [index.md](index.md)
+- [List of downloads](download.md)
+- [List of indexes](index.md)
 
 The purpose of the data mirror is to download data (JSON, XML, ...) from a variety of sources into a local directory and
 create an index using Lucene Index from it. The index makes it easy to quickly search for data when it's needed during
@@ -13,7 +13,8 @@ The data is stored in a base directory, divided into two subdirectories named `d
 accessing a download/index, only the base directory needs to be defined as the normalized subdirectories are
 automatically inferred and created.
 
-This diagram shows the data flow in between the different Mirror phases:
+This diagram shows the data flow in between the different Mirror phases. See [this graph](../dependants.svg) for a more
+detailed dependency chart between the different phases.
 
 ![mirror overview process image](mirror-documentation-overview.svg)
 
