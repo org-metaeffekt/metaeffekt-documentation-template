@@ -6,33 +6,35 @@
 As some steps require other steps to be run before them, there is a certain default order the following steps should be
 executed in:
 
-- **Step 1**: find vulnerability identifiers
+- **[Step 1](#step-1---find-vulnerability-identifiers)**: find vulnerability identifiers
     - [`artifactYamlEnrichment`](#artifact-correlation-yaml)
     - [`cpeDerivationEnrichment`](#cpe-derivation)
     - [`msVulnerabilitiesByProductEnrichment`](#msrc-vulnerabilities-from-ms-products)
     - [`nvdMatchCveFromCpeEnrichment`](#nvd-cve-from-cpe)
     - [`customVulnerabilitiesFromCpeEnrichment`](#custom-vulnerabilities-from-cpe)
 
-- **Step 2**: fill vulnerability meta data for matched identifiers
+- **[Step 2](#step-2---fill-vulnerability-meta-data-for-matched-identifiers)**: fill vulnerability meta data for matched
+  identifiers
     - [`nvdCveFillDetailsEnrichment`](#nvd-cve-details-filling)
     - [`customVulnerabilitiesFillDetailsEnrichment`](#custom-vulnerability-details-filling)
     - [`msrcAdvisorFillDetailsEnrichment`](#msrc-advisor-details-filling)
 
-- **Step 3**: add status/keyword data
-    - [`vulnerabilityStatusEnrichment`]()
-    - [`vulnerabilityKeywordsEnrichment`]()
+- **[Step 3](#step-3---add-statuskeyword-data)**: add status/keyword data
+    - [`vulnerabilityStatusEnrichment`](#vulnerability-status)
+    - [`vulnerabilityKeywordsEnrichment`](#vulnerability-keywords)
 
-- **Step 4**: fill vulnerability meta data and add advisory data if available
+- **[Step 4](#step-4---fill-vulnerability-meta-data-and-add-advisory-data-if-available)**: fill vulnerability meta data
+  and add advisory data if available
     - [`nvdCveFillDetailsEnrichment`](#nvd-cve-details-filling)
     - [`customVulnerabilitiesFillDetailsEnrichment`](#custom-vulnerability-details-filling)
     - [`msrcAdvisorFillDetailsEnrichment`](#msrc-advisor-details-filling)
     - [`certFrAdvisorEnrichment`](#cert-fr-advisors-details-filling)
     - [`certSeiAdvisorEnrichment`](#cert-sei-advisors-details-filling)
 
-- **Step 5**: use data to create VAD
+- **[Step 5](#step-5---use-data-to-create-vad)**: use data to create VAD
     - [`vulnerabilityAssessmentDashboardEnrichment`](#vulnerability-assessment-dashboard--vad-)
 
-- **Other**: steps that do not belong into the main enrichment process
+- **[Other](#other-steps)**: steps that do not belong into the main enrichment process
     - [`advisorPeriodicEnrichment`](#advisor-periodic)
 
 Open the following image in a new tab to see more details about the requirements between the different steps:
@@ -44,9 +46,9 @@ structures you need to use the individual steps.
 
 The titles for the individual steps below are build from: `Step Name → Class Name / Maven POM config parameter`.
 
-## Step 1: find vulnerability identifiers
+# Step 1 - find vulnerability identifiers
 
-### Artifact Correlation YAML
+## Artifact Correlation YAML
 
 → `ArtifactYamlEnrichment` / `artifactYamlEnrichment`
 
@@ -55,7 +57,8 @@ overwriting the findings from the following automatic steps by appending and sub
 artifacts in an inventory.
 
 It uses YAML files in the [Artifact Correlation YAML format](example-data/artifact-data.json) to find matching artifacts
-and append some data to them.
+and append some data to them. See [Vulnerability Assessment (Correlation)](artifact-correlation.md) for more details on
+how-to and to see our philosophy.
 
 An example for how we do this:  
 A file consists of a list of entries, each one having a header comment block in front of it with the original artifact
@@ -80,16 +83,7 @@ and an `append`/`remove` section. In all sections, artifact attributes can be li
     Additional CPE URIs: cpe:/a:eclipse:jetty, cpe:/a:mortbay:jetty, cpe:/a:mortbay_jetty:jetty, cpe:/a:jetty:jetty
 ```
 
-For more details on how-to and to see our philosophy, view
-[Vulnerability Assessment (Correlation)](artifact-correlation.md).
-
-#### Affected attributes
-
-- `Artifact Inventory`
-    - read/write :mag_right: :memo:
-        - any attribute
-
-#### Technical description:
+### Technical description:
 
 For each YAML file specified:
 
@@ -99,9 +93,19 @@ For each YAML file specified:
     2. Apply the entry to the artifact by appending/setting values in or removing fields by using
        `YamlDataEntry#apply()`
 
----
+### Configuration Parameters
 
-### CPE Derivation
+- `List<File> yamlFiles = new ArrayList<>()`  
+  files or entire directories that are recursively scanned for YAML files conforming to the
+  [Artifact YAML Data schema](example-data/artifact-data.json) that are then applied to the artifacts in the inventory.
+
+### Affected attributes
+
+- `Artifact Inventory`
+    - read/write :mag_right: :memo:
+        - any attribute
+
+## CPE Derivation
 
 → `CpeDerivationEnrichment` / `cpeDerivationEnrichment`
 
@@ -122,7 +126,13 @@ Example:
 As mentioned above, this usually introduces a lot of false-positives into the project. Use the
 [Artifact Correlation YAML](#artifact-correlation-yaml) step to correct these findings.
 
-#### Affected attributes
+### Configuration Parameters
+
+- `int maxCorrelatedCpePerArtifact = Integer.MAX_VALUE`  
+  The maximum amount of CPEs are allowed to be matched per artifact, additional CPEs will be dropped. To guarantee
+  consistency over runs, the list of CPE is sorted alphabetically before removing elements.
+
+### Affected attributes
 
 - `Artifact Inventory`
     - read :mag_right:
@@ -135,7 +145,7 @@ As mentioned above, this usually introduces a lot of false-positives into the pr
     - write :memo:
         - Derived CPE URIs
 
-#### Technical description
+### Technical description
 
 1. For each field listed below, derive aliases by replacing certain character sequences with others and splitting
    identifiers. These are collected in a set.
@@ -158,9 +168,7 @@ As mentioned above, this usually introduces a lot of false-positives into the pr
 5. Limit the CPEs to `maxCorrelatedCpePerArtifact`
 6. Store the CPEs in `2.2` format (or `2.3` as fallback) in `Derived CPE URIs`
 
----
-
-### MSRC Vulnerabilities from MS Products
+## MSRC Vulnerabilities from MS Products
 
 → `MsrcVulnerabilitiesByProductEnrichment` / `msVulnerabilitiesByProductEnrichment`
 
@@ -183,7 +191,11 @@ All artifacts with a `MS Product ID` are iterated over:
    for documentation purposes
 6. Append all active vulnerabilities (names) to the `Vulnerability` sheet, if not already present
 
-#### Affected attributes
+### Configuration Parameters
+
+none
+
+### Affected attributes
 
 - `Artifact Inventory`
     - read :mag_right:
@@ -196,9 +208,7 @@ All artifacts with a `MS Product ID` are iterated over:
     - write :memo:
         - Name
 
----
-
-### NVD CVE from CPE
+## NVD CVE from CPE
 
 → `NvdVulnerabilitiesFromCpeEnrichment` / `nvdMatchCveFromCpeEnrichment`
 
@@ -227,7 +237,13 @@ Iterate over all artifacts in the inventory:
     9. Collect the CPEs that matched vulnerabilities into Matched CPEs
 3. Append all collected vulnerabilities (names) to `Vulnerabilities` sheet of the inventory if not already present
 
-#### Affected attributes
+### Configuration Parameters
+
+- `int maxCorrelatedVulnerabilitiesPerArtifact = Integer.MAX_VALUE`  
+  the maximum amount of vulnerabilities are allowed to be matched per artifact. Additional vulnerabilities will be
+  dropped. To guarantee consistency over runs, the list is sorted alphabetically before removing the vulnerabilities.
+
+### Affected attributes
 
 - `Artifact Inventory`
     - read :mag_right:
@@ -247,9 +263,7 @@ Iterate over all artifacts in the inventory:
         - Name
         - Product URIs
 
----
-
-### Custom Vulnerabilities from CPE
+## Custom Vulnerabilities from CPE
 
 → `CustomVulnerabilitiesFromCpeEnrichment` / `customVulnerabilitiesFromCpeEnrichment`
 
@@ -259,9 +273,7 @@ All `X from CPE` enrichment steps use the exact same matching logic, so the proc
 However, this is not a regular data source: This source uses custom vulnerabilities specified in either YAML or JSON
 files somewhere on your file system. See [Custom Vulnerabilities](custom-vulnerabilities.md) for more detail.
 
----
-
-## Step 2: fill vulnerability meta data for matched identifiers
+# Step 2 - fill vulnerability meta data for matched identifiers
 
 The "vulnerability filling" steps all work on a similar basis. Since the previous steps only supplied vulnerability
 _names_ without any details like CVSS, description, URLs, ..., these details have to be filled now, before other steps
@@ -285,7 +297,7 @@ vulnerabilities are introduced to the inventory, their details have to be filled
 enrichment can add new vulnerabilities, but require vulnerability information themselves, the enrichment steps have to
 be performed after those.
 
-### NVD CVE details filling
+## NVD CVE details filling
 
 → `NvdCveDetailsFillingEnrichment` / `nvdCveFillDetailsEnrichment`
 
@@ -302,7 +314,12 @@ For all `VulnerabilityMetaData` that have a CVE-identifier and are missing both 
 6. Join the references as JSONArray into `References`
 7. Add the description into `Description`
 
-#### Affected attributes
+### Configuration Parameters
+
+- `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
+  a string conforming to the [CVSS Severity Ranges format](#default-cvss-ranges).
+
+### Affected attributes
 
 - `Vulnerabilities`
     - read :mag_right:
@@ -315,24 +332,28 @@ For all `VulnerabilityMetaData` that have a CVE-identifier and are missing both 
         - References
         - (multiple CVSS-scoring related fields)
 
----
-
-### Custom Vulnerability details filling
+## Custom Vulnerability details filling
 
 → `CustomVulnerabilitiesDetailsFillingEnrichment` / `customVulnerabilitiesFillDetailsEnrichment`
 
 This process works the same and affects the same attributes as `NVD CVE details filling` above, except the `Url` might
 be a custom URL.
 
-#### Affected attributes
+### Configuration Parameters
+
+- `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
+  a string conforming to the [CVSS Severity Ranges format](#default-cvss-ranges).
+- `List<File> vulnerabilityFiles = new ArrayList<>()`  
+  a list of files/directories of files that are parsed recursively conforming to the
+  [Custom Vulnerability format](custom-vulnerabilities.md).
+
+### Affected attributes
 
 See `NVD CVE details filling`.
 
----
+# Step 3 - add status/keyword data
 
-## Step 3: add status/keyword data
-
-### Vulnerability Status
+## Vulnerability Status
 
 → `VulnerabilityStatusEnrichment` / `vulnerabilityStatusEnrichment`
 
@@ -347,7 +368,17 @@ Adds status information to the vulnerabilities in the inventory.
    entries
 4. Apply the first matching entry. If there is at least one more matching, warn the user.
 
-#### Affected attributes
+### Configuration Parameters
+
+- `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
+  a string conforming to the [CVSS Severity Ranges format](#default-cvss-ranges).
+- `List<File> statusFiles = new ArrayList<>()`  
+  a list of files/directories of files that are parsed recursively conforming to the
+  [Vulnerability Status format](vulnerability-status.md).
+- `String[] activeLabels = new String[]{}`  
+  Labels that are marked as active. Can be used to enable or disable certain status assessments from the `statusFiles`.
+
+### Affected attributes
 
 - `Vulnerabilities`
     - read :mag_right:
@@ -364,9 +395,7 @@ Adds status information to the vulnerabilities in the inventory.
         - Risk
         - Measures
 
----
-
-### Vulnerability Keywords
+## Vulnerability Keywords
 
 → `VulnerabilityKeywordsEnrichment` / `vulnerabilityKeywordsEnrichment`
 
@@ -382,7 +411,17 @@ See [Vulnerability Keywords](vulnerability-keywords.md) to learn more about vuln
     4. A keyword file may reference a status entry. If this is the case, apply the status to the matching vulnerability.
        See the `vulnerabilityStatusEnrichment` above for more details.
 
-#### Affected attributes
+### Configuration Parameters
+
+- `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
+  a string conforming to the [CVSS Severity Ranges format](#default-cvss-ranges).
+- `List<File> statusFiles = new ArrayList<>()`  
+  a list of files/directories of files that are parsed recursively conforming to the
+  [Vulnerability Keyword format](vulnerability-keywords.md).
+- `List<String> activeLabels = new ArrayList<>()`  
+  Labels that are marked as active. Can be used to enable or disable certain status assessments from the `statusFiles`.
+
+### Affected attributes
 
 - `Vulnerabilities`
     - read :mag_right:
@@ -395,9 +434,7 @@ See [Vulnerability Keywords](vulnerability-keywords.md) to learn more about vuln
         - Matched Keyword Total Score
         - (… all Vulnerability Status attributes)
 
----
-
-## Step 4: fill vulnerability meta data and add advisory data if available
+# Step 4 - fill vulnerability meta data and add advisory data if available
 
 Optionally, advisory information can be appended to the inventory. This currently includes data from the CERT-FR,
 CERT-SEI and MSRC (Microsoft Security Response Center). These enrichment steps all work similarly, as they all inherit
@@ -414,7 +451,7 @@ from the `VulnerabilityDetailsFillingEnrichment` class, which is also the basis 
     2. If the vulnerability is missing `Url` or `Description`, fill the data
     3. Merge the references with any existing `References`
 
-### MSRC Advisor details filling
+## MSRC Advisor details filling
 
 → `MsrcAdvisorFillDetailsEnrichment` / `msrcAdvisorFillDetailsEnrichment`
 
@@ -435,39 +472,50 @@ Collect all `VulnerabilityMetaData` with a `CVE` or `ADV` identifier, but withou
 7. Use the `toJson` method to append the entire advisory entry in `Advisories`. This includes data like descriptions,
    modified date, references and more. This data can then be used in later steps.
 
-#### Affected attributes
+### Configuration Parameters
+
+- `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
+  a string conforming to the [CVSS Severity Ranges format](#default-cvss-ranges).
+
+### Affected attributes
 
 See `NVD CVE details filling`.
 
----
-
-### CERT-FR Advisors details filling
+## CERT-FR Advisors details filling
 
 → `CertFrAdvisorFillDetailsEnrichment` / `certFrAdvisorEnrichment`
 
 This step uses the general step (Step 4) from above.
 
-#### Affected attributes
+### Configuration Parameters
+
+- `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
+  a string conforming to the [CVSS Severity Ranges format](#default-cvss-ranges).
+
+### Affected attributes
 
 See `NVD CVE details filling`.
 
----
-
-### CERT-SEI Advisors details filling
+## CERT-SEI Advisors details filling
 
 → `CertSeiAdvisorFillDetailsEnrichment` / `certSeiAdvisorEnrichment`
 
 This step uses the general step (Step 4) from above.
 
-#### Affected attributes
+### Configuration Parameters
+
+- `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
+  a string conforming to the [CVSS Severity Ranges format](#default-cvss-ranges).
+
+- `File svgDirectory`
+
+### Affected attributes
 
 See `NVD CVE details filling`.
 
----
+# Step 5 - use data to create VAD
 
-## Step 5: use data to create VAD
-
-### Vulnerability Assessment Dashboard (VAD)
+## Vulnerability Assessment Dashboard (VAD)
 
 → `VulnerabilityAssessmentDashboard` / `vulnerabilityAssessmentDashboardEnrichment`
 
@@ -479,12 +527,62 @@ One of the core features, the vulnerability timeline, can make generating the da
 unreviewed vulnerabilities are present in the inventory, which is why the `vulnerabilityTimelinesGlobalEnabled`
 configuration parameter can initially be set to `false` in case this information is not yet required.
 
----
+### Configuration Parameters
 
-## Other
+- `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
+  a string conforming to the [CVSS Severity Ranges format](#default-cvss-ranges).
+- `double minimumVulnerabilityIncludeScore = Double.MIN_VALUE`  
+  The minimum score vulnerabilities need to be included in the VAD.
+- `int maximumVulnerabilitiesPerDashboardCount = Integer.MAX_VALUE`  
+  The absolute maximum amount of vulnerabilities to include in the VAD.
+- `int maximumCpeForTimelinesPerVulnerability = Integer.MAX_VALUE`  
+  How many timelines should be generated per vulnerability, if enough matching CPE are present. Setting this to a lower
+  value like `3` is recommended when the inventory is still fresh with missing correlation files to prevent false
+  positives from taking a long time to generate.
+- `int maximumVulnerabilitiesPerTimeline = 72260`  
+  The maximum amount of vulnerabilities to query for whilst generating the timelines. The limit is set to prevent CPEs
+  with a long history from taking too long to generate.
+- `int maximumVersionsPerTimeline = Integer.MAX_VALUE`  
+  The maximum amount of versions to include in the timelines. If set to a lower value than the amount of versions
+  matched, the versions will be cropped from the left (i.e. the older, lower versions). It is not guaranteed that this
+  exact amount of versions is hit, as the normalizing process that follows after that might reduce the amount further.
+- `int maximumTimeSpentOnTimelines = Integer.MAX_VALUE`  
+  The maximum amount of _SECONDS_ the process should spend generating a timeline. If hit, will stop searching for more
+  versions and vulnerabilities.
+- `double insignificantThreshold = Integer.MIN_VALUE`  
+  If a vulnerability has a score of `insignificantThreshold` or less, it will be marked as `insignificant` if it has no
+  other status. A recommended value for this is `7`.
+- `boolean vulnerabilityTimelinesGlobalEnabled = true`  
+  Whether to generate timelines at all.
+- `boolean vulnerabilityTimelineHideIrrelevantVersions = true`  
+  Whether to include all versions in the timeline or to filter them for 'relevant' versions (with a change in the
+  vulnerability count, containing the current vulnerability, major version changes, ...).
+- `boolean failOnVulnerabilityWithoutSpecifiedRisk = true`  
+  Whether to fail after generating and writing the VAD if a vulnerability is found that does not contain a status with a
+  specified `risk`.
+- `boolean failOnUnreviewedAdvisories = true`  
+  Whether to fail after generating and writing the VAD if a vulnerability is found that has an advisory that is not
+  marked as reviewed by a status entry.
 
-### Advisor Periodic
+# Other steps
+
+## Advisor Periodic
 
 → `AdvisorPeriodicEnrichment` / `advisorPeriodicEnrichment`
 
 TODO
+
+# Other information
+
+### Default CVSS Ranges
+
+The default CVSS severity range is the CVSS V3 range:
+
+    None:pastel-gray:0.0:0.0,Low:strong-yellow:0.1:3.9,Medium:strong-light-orange:4.0:6.9,High:strong-dark-orange:7.0:8.9,Critical:strong-red:9.0:10.0
+
+Apart from that, there is also the CVSS V2 range:
+
+    Low:strong-yellow:0.0:3.9,Medium:strong-light-orange:4.0:6.9,High:strong-red:7.0:10.0
+
+These can be found in `com.metaeffekt.artifact.analysis.vulnerability.enrichment.cvss.CvssSeverityRanges`. Or create a
+custom range that uses the colors from the `DefaultColorScheme`.
