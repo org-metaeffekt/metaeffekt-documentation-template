@@ -32,7 +32,7 @@ executed in:
     - [`certSeiAdvisorEnrichment`](#cert-sei-advisors-details-filling)
 
 - **[Step 5](#step-5---use-data-to-create-vad)**: use data to create VAD
-    - [`vulnerabilityAssessmentDashboardEnrichment`](#vulnerability-assessment-dashboard--vad-)
+    - [`vulnerabilityAssessmentDashboardEnrichment`](#vulnerability-assessment-dashboard-vad)
 
 - **[Other](#other-steps)**: steps that do not belong into the main enrichment process
     - [`advisorPeriodicEnrichment`](#advisor-periodic)
