@@ -1,30 +1,50 @@
 # Vulnerability Assessment (Correlation)
 
-> :warning: This document is still WIP and may contain outdated/useless information without context  
-> TODO
+> :warning: TODO: This document is still WIP and may contain outdated/useless information without context
 
-## Initial Inventory enrichment
+## Introduction
 
-1. Seperate Inventories into directories
-2. Assert that vulnerability Mirror exists
-    1. in VulnerabilityEnrichmentTest beforeAll set update true
-    2. run any Method in Class
-3. copy Inventory path
-4. paste into externalInventory variable
-5. run enrichAndCreateDashboardFromOtherTest
+This document describes best practices and tips/ticks on how to best create and maintain correlation files, as used by
+the [Artifact Correlation YAML](steps.md#artifact-correlation-yaml) enrichment step.
+
+Automatic vulnerability correlation, as provided by the [CPE Derivation step](steps.md#cpe-derivation), can sometimes be
+incorrect due to incomplete, ambiguous, or incorrect information provided by the artifacts in an inventory. This makes
+manual interference necessary to ensure that accurate CPE information is specified for each artifact.
+
+Artifact correlation files contain CPE and other vulnerability-related information, such as KB identifiers for
+the [MSRC Vulnerabilities from Products](steps.md#msrc-vulnerabilities-from-ms-products). These files allow users to
+specify additional CPEs or remove incorrect ones, improving on the accuracy of automatic correlation.
+
+This document will focus on the CPE correlation aspect, not the Microsoft vulnerability information.
 
 ## Correlation loop
 
-1. Create yaml file in same directory: <inventory name> - data.yaml
-2. open yaml file in Intellij
-    1. if json schema not yet defined: click bottom right No JSON schema → edit schema mappings → copy and insert path
-       for artifact-data.json
-3. run ArtifactYamlUtilities main method
+Preparation:
+
+- Create a YAML file where the correlation entries will be stored in
+- Open the file in your preferred editor. You can specify the [artifact-data.json](example-data/artifact-data.json)
+  JSON schema to enable guided assistance when it comes to format and attributes.
+- Create an [inventory enrichment pipeline](steps.md) using (at least) these steps:
+    - `artifactYamlEnrichment`: This step will read the correlation file and add the information to the inventory
+    - `cpeDerivationEnrichment`: This step will automatically derive CPE information for each artifact
+    - optional: `nvdMatchCveFromCpeEnrichment`: Finds vulnerabilities that match the CPEs of the artifacts
+    - optional: `nvdCveFillDetailsEnrichment`: Adds NVD CVE information to the matched vulnerabilities
+
+Correlation loop:
+
+- Run the pipeline on the inventory
+- For each artifact in the inventory, use the [steps listed below](#initial-state) to determine if the CPE information
+  is incorrect or incomplete and adjust the correlation file accordingly
+
+Sometimes, multiple loops are required to check whether the effective CPE information matches the expected information.
+Maybe a mistake has been made, where an incorrect field was listed or the CPE was misspelled? This has all happened
+before.
+
+If you have access to the source code of the _Metaeffekt Artifact Analysis_ project, you can head down to the
+[Utility Class](#utility-class) section, to learn more about how to easily iterate over artifacts in an inventory with
+automatic suggestions and other features.
 
 # Writing a correlation file (+ best practices)
-
-Using the ArtifactYamlUtilities class in the artifact analysis project, launch the main method and enter the path to the
-enriched inventory. Navigate the inventory using the commands listed in the command line.
 
 ### Initial state
 
@@ -38,7 +58,7 @@ matched entry is correct/incorrect.
 If no CPE URIs have been matched or the ones matched were incorrectly added, search the internet for (vulnerability)
 information on the artifact.
 
-### **Creating the entry**
+### Creating the entry
 
 Once the research is completed and at least one modification to the artifact is required OR at least a CPE URI has been
 correctly matched, an entry in the YAML file has to be created. To assist you with this, the CLI-tool can generate an
@@ -73,7 +93,7 @@ vulnerabilities than too few.
 This means, all inapplicable CPE URIs should be listed in a comma-separated list under Inapplicable CPE URIs and
 additional ones under Additional CPE URIs.
 
-### **Correctly derived CPE**
+### Correctly derived CPE
 
 When CPEs have been derived correctly by the system, an entry with the CPE should be created under Additional CPE URIs.
 This is so that when the derivation algorithm changes in the future, the CPE does not disappear from the derived list.
@@ -98,7 +118,7 @@ Example:
 
 `    `Additional CPE URIs: cpe:/a:qos:slf4j
 
-### **Reasoning chain**
+### Reasoning chain
 
 As seen above, the automatically generated entry contains a reason tag: # reason: cpe:/a:pivotal:reactor\_netty -->
 This is so that when the entry is visited in the future, the reason behind the modifications can be understood. The best
@@ -117,7 +137,7 @@ forms.
 \# cpe:/a:taglib:taglib --> https://taglib.org/ --> TagLib is a library for reading and editing the meta-data of several
 popular audio formats
 
-### **Follow-up entries**
+### Follow-up entries
 
 Multiple entries can be chained together to form more of a logic than a simple entry can. See this example:
 
@@ -147,15 +167,164 @@ springsource\_spring\_security
 
 todo
 
-### **Multiple entries in affects**
+### Multiple entries in affects
 
 todo
 
-### **Duplicate entries**
+### Duplicate entries
 
 todo; entries with the same CPE information should be merged into one with a list of criteria … see multiple entries in
 affects
 
-### **Never-correct entries (github:github and jboss:jboss)**
+### Never-correct entries (github:github and jboss:jboss)
 
 todo
+
+## Utility class
+
+This section will only be useful to you, if you have access to the source code of the _Metaeffekt Artifact Analysis_
+project.
+
+This command line tool will help you in the process of finding the correct CPEs for artifacts in an inventory by
+suggesting URLs, searching a local vulnerability index and automatically enriching inventories.
+
+Getting started:
+
+- On the top-level of the project, create a file `.local-properties`
+    - Set a property `ae.mirror.path=` that specifies a directory that contains the new
+      [Data Source Mirror](../mirror/mirror-overview.md) or an empty directory where the mirror will be created in.
+    - Set a property `ae.mirror.nvd.apikey=` where you can enter your personal/company
+      [NVD API key](../mirror/download.md#nvd-api). This is only required if you need to download the data into the
+      mirror directory.
+- Open the `CorrelationUtilities` class
+- Add at lease one path to a correlation file/directory to the list of correlation files:
+  ```java
+  private List<File> correlationFiles = Arrays.asList(
+      new File("/Users/.../correlation-1"),
+      new File("/Users/.../correlation-2"),
+      ...
+  );
+  ```
+- Specify the path to the **not yet enriched** inventory in
+  ```java
+  private File inventoryFile = new File("/Users/.../inventory.xls");
+  ```
+  or leave it empty to provide the path at runtime later.
+- Run the `main` method: `public static void main(String[] args)`
+- If you need to mirror the data sources, enter `Y` and confirm on this prompt:
+  ```
+  Do you want to perform a full mirror? [Y/n] Failed to initialize index: Index directory is empty: /Users/...
+  ```
+  This will trigger the download and index classes to fully update the mirror. This can take quite a while (10-20
+  minutes).  
+  If you ever need to update the mirror, enter `m` → `m` to update all mirrors.
+
+The command line tool is structured using a set of different menus that can be navigated by entering short or long
+identifiers of actions to perform. The short action is always highlighted in `[brackets]`, the long version is the
+option, but without the brackets.
+
+- **main menu**:
+  ```
+  -----------------------< Correlation Utilities >------------------------
+  Options: [q]uery, [i]nventory, [e]nrichment, [m]irror, [ex]it
+  ```
+  Selection of the actions you want to take. In most cases, this is the `i` option, as almost all other actions are
+  accessible from there as well.
+- **mirror**:
+  ```
+  ----------------------------< Data Mirror >-----------------------------
+  Options: [m]irror all, [d]ownload all, [i]ndex all, [b]ack, [ex]xit
+  ```
+  Allows for updating the local mirror. `m` is recommended, as only downloading or only indexing is no use.
+- **enrichment**:
+  ```
+  ------------------------< Inventory Enrichment >------------------------
+  [b]ack / [e]xit, inventory enrichment pipelines:
+  - [0] correlation
+  - [1] nvd
+  - [2] nvd-advisors
+  - [3] vad
+  ```
+  Allows for selecting an enrichment pipeline from (currently) four different pre-configured pipelines or a custom
+  pipeline specified in
+  ```java
+  private final static Map<String, List<Class<? extends InventoryEnricher>>> ENRICHMENT_PIPELINES = new LinkedHashMap<String, List<Class<? extends InventoryEnricher>>>() {{
+  ```
+  at the bottom of the class. Depending on the pipeline, different steps will be executed. See the above mentioned
+  attribute `ENRICHMENT_PIPELINES` to see what steps will be executed.  
+  After selecting the pipeline, you will be prompted to select what should be enriched:
+  ```
+  Enrichment mode [a]rtifact, [i]nventory, [s]tored inventory: 
+  ```
+  `artifact` constructs a new inventory using a cloned version of the currently selected artifact from the `[i]nventoty`
+  menu and applies the enrichment. `inventory` clones the inventory and applies the enrichment. `stored inventoty` works
+  a bit different and is a really useful new option: The command line tool stores these enriched inventories in the
+  `target` directory and using `[sw]itch` in the `[i]nventoty` menu, you can switch between the un-enriched and enriched
+  versions of the inventory. when re-applying the pipeline to the inventory using `stored inventoty`, the un-enriched
+  inventory will be used, no matter what inventory is selected.
+- **query**:
+  ```
+  --------------------------< Perform Queries >---------------------------
+  Options: {data query}, [h]elp, [b]ack, [e]xit
+  h
+  | Identifier                 | Short Identifier |
+  |----------------------------|------------------|
+  | cert-fr-advisor            | cf, certfr       |
+  | cert-sei-advisor           | cs, certsei      |
+  | msrc-advisor               | msa, msrca       |
+  | msrc-product               | msp, msrcp       |
+  | msrc-kb-chain              | mskb, msrckb     |
+  | nvd-cpe-api                | cpe              |
+  | nvd-cpe-api-vendor-product | cpevp, vp        |
+  | nvd-cve                    | cve              |
+  ```
+  Allows for accessing the local index. Either the `Identifier` or the `Short Identifier` can be used to start a query.
+  All the options may seem a bit overwhelming at first, but simply trying out the different options will guide you
+  through creating a query, no need for learning all sub-options by heart. If you want, however, you can directly
+  combine the follow-up questions in the initial input to skip the questions:
+  ```
+  cpe c wink
+  
+  cpe:/a:apache:wink
+  cpe:/a:apache:wink:0.1
+  cpe:/a:apache:wink:1.0
+  cpe:/a:apache:wink:1.1.0
+  cpe:/a:apache:wink:1.1.1
+  cpe:/a:apache:wink:1.1.2
+  cpe:/a:apache:wink:1.2.0
+  cpe:/a:apache:wink:1.2.1
+  cpe:/a:apache:wink:1.3.0
+  ```
+- **inventory**:
+  ```
+  --------------------- original ----------------------
+  Artifact index 0 of 537
+  Id:        acl-2.2.53
+  Component: acl
+  Version:   2.2.53
+  URL:       https://savannah.nongnu.org/projects/acl
+  Type:      package
+  -----------------------------------------------------
+  Options: [go], [n]ext, [p]revious, [l]inks, [su]rrounding artifacts, [si]milar artifacts, [a]ll attributes, [ya] yaml -> artifact, [yi] yaml -> inventory, [en]rich inventory/artifact, [s|q]uery, change [source|src] inventory, [sw]itch working inventory, [cls|clear] screen, [b]ack, [ex]it
+  ```
+    - Whenever a dialog is done, the current artifact is printed with it's most important attributes for the artifact
+      correlation. All other attributes can be printed using `[a]ll attributes`.
+    - Navigate using `[n]ext`, `[p]revious` or `[go]`, after which a numeric ID or wildcard-string for an artifact ID
+      can be specified (`acl-*`).
+    - Surrounding or similar artifacts (by `Id`/`Component`)
+      ```
+      si
+      
+      [140] iwl100-firmware-39.31.5.1   |  152  iwl7260-firmware-25.30.13.0
+       141  iwl1000-firmware-39.31.5.1  |  144  iwl2000-firmware-18.168.6.1
+       142  iwl105-firmware-18.168.6.1  |  145  iwl2030-firmware-18.168.6.1
+       143  iwl135-firmware-18.168.6.1  |  146  iwl3160-firmware-25.30.13.0
+        77  firewalld-0.9.3             |  149  iwl6000-firmware-9.221.4.1
+        78  firewalld-filesystem-0.9.3  |  148  iwl5150-firmware-8.24.2.2
+       147  iwl5000-firmware-8.83.5.1_1 |  150  iwl6000g2a-firmware-18.168.6.1
+       151  iwl6050-firmware-41.28.5.1  |  293  mariadb-connector-c-3.1.11
+      ```
+    - `[ya]`/`[yi]` will apply all correlation files to the current artifact or inventory and display the effective
+      changes detected (+ consistency warnings)
+    - `[sw]itch` will switch between the `stored inventoty` and the original inventory
+    - `[s|q]uery` or `[en]rich` allow for accessing the other menus listed above 

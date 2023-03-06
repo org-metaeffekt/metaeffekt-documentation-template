@@ -3,6 +3,11 @@
 
 # Inventory Enrichment Steps
 
+For examples and more information on how to implement an inventory enrichment pipeline yourself, see these documents:
+
+- [Java process](java.md)
+- [Maven POM](maven.md)
+
 As some steps require other steps to be run before them, there is a certain default order the following steps should be
 executed in:
 
