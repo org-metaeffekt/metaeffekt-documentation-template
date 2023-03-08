@@ -36,7 +36,9 @@ Data sources include:
 
 ### Java
 
-Commented out download/index classes are deprecated
+Commented out download/index classes are deprecated. See
+[deprecated downloads](download.md#list-of-deprecated-downloads) and
+[deprecated indexes](index.md#list-of-deprecated-indexers) for more details.
 
 ```java
 final String MIRROR_NVD_API_KEY = "";
@@ -204,3 +206,5 @@ When performing a full mirror without the deprecated downloads/indexes, this dir
     - msrc-kb-chains
     - msrc-products
     - nvd-cve
+
+Learn how we use the data sources in the [Inventory Enrichment Steps](../enrichment/inventory-enrichment.md)

@@ -67,7 +67,7 @@ Some more information:
   can be made during that time. The individual process can define how many threads should be launched in parallel, with
   a maximum of the amount of cores available.
 
-A full list of all download processes can be found in [download.md](download.md).
+A full list of all download processes can be found [below](#list-of-downloads).
 
 ### Some more context for downloading
 

@@ -17,7 +17,7 @@ an overview on the dependencies between downloads and indexes, see [this overvie
         * MSRC Products
         * MSRC Advisors (advisory data)
         * MSRC KB Chains
-    * [List of deprecated downloads](#list-of-deprecated-downloads)
+    * [List of deprecated downloads](#list-of-deprecated-indexers)
         * Legacy NVD CVE/CPE Information
             * CPE Dictionary (CPEs)
             * CPE Dictionary Vendor Product (Vendor/Product pairs)
@@ -102,8 +102,8 @@ highly recommend checking out the [NVD Downloaders](download.md#nvd-api).
 
 ### NVD CPE API (CPEs) (`cpe-dict` / `nvdCpeIndex`)
 
-All entries from the API have been normalized to match the CPE Dictionary format in the downloader step, which is why
-all CPE entries can be parsed in the same way.
+All entries from the API have been normalized to match the CPE Dictionary format in the
+[downloader step](download.md#nvd-api), which is why all CPE entries can be parsed in the same way.
 
 All entries have these fields: `cpeName`, `cpeNameId`, `deprecated`, `titles`, `refs`  
 `lastModified` and `created` are dropped in this step.
@@ -195,8 +195,8 @@ contains a table in the header that provides some general information, such as t
 appear in random order from document to document.
 
 After the header, there are multiple titles followed by text content. These headers are not normalized, with 1800 unique
-headers, where sometimes there are variations of headers and some appear only once. After detection the paragraphs, we
-collect them with their respective header and text content. Some titles are normalized to an English identifier for
+headers, where sometimes there are variations of headers and some appear only once. After detecting the paragraphs, they
+are collected with their respective header and text content. Some titles are normalized to an English identifier for
 consistency.
 
 1. Iterate over all TXT files in the directory
@@ -230,7 +230,7 @@ Valid table headers are:
   `Reminder of notices issued`
 - `^\\d{1,2} .+`
 
-Examples:
+"Interactive" example:
 
 - Please view the entry [CERTFR-2022-AVI-068](example-data/cert-fr-CERTFR-2022-AVI-068.txt) (online
   [https://www.cert.ssi.gouv.fr/avis/CERTFR-2022-AVI-068/](https://www.cert.ssi.gouv.fr/avis/CERTFR-2022-AVI-068/)).
@@ -239,7 +239,9 @@ Examples:
     - [Removing unused lines](example-data/cert-fr-CERTFR-2022-AVI-068-PARSING-1.txt)
     - [Detection of segments](example-data/cert-fr-CERTFR-2022-AVI-068-PARSING-2.txt) (`##` stands for a comment by me)
 
-  And this is the [result of a parsed file (JSON)](example-data/cert-fr-CERTFR-2022-AVI-068-PARSED.json).
+  And this is the [result of a parsed file (JSON)](example-data/cert-fr-CERTFR-2022-AVI-068-PARSED.json). This process
+  is obviously not perfect, but this is the best the process could be made after spending over two weeks on writing it,
+  with multiple rewrites so far.
 
 ---
 
@@ -268,10 +270,10 @@ child nodes of the vendors, but not all products have a family/vendor: some are 
 ### MSRC Advisors (advisory data) (`msrc-advisors` / `msrcAdvisorIndex`)
 
 The advisories provided in the MSRC download are each almost always linked to at least one CVE, which is also their ID.
-Very rarely however, the ID may be an ADV\d+ identifier, that is not related a specific CVE.
+Very rarely however, the ID may be an `ADV\d+` identifier, that is not related a specific CVE.
 
-Some of the AdvisorEntry-related fields such as workarounds, … cannot be filled out, as they relate to a specific
-product.
+Some of the AdvisorEntry-related fields such as workarounds, etc. cannot be filled out, as they relate to a specific
+product and are stored in separate fields.
 
 | XML                                                              | MsrcAdvisorEntry     |
 |:-----------------------------------------------------------------|:---------------------|
@@ -296,7 +298,7 @@ For more details on how this index is built and how it can be used, see
 
 ---
 
-## List of deprecated downloads
+## List of deprecated indexers
 
 These downloads either have already or will stop working in the future, due to API changes.
 
