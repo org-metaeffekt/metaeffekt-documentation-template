@@ -34,6 +34,10 @@ This process is split into multiple parts, that are each described in their own 
     - [Vulnerability Keywords files](enrichment/vulnerability-keywords.md)
     - [Vulnerability Filter format](enrichment/vulnerability-filter-format.md)
 
+Other chapters:
+
+- [Inventory Vulnerability Status differ](enrichment/vulnerability-status-differ.md)
+
 ## Overview graphs
 
 This image provides a high-level overview over the process:

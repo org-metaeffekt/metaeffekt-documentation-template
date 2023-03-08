@@ -120,20 +120,29 @@ inside a tag with the same name. Replace lists entries with child tag entries.
                     </certSeiAdvisorEnrichment>
 
 
+                    <vulnerabilityFilterEnrichment>
+                        <active>false</active>
+                        <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
+                    </vulnerabilityFilterEnrichment>
+
                     <vulnerabilityAssessmentDashboardEnrichment>
                         <active>${activate.dashboard}</active>
                         <outputDashboardFile>${output.dashboard}</outputDashboardFile>
                         <svgDirectory>${output.svg}</svgDirectory>
 
+                        <!-- deprecated: Use vulnerabilityIncludeFilter instead -->
                         <minimumVulnerabilityIncludeScore>-2147483648</minimumVulnerabilityIncludeScore>
+                        <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
                         <maximumVulnerabilitiesPerDashboardCount>2147483647</maximumVulnerabilitiesPerDashboardCount>
+                        <insignificantThreshold>${ae.dashboard.insignificant.threshold}</insignificantThreshold>
+
+                        <vulnerabilityTimelinesGlobalEnabled>${ae.dashboard.timeline}</vulnerabilityTimelinesGlobalEnabled>
                         <maximumCpeForTimelinesPerVulnerability>2147483647</maximumCpeForTimelinesPerVulnerability>
+                        <maximumVulnerabilitiesPerTimeline>${ae.dashboard.cpe.limit}</maximumVulnerabilitiesPerTimeline>
+                        <vulnerabilityTimelineHideIrrelevantVersions>true</vulnerabilityTimelineHideIrrelevantVersions>
                         <maximumVersionsPerTimeline>2147483647</maximumVersionsPerTimeline>
                         <maximumTimeSpentOnTimelines>2147483647</maximumTimeSpentOnTimelines>
-                        <insignificantThreshold>${ae.dashboard.insignificant.threshold}</insignificantThreshold>
-                        <maximumVulnerabilitiesPerTimeline>${ae.dashboard.cpe.limit}</maximumVulnerabilitiesPerTimeline>
-                        <vulnerabilityTimelinesGlobalEnabled>${ae.dashboard.timeline}</vulnerabilityTimelinesGlobalEnabled>
-                        <vulnerabilityTimelineHideIrrelevantVersions>true</vulnerabilityTimelineHideIrrelevantVersions>
+
                         <failOnVulnerabilityWithoutSpecifiedRisk>true</failOnVulnerabilityWithoutSpecifiedRisk>
                         <failOnUnreviewedAdvisories>true</failOnUnreviewedAdvisories>
                         <failOnUnreviewedAdvisoriesTypes></failOnUnreviewedAdvisoriesTypes>
