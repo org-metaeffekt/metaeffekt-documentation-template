@@ -20,6 +20,14 @@ Learn more about how to build a pipeline yourself here:
 - [Java process](java.md)
 - [Maven POM](maven.md)
 
+Details for the individual steps:
+
+- [Custom Vulnerability Data Sources](custom-vulnerabilities.md)
+- [Inventory CPE data and effective CPE](parsing-effective-cpe.md)
+- [Vulnerability Status files](vulnerability-status.md)
+- [Vulnerability Keywords files](vulnerability-keywords.md)
+- [Vulnerability Filter format](vulnerability-filter-format.md)
+
 ## Overview / Data flow
 
 As mentioned above, an `InventoryEnrichmentPipeline` is constructed from multiple `InventoryEnricher` instances. They

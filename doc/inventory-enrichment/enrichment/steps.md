@@ -36,7 +36,8 @@ executed in:
     - [`certFrAdvisorEnrichment`](#cert-fr-advisors-details-filling)
     - [`certSeiAdvisorEnrichment`](#cert-sei-advisors-details-filling)
 
-- **[Step 5](#step-5---use-data-to-create-vad)**: use data to create VAD
+- **[Step 5](#step-5---use-data-to-create-vad)**: adjust view and use data to create VAD
+    - [`vulnerabilityFilterEnrichment`](#vulnerability-filter)
     - [`vulnerabilityAssessmentDashboardEnrichment`](#vulnerability-assessment-dashboard-vad)
 
 - **[Other](#other-steps)**: steps that do not belong into the main enrichment process
@@ -520,6 +521,34 @@ See `NVD CVE details filling`.
 
 # Step 5 - use data to create VAD
 
+## Vulnerability Filter
+
+→ `VulnerabilityFilterEnrichment` / `vulnerabilityFilterEnrichment`
+
+Allows for filtering vulnerabilities based on their name, dates, scores, etc. The filter is applied to every
+vulnerability in the inventory and only those that match the filter are kept. It is highly recommended to see the
+[Vulnerability Filter format](vulnerability-filter-format.md) document for more information on how to build a filter
+expression.
+
+If no filter is provided, this enrichment step is skipped and all vulnerabilities are kept.
+
+### Configuration Parameters
+
+- `String vulnerabilityIncludeFilter = ""`  
+  A filter string conforming to the [Vulnerability Filter format](vulnerability-filter-format.md) that is used to filter
+  vulnerabilities based on a variety of criteria. If no filter is provided, all vulnerabilities are included.
+
+### Affected attributes
+
+- `Vulnerabilities`
+    - read :mag_right:
+        - Description
+        - Weakness
+        - Last Updated Timestamp
+        - Created Timestamp
+        - Source
+        - multiple CVSS-scoring related fields
+
 ## Vulnerability Assessment Dashboard (VAD)
 
 → `VulnerabilityAssessmentDashboard` / `vulnerabilityAssessmentDashboardEnrichment`
@@ -539,8 +568,9 @@ configuration parameter can initially be set to `false` in case this information
 - **DEPRECATED:** `double minimumVulnerabilityIncludeScore = Double.MIN_VALUE`  
   The minimum score vulnerabilities need to be included in the VAD. Use `vulnerabilityIncludeFilter` instead.
 - `String vulnerabilityIncludeFilter = ""`  
-  A filter string conforming to the [Vulnerability Filter format](vulnerability-filter-format.md) that is used to filter
-  vulnerabilities based on a variety of criteria.
+  See [Vulnerability Filter](#vulnerability-filter) for more details. A filter string conforming to the
+  [Vulnerability Filter format](vulnerability-filter-format.md) that is used to filter vulnerabilities based on a
+  variety of criteria.
 - `int maximumVulnerabilitiesPerDashboardCount = Integer.MAX_VALUE`  
   The absolute maximum amount of vulnerabilities to include in the VAD.
 - `int maximumCpeForTimelinesPerVulnerability = Integer.MAX_VALUE`  

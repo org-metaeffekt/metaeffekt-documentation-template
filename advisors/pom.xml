@@ -237,6 +237,11 @@
                                 </certSeiAdvisorEnrichment>
 
 
+                                <vulnerabilityFilterEnrichment>
+                                    <active>false</active>
+                                    <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
+                                </vulnerabilityFilterEnrichment>
+
                                 <vulnerabilityAssessmentDashboardEnrichment>
                                     <active>${activate.dashboard}</active>
                                     <outputDashboardFile>${output.dashboard}</outputDashboardFile>
