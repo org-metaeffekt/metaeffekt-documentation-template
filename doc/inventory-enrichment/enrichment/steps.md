@@ -536,8 +536,11 @@ configuration parameter can initially be set to `false` in case this information
 
 - `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
   a string conforming to the [CVSS Severity Ranges format](#default-cvss-ranges).
-- `double minimumVulnerabilityIncludeScore = Double.MIN_VALUE`  
-  The minimum score vulnerabilities need to be included in the VAD.
+- **DEPRECATED:** `double minimumVulnerabilityIncludeScore = Double.MIN_VALUE`  
+  The minimum score vulnerabilities need to be included in the VAD. Use `vulnerabilityIncludeFilter` instead.
+- `String vulnerabilityIncludeFilter = ""`  
+  A filter string conforming to the [Vulnerability Filter format](vulnerability-filter-format.md) that is used to filter
+  vulnerabilities based on a variety of criteria.
 - `int maximumVulnerabilitiesPerDashboardCount = Integer.MAX_VALUE`  
   The absolute maximum amount of vulnerabilities to include in the VAD.
 - `int maximumCpeForTimelinesPerVulnerability = Integer.MAX_VALUE`  

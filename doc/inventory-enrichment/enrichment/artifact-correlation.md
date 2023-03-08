@@ -44,54 +44,86 @@ If you have access to the source code of the _Metaeffekt Artifact Analysis_ proj
 [Utility Class](#utility-class) section, to learn more about how to easily iterate over artifacts in an inventory with
 automatic suggestions and other features.
 
-# Writing a correlation file (+ best practices)
+## Writing a correlation file (+ best practices)
 
 ### Initial state
 
-An artifact can be in multiple different states:
+No matter what state an artifact is in, it should always be analyzed by hand once more, to confirm that the automatic
+derivation is correct. An artifact can be in multiple different states:
 
-- No matched CPE URIs in the Derived CPE URIs field
-- Matched CPE URIs in the Derived CPE URIs field
-
-If CPE URIs have been matched, use the built in features of the CLI-tool and search the internet for hints that the
-matched entry is correct/incorrect.
-If no CPE URIs have been matched or the ones matched were incorrectly added, search the internet for (vulnerability)
-information on the artifact.
+- No matched CPE URIs in the `Derived CPE URIs` field:  
+  Check whether there truly are no more entries by checking the internet for CPE on the artifact `Id`/...
+- Matched CPE URIs in the `Derived CPE URIs` field:  
+  Check all matched CPE URIs and determine whether they are correct or not. If they are not, remove them from the
+  artifact by adding them to the `Inapplicable CPE URIs` field. If they are correct, add them to the
+  `Additional CPE URIs` field.
 
 ### Creating the entry
 
-Once the research is completed and at least one modification to the artifact is required OR at least a CPE URI has been
-correctly matched, an entry in the YAML file has to be created. To assist you with this, the CLI-tool can generate an
-entry for you: Enter ca and the raw entry will be copied to your clipboard. This will look something like this:
+If at least one modification to the artifact is required or if a CPE URI has been correctly matched, an entry in the
+YAML file has to be created. A well-formed entry is formatted as follows:
 
-\# Id:               reactor-netty-0.8.8.RELEASE.jar
+```yaml
+# Id:               reactor-netty-0.8.8.RELEASE.jar
+# Component:        Reactor Project
+# Group Id:         io.projectreactor.netty
+# Version:          0.8.8.RELEASE
+# Derived CPE URIs: cpe:/a:pivotal:reactor_netty
+# reason:           cpe:/a:pivotal:reactor_netty --> some reason
+- affects:
+    Id: reactor-netty-*.jar
+  append:
+    Inapplicable CPE URIs: cpe:/a:pivotal:reactor_netty
+```
 
-\# Component:        Reactor Project
+An entry should always include:
 
-\# Group Id:         io.projectreactor.netty
+- the artifact data, such as `Id`, `Component`, `Group Id`, `Version` and other fields if available/useful
+- the automatically derived CPE information, if present
+- a `reason` tag that describes why this entry is the way it is
+- the actual entry in YAML format
 
-\# Version:          0.8.8.RELEASE
+#### Artifact Correlation Data format
 
-\# Derived CPE URIs: cpe:/a:pivotal:reactor\_netty
+The [artifact-data.json](example-data/artifact-data.json) schema file describes what format the YAML file must be in:
 
-\# reason:           cpe:/a:pivotal:reactor\_netty -->
+| Property    | Description                                                                                                                                                                                                                                               |
+|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `affects`   | This section is mandatory: It contains either a single artifact matcher or a list of matchers, see [artifact matcher](#artifact-matcher). Artifacts have to match with at least one of these matchers in order to have the setters below applied to them. |
+| `ignores`   | It contains either a single artifact matcher or a list of matchers, see [artifact matcher](#artifact-matcher). None of these may match for the entry to become active.                                                                                    |
+| `append`    | CSV-append all following values to the artifact. See [Artifact appender](#artifact-appender).                                                                                                                                                             |
+| `remove`    | CSV-split and remove all following values from the artifact. See [Artifact appender](#artifact-appender).                                                                                                                                                 |
+| `overwrite` | Set the value of the following attributes on the artifact. See [Artifact appender](#artifact-appender).                                                                                                                                                   |
+| `clear`     | Clear (empty) the following attributes. This is a list of artifact attributes.                                                                                                                                                                            |
 
-\- affects:
+#### Artifact matcher
 
-`    `Id: reactor-netty-\*.jar
+An artifact matcher is a set of key-value pairs that represent artifact attributes and artifact values. An entry may
+look like this:
 
-`  `append:
+```yaml
+Id: openssl-*
+Component: openssl
+```
 
-`    `Inapplicable CPE URIs: cpe:/a:pivotal:reactor\_netty
+This entry uses wildcards.
 
-This will include the artifact information in a formatted comment header and an affects and append section.
+| Pattern              | Description                                                                                     |
+|----------------------|-------------------------------------------------------------------------------------------------|
+| `*`                  | Wildcard that matches any amount of characters, is translated to a `.+` in a regular expression |
+| `?`                  | Wildcard that matches exactly one character, is translated to a `.` in a regular expression     |
+| `open-*-toolkit/i`   | Regular expression flags with wildcards from above                                              |
+| `/open-.+-toolkit/i` | Full regular expression support                                                                 |
 
-When adding/removing CPEs, only the Inapplicable CPE URIs and Additional CPE URIs attributes should be used. CPE URIs
-(with sometimes cpe:/a:none:none has been used in the past, but has been considered potentially dangerous, as it will
-lead to the artifact never matching with any new/other CPEs in the future. It is better to be notified of too many
-vulnerabilities than too few.
-This means, all inapplicable CPE URIs should be listed in a comma-separated list under Inapplicable CPE URIs and
-additional ones under Additional CPE URIs.
+#### Artifact appender
+
+...
+
+When adding/removing CPEs, only the `Inapplicable CPE URIs` and `Additional CPE URIs` attributes should be used.
+`CPE URIs` (with sometimes `cpe:/a:none:none` has been used in the past, but has been considered potentially dangerous,
+as it will lead to the artifact never matching with any new/other CPEs in the future. It is better to be notified of too
+many vulnerabilities than too few. This means, all inapplicable CPE URIs should be listed in a comma-separated list
+under `Inapplicable CPE URIs` and additional ones under `Additional CPE URIs`.
 
 ### Correctly derived CPE
 

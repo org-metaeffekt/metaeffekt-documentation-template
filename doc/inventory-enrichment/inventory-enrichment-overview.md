@@ -32,6 +32,7 @@ This process is split into multiple parts, that are each described in their own 
     - [Inventory CPE data and effective CPE](enrichment/parsing-effective-cpe.md)
     - [Vulnerability Status files](enrichment/vulnerability-status.md)
     - [Vulnerability Keywords files](enrichment/vulnerability-keywords.md)
+    - [Vulnerability Filter format](enrichment/vulnerability-filter-format.md)
 
 ## Overview graphs
 
