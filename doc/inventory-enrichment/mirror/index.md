@@ -8,20 +8,20 @@ an overview on the dependencies between downloads and indexes, see [this overvie
 * [Index](#index)
     * [Common steps](#common-steps)
     * [List of indexes](#list-of-indexes)
-        * NVD API
-            * NVD CPE API (CPEs)
-            * NVD CPE API (Vendor/Product pairs)
-            * NVD CVE API
-        * CERT-SEI (advisory data)
-        * CERT-FR (advisory data)
-        * MSRC Products
-        * MSRC Advisors (advisory data)
-        * MSRC KB Chains
+        * [NVD API](#nvd-api)
+            * [NVD CPE API](#nvd-cpe-api-cpes) (CPEs)
+            * [NVD CPE API](#nvd-cpe-api-vendorproduct-pairs) (Vendor/Product pairs)
+            * [NVD CVE API](#nvd-cve-api)
+        * [CERT-SEI](#cert-sei-advisory-data) (advisory data)
+        * [CERT-FR](#cert-fr-advisory-data) (advisory data)
+        * [MSRC Products](#msrc-products)
+        * [MSRC Advisors](#msrc-advisors-advisory-data) (advisory data)
+        * [MSRC KB Chains](#msrc-kb-chains)
     * [List of deprecated downloads](#list-of-deprecated-indexers)
-        * Legacy NVD CVE/CPE Information
-            * CPE Dictionary (CPEs)
-            * CPE Dictionary Vendor Product (Vendor/Product pairs)
-            * NVD Vulnerabilities (CVE)
+        * [Legacy NVD CVE/CPE Information](#legacy-nvd-cvecpe-information)
+            * [CPE Dictionary](#cpe-dictionary-cpes) (CPEs)
+            * [CPE Dictionary Vendor Product](#cpe-dictionary-vendor-product-vendorproduct-pairs) (Vendor/Product pairs)
+            * [NVD Vulnerabilities](#nvd-vulnerabilities-cve) (CVE)
 
 ## Common steps
 
@@ -100,7 +100,9 @@ highly recommend checking out the [NVD Downloaders](download.md#nvd-api).
 
 ---
 
-### NVD CPE API (CPEs) (`cpe-dict` / `nvdCpeIndex`)
+### NVD CPE API (CPEs)
+
+`cpe-dict` / `nvdCpeIndex`
 
 All entries from the API have been normalized to match the CPE Dictionary format in the
 [downloader step](download.md#nvd-api), which is why all CPE entries can be parsed in the same way.
@@ -122,7 +124,9 @@ properly parsed as language-specific titles and reference instances.
 
 ---
 
-### NVD CPE API (Vendor/Product pairs) (`cpe-dict-vp` / `nvdCpeVendorProductIndex`)
+### NVD CPE API (Vendor/Product pairs)
+
+`cpe-dict-vp` / `nvdCpeVendorProductIndex`
 
 For all vendors, store a set of their products.  
 For all products, store a set of their vendors.
@@ -141,7 +145,9 @@ Dictionary and NVD CPE API interface are the same.
 
 ---
 
-### NVD CVE API (`nvd-cve` / `nvdVulnerabilityIndex`)
+### NVD CVE API
+
+`nvd-cve` / `nvdVulnerabilityIndex`
 
 Every file contained in the download directory is parsed and processed in the same way. An entry in the parsed JSON
 Array has these fields: `sourceIdentifier`, `references`, `configurations`, `weaknesses`, `id`, `published`,
@@ -160,7 +166,9 @@ Array has these fields: `sourceIdentifier`, `references`, `configurations`, `wea
 
 ---
 
-### CERT-SEI (advisory data) (`certsei-advisors` / `certSeiAdvisorIndex`)
+### CERT-SEI (advisory data)
+
+`certsei-advisors` / `certSeiAdvisorIndex`
 
 The CERT-SEI provides multiple JSON files with one note/advisor per file. To parse the JSON files in the download
 directory:
@@ -187,7 +195,9 @@ directory:
 
 ---
 
-### CERT-FR (advisory data) (`certfr-advisors` / `certFrAdvisorIndex`)
+### CERT-FR (advisory data)
+
+`certfr-advisors` / `certFrAdvisorIndex`
 
 The TXT files provided by the CERT-FR are mere transcriptions of PDF files and are highly unstructured, lacking proper
 segmentation and including header and footer on each page and PDF-specific formatting symbols. Each document
@@ -245,7 +255,9 @@ Valid table headers are:
 
 ---
 
-### MSRC Products (`msrc-products` / `msrcProductIndex`)
+### MSRC Products
+
+`msrc-products` / `msrcProductIndex`
 
 When downloading the Microsoft Security Response Center data (MSRC), a list of affected products is included. The
 majority of these products are developed by Microsoft. Each monthly file within the download contains only the products
@@ -267,7 +279,9 @@ child nodes of the vendors, but not all products have a family/vendor: some are 
 
 ---
 
-### MSRC Advisors (advisory data) (`msrc-advisors` / `msrcAdvisorIndex`)
+### MSRC Advisors (advisory data)
+
+`msrc-advisors` / `msrcAdvisorIndex`
 
 The advisories provided in the MSRC download are each almost always linked to at least one CVE, which is also their ID.
 Very rarely however, the ID may be an `ADV\d+` identifier, that is not related a specific CVE.
@@ -291,7 +305,9 @@ product and are stored in separate fields.
 
 ---
 
-### MSRC KB Chains (`msrc-kb-chains` / `msrcKbChainIndex`)
+### MSRC KB Chains
+
+`msrc-kb-chains` / `msrcKbChainIndex`
 
 For more details on how this index is built and how it can be used, see
 [Understanding the MSRC data](../msrc/understanding-data.md) and related pages.
@@ -311,7 +327,9 @@ These downloads either have already or will stop working in the future, due to A
 
 ---
 
-### CPE Dictionary (CPEs) (`cpe-dict-legacy-feed` / `cpeDictionaryIndex`)
+### CPE Dictionary (CPEs)
+
+`cpe-dict-legacy-feed` / `cpeDictionaryIndex`
 
 The downloaded files come in JSON for the dictionary and XML for the match file. The JSON contains an array of objects,
 that each have a CPE URI and multiple child-CPEs. The XML contains a list of cpe-item entries with a CPE as name and
@@ -332,7 +350,9 @@ multiple other CPEs in several data structure formats.
 
 ---
 
-### CPE Dictionary Vendor Product (Vendor/Product pairs) (`cpe-dict-vp-legacy-feed` / `cpeDictionaryVendorProductIndex`)
+### CPE Dictionary Vendor Product (Vendor/Product pairs)
+
+`cpe-dict-vp-legacy-feed` / `cpeDictionaryVendorProductIndex`
 
 For all vendors, store a set of their products.  
 For all products, store a set of their vendors.
@@ -348,7 +368,9 @@ information is extracted from the CPE Dictionary index, making the index require
 
 ---
 
-### NVD Vulnerabilities (CVE) (`nvd-cve-legacy-feed` / `nvdLegacyVulnerabilityIndex`)
+### NVD Vulnerabilities (CVE)
+
+`nvd-cve-legacy-feed` / `nvdLegacyVulnerabilityIndex`
 
 No detail is provided for this index. If you want to know more, see `Vulnerability#fromNvdMirrorCveItem1_0()` in the
 artifact analysis project.

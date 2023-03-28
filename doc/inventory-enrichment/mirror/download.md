@@ -19,17 +19,17 @@ For an overview on the dependencies between downloads and indexes, see [this ove
 * [Common steps](#common-steps)
     * [Some more context for downloading](#some-more-context-for-downloading)
 * [List of downloads](#list-of-downloads)
-    * NVD API
-        * NVD CVE API
-        * NVD CPE API
-    * CERT-SEI (advisory data)
-    * CERT-FR (advisory data)
-    * MSRC (advisory data/product mappings)
-    * MSRC CSV (KB chains)
+    * [NVD API](#nvd-api)
+        * [NVD CVE API](#nvd-cve-api)
+        * [NVD CPE API](#nvd-cpe-api)
+    * [CERT-SEI](#cert-sei-advisory-data) (advisory data)
+    * [CERT-FR](#cert-fr-advisory-data) (advisory data)
+    * [MSRC](#msrc-advisory-dataproduct-mappings) (advisory data/product mappings)
+    * [MSRC CSV](#msrc-csv-kb-chains) (KB chains)
 * [List of deprecated downloads](#list-of-deprecated-downloads)
-    * Legacy NVD CVE/CPE Information
-        * Legacy NVD CPE Dictionary
-        * Legacy NVD CVE Information
+    * [Legacy NVD CVE/CPE Information](#legacy-nvd-cvecpe-information)
+        * [Legacy NVD CPE Dictionary](#legacy-nvd-cpe-dictionary)
+        * [Legacy NVD CVE Information](#legacy-nvd-cve-information)
 
 ## Common steps
 
@@ -140,7 +140,9 @@ The following two downloads are part of this API.
 
 ---
 
-### NVD CVE API (`nvd` / `nvdCveDownload`)
+### NVD CVE API
+
+`nvd` / `nvdCveDownload`
 
 With the total amount of vulnerabilities being ~200000 at the moment, this leads to a total of ~100 requests made. In
 the best-case scenario, this would lead to a mirroring time of 1 minute with an API key and 20 minutes without. Both of
@@ -177,7 +179,9 @@ Examples:
 
 ---
 
-### NVD CPE API (`cpe-dict` / `nvdCpeDownload`)
+### NVD CPE API
+
+`cpe-dict` / `nvdCpeDownload`
 
 Just as in the legacy CPE Dictionary, the data feed is split into two parts: The CPE Dictionary and the CPE Matches.
 They each have their own endpoint:
@@ -209,7 +213,9 @@ Examples:
 
 ---
 
-### CERT-SEI (advisory data) (`certsei` / `certSeiDownload`)
+### CERT-SEI (advisory data)
+
+`certsei` / `certSeiDownload`
 
 References:
 
@@ -246,7 +252,9 @@ Examples:
 
 ---
 
-### CERT-FR (advisory data) (`certfr` / `certFrDownload`)
+### CERT-FR (advisory data)
+
+`certfr` / `certFrDownload`
 
 References:
 
@@ -280,7 +288,9 @@ Examples:
 
 ---
 
-### MSRC (advisory data/product mappings) (`msrc` / `msrcDownload`)
+### MSRC (advisory data/product mappings)
+
+`msrc` / `msrcDownload`
 
 References:
 
@@ -322,7 +332,9 @@ Examples:
 
 ---
 
-### MSRC CSV (KB chains) (`msrc-csv` / `msrcCsvDownload`)
+### MSRC CSV (KB chains)
+
+`msrc-csv` / `msrcCsvDownload`
 
 References:
 
@@ -375,7 +387,9 @@ The NVD downloads (CVE/CPE) listed below are also no longer in use, so there is 
 
 ---
 
-### Legacy NVD CPE Dictionary (`cpe-dict-legacy-feed` / `cpeDictionaryDownload`)
+### Legacy NVD CPE Dictionary
+
+`cpe-dict-legacy-feed` / `cpeDictionaryDownload`
 
 References:
 
@@ -406,7 +420,9 @@ Examples:
 
 ---
 
-### Legacy NVD CVE Information (`nvd-legacy-feed` / `nvdLegacyDownload`)
+### Legacy NVD CVE Information
+
+`nvd-legacy-feed` / `nvdLegacyDownload`
 
 References:
 
