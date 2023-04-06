@@ -180,6 +180,33 @@
                                             <CPE_MATCH_URL>https://nvd.nist.gov/feeds/json/cpematch/1.0/nvdcpematch-1.0.json.zip</CPE_MATCH_URL>
                                         </resourceLocations>
                                     </cpeDictionaryDownload>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>index-database</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.metaeffekt.artifact.analysis</groupId>
+                        <artifactId>ae-mirror-plugin</artifactId>
+                        <version>${ae.artifact.analysis.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>data-index</id>
+                                <goals>
+                                    <goal>data-mirror</goal>
+                                </goals>
+
+                                <configuration>
+                                    <mirrorDirectory>${input.database}</mirrorDirectory>
 
                                     <!-- Indexers -->
 
@@ -220,6 +247,7 @@
                 </plugins>
             </build>
         </profile>
+
     </profiles>
 
 </project>

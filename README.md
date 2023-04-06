@@ -28,7 +28,7 @@
 
 Mirror the vulnerability databases once using the `mirror-database` profile:
 
-    mvn clean install -Pmirror-database
+    mvn clean install -Pmirror-database,index-database
 
 This may take around 10 minutes. The process will create a local mirror of public vulnerability data in the `.database`
 folder. Rerun the process to update the data regularly.
