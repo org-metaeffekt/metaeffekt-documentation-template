@@ -1,3 +1,6 @@
+- Id: openssl-1.1.1i
+  Version: 1.1.1i
+  CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
 - Id: openssl-1.1.1a
   Version: 1.1.1a
   CPE URIs: cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl

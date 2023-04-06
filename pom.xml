@@ -18,9 +18,9 @@
     </scm>
 
     <properties>
-        <ae.core.version>0.67.0</ae.core.version>
+        <ae.core.version>HEAD-SNAPSHOT</ae.core.version>
         <ae.dita.version>0.29.0</ae.dita.version>
-        <ae.artifact.analysis.version>0.43.0</ae.artifact.analysis.version>
+        <ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>
 
         <artifact.inventory.validation>false</artifact.inventory.validation>
         <artifact.annex.validation>false</artifact.annex.validation>        
@@ -77,6 +77,14 @@
                 <module>advisors</module>
             </modules>
         </profile>
+
+        <profile>
+            <id>scan</id>
+            <modules>
+                <module>scanners</module>
+            </modules>
+        </profile>
+
         <profile>
             <id>mirror-database</id>
             <modules>

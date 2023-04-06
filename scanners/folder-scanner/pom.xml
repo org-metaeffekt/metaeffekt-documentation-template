@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>ae-scanners</artifactId>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>folder-scanner</artifactId>
+    <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.metaeffekt.core</groupId>
+                <artifactId>ae-inventory-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-artifact-analysis-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
+            </plugin>
+
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy-metaeffekt-tmd</id>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <phase>validate</phase>
+                            <configuration>
+                                <outputDirectory>${project.basedir}/.analysis</outputDirectory>
+                                <includes>**/*.obj</includes>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>com.metaeffekt.artifact.analysis</groupId>
+                                        <artifactId>ae-term-metadata</artifactId>
+                                        <version>${ae.artifact.analysis.version}</version>
+                                    </artifactItem>
+                                </artifactItems>
+                                <overWriteSnapshots>true</overWriteSnapshots>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.metaeffekt.artifact.analysis</groupId>
+                    <artifactId>ae-artifact-analysis-plugin</artifactId>
+                    <version>${version.ae.artifact.analysis}</version>
+                    <executions>
+                        <execution>
+                            <id>scan</id>
+                            <goals>
+                                <goal>scan-folder</goal>
+                            </goals>
+                            <phase>process-resources</phase>
+                            <configuration>
+                                <base64EncodedKey>${tmd.key}</base64EncodedKey>
+                                <base64EncodedIv>${tmd.iv}</base64EncodedIv>
+
+                                <inputDir>.license-scanner/input</inputDir>
+                                <analysisDir>.license-scanner/analysis</analysisDir>
+                                <tmpBaseDir>.license-scanner/analysis/tmp</tmpBaseDir>
+                                <statusBaseDir>.license-scanner/analysis/status</statusBaseDir>
+                                <outputDir>.license-scanner/output</outputDir>
+                                <scanControlPropertiesFile>src/analysis/scan-control.properties</scanControlPropertiesFile>
+
+                                <referenceInventoryDir>src/analysis/reference</referenceInventoryDir>
+                                <referenceInventoryIncludes>**/*.xls</referenceInventoryIncludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <!-- FIXME: for some reason the maven dependency resolution is not resolving the correct version -->
+                        <dependency>
+                            <groupId>commons-io</groupId>
+                            <artifactId>commons-io</artifactId>
+                            <version>2.11.0</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

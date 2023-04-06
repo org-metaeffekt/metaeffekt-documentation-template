@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>ae-scanners</artifactId>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>example-scanner</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <source.dir>${project.basedir}/../../extractors/dependency-extractors/ae-dependency-extractor/target/scan</source.dir>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.metaeffekt.core</groupId>
+                <artifactId>ae-inventory-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-artifact-analysis-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
+            </plugin>
+
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy-metaeffekt-tmd</id>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <phase>validate</phase>
+                            <configuration>
+                                <outputDirectory>${project.basedir}/.analysis</outputDirectory>
+                                <includes>**/*.obj</includes>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>com.metaeffekt.artifact.analysis</groupId>
+                                        <artifactId>ae-term-metadata</artifactId>
+                                        <version>${ae.artifact.analysis.version}</version>
+                                    </artifactItem>
+                                </artifactItems>
+                                <overWriteSnapshots>true</overWriteSnapshots>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.metaeffekt.core</groupId>
+                    <artifactId>ae-inventory-maven-plugin</artifactId>
+                    <version>${ae.core.version}</version>
+                    <executions>
+
+                        <execution>
+                            <id>prepare-scan-directory</id>
+                            <goals>
+                                <goal>prepare-scan-directory</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <inputDirectory>${source.dir}</inputDirectory>
+                                <scanDirectory>${project.build.directory}/scan</scanDirectory>
+                                <scanIncludes>
+                                    <include>**/*</include>
+                                </scanIncludes>
+                                <scanExcludes>
+                                    <exclude>---nothing---</exclude>
+                                </scanExcludes>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>create-scan-report</id>
+                            <goals>
+                                <goal>create-directory-report</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                            <configuration>
+                                <scanDirectory>${project.build.directory}/scan</scanDirectory>
+
+                                <enableImplicitUnpack>false</enableImplicitUnpack>
+
+                                <failOnError>false</failOnError>
+                                <failOnBanned>false</failOnBanned>
+                                <failOnInternal>false</failOnInternal>
+                                <failOnUnknownVersion>false</failOnUnknownVersion>
+                                <failOnUnknown>false</failOnUnknown>
+                                <failOnUpgrade>false</failOnUpgrade>
+                                <failOnDowngrade>false</failOnDowngrade>
+                                <failOnDevelopment>false</failOnDevelopment>
+                                <failOnMissingLicense>false</failOnMissingLicense>
+                                <failOnMissingLicenseFile>false</failOnMissingLicenseFile>
+                                <failOnMissingNotice>false</failOnMissingNotice>
+                                <failOnMissingSources>false</failOnMissingSources>
+
+                                <!-- REMARKS:
+                                    - the inventory may also consist of controls to further unpack archives in the
+                                      source tree. It can be more than component patterns
+                                -->
+                                <!-- NOTE: dedicated definition for component patterns -->
+                                <sourceInventoryDir>${project.basedir}/src/analysis</sourceInventoryDir>
+                                <sourceInventoryIncludes>component-patterns.xls</sourceInventoryIncludes>
+
+                                <targetInventoryDir>${project.build.directory}/classes/inventory</targetInventoryDir>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.metaeffekt.artifact.analysis</groupId>
+                    <artifactId>ae-artifact-analysis-plugin</artifactId>
+                    <version>${version.ae.artifact.analysis}</version>
+                    <executions>
+                        <execution>
+                            <id>extract</id>
+                            <goals>
+                                <goal>extract-artifacts</goal>
+                            </goals>
+                            <phase>compile</phase>
+                            <configuration>
+                                <!-- NOTE: dedicated definition for component patterns -->
+                                <referenceInventoryDir>${project.basedir}/src/analysis/</referenceInventoryDir>
+                                <referenceInventoryIncludes>component-patterns.xls</referenceInventoryIncludes>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>scan</id>
+                            <goals>
+                                <goal>scan-artifacts</goal>
+                                <goal>report-artifacts</goal>
+                            </goals>
+                            <phase>compile</phase>
+                            <configuration>
+                                <!-- NOTE: for scanning and reporting we use the reference inventory -->
+                                <referenceInventoryDir>${project.basedir}/src/analysis</referenceInventoryDir>
+                                <referenceInventoryIncludes>reference-inventory.xls</referenceInventoryIncludes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <id>${project.artifactId}</id>
+                        <base64EncodedKey>${tmd.key}</base64EncodedKey>
+                        <base64EncodedIv>${tmd.iv}</base64EncodedIv>
+                        <scanBaseDir>${project.build.directory}/scan</scanBaseDir>
+                        <targetInventoryDir>${project.build.directory}/classes/inventory</targetInventoryDir>
+                    </configuration>
+                    <dependencies>
+                        <!-- FIXME: for some reason the maven dependency resolution is not resolving the correct version -->
+                        <dependency>
+                            <groupId>commons-io</groupId>
+                            <artifactId>commons-io</artifactId>
+                            <version>2.11.0</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
