@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "$id": "http://www.metaeffekt.com/schema/artifact-data.json",
+  "type": "array",
+  "title": "Artifact YAML Data schema documentation",
+  "items": {
+    "type": "object",
+    "title": "Artifact data section",
+    "properties": {
+      "affects": {
+        "oneOf": [
+          {
+            "type": "object",
+            "minProperties": 1,
+            "properties": {
+              "Id": {
+                "type": "string"
+              },
+              "Component": {
+                "type": "string"
+              },
+              "Version": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "array"
+          }
+        ]
+      },
+      "ignores": {
+        "oneOf": [
+          {
+            "type": "object",
+            "minProperties": 1
+          },
+          {
+            "type": "array"
+          }
+        ]
+      },
+      "append": {
+        "type": "object",
+        "minProperties": 1,
+        "properties": {
+          "CPE URIs": {
+            "type": "string"
+          },
+          "Inapplicable CPE URIs": {
+            "type": "string"
+          },
+          "Additional CPE URIs": {
+            "type": "string"
+          }
+        }
+      },
+      "remove": {
+        "type": "object",
+        "minProperties": 1,
+        "properties": {
+          "CPE URIs": {
+            "type": "string"
+          },
+          "Inapplicable CPE URIs": {
+            "type": "string"
+          },
+          "Additional CPE URIs": {
+            "type": "string"
+          }
+        }
+      },
+      "clear": {
+        "type": "array",
+        "minProperties": 1
+      },
+      "overwrite": {
+        "type": "object",
+        "minProperties": 1,
+        "properties": {
+          "CPE URIs": {
+            "type": "string"
+          },
+          "Inapplicable CPE URIs": {
+            "type": "string"
+          },
+          "Additional CPE URIs": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "required": [
+      "affects"
+    ],
+    "anyOf": [
+      {
+        "required": [
+          "append"
+        ]
+      },
+      {
+        "required": [
+          "remove"
+        ]
+      },
+      {
+        "required": [
+          "clear"
+        ]
+      },
+      {
+        "required": [
+          "overwrite"
+        ]
+      }
+    ]
+  }
+}

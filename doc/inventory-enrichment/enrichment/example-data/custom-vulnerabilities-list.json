@@ -1,0 +1,9 @@
+[
+  {
+    "name": "JSON-CVE-2019-3435"
+  },
+  {
+    "name": "JSON-CVE-2018-5862",
+    "description": "json description"
+  }
+]

@@ -48,6 +48,12 @@ With container enabled (currently disabled):
 
 The container enabled process requires that docker daemon is running and the container of interest was already pulled.
 
+## Documentation
+
+For more information on the process, see the documents in the `doc` directory. If you are new to this project, start
+with
+[Inventory Enrichment Overview](doc/inventory-enrichment/inventory-enrichment-overview.md).
+
 ## DISCLAIMER
 
 Currently, the provided inventory does only contain minimal information. We promise to add more data to better
