@@ -340,19 +340,16 @@ rules:
 
 - We do not miss out on any new vulnerabilities if we do not include the Update Guide CSV data.
 
-- The most important quality of the Update Guide CSV data is the fact, that it contains a whole lot of relations between
-  vulnerabilities and fixing KBs.  
-  This can also be seen in the roughly 70.000 relations on the KB identifiers, which on almost all of them look like
-  this:  
-  KB `5012170` → which fixes on product `2472-10855` the vulnerabilities
-  `CVE-2022-34303, CVE-2022-34302, CVE-2022-34301` Without this information, on many vulnerabilities, we would not know
-  what KB could fix it.
+- The most important quality of the Update Guide CSV data is, that it contains relations between vulnerabilities and
+  fixing KBs that are not present in other sources.  
+  The roughly 70.000 relations are all of the form "KB → on product → fixes vulnerability". On several vulnerabilities,
+  without this information, we would not know what KB could fix it.
 
 ## Understanding the data
 
-If you followed the steps above, you should now have a pretty complete dataset of the `KB ↔︎ KB` and `KB ↔︎ CVE/ADV`
-relations. There are two main use-cases this data can be used for. But first, let’s explore what supersedence means in
-this context.
+If you followed the steps above, you should now have a comprehensive complete dataset of the `KB ↔︎ KB` and
+`KB ↔︎ CVE/ADV` relations. There are two main use-cases this data can be used for. But first, let’s explore what
+supersedence means in this context.
 
 ### Supersedence
 
@@ -360,10 +357,10 @@ In the context of MSRC data, "supersedence" refers to the relationship between K
 another KB, is installed on a system, the installed KB will address the vulnerabilities associated with both entries.
 
 To determine all KB Ids that are included in the update with the original KB entry, it is necessary to follow the KB
-chain in the direction of the "supersedes" set.
-This behavior changes if a product Id is given: relations can now only be used if the relation includes that product Id.
+chain in the direction of the "supersedes" set.  
+If a product Id is given: relations can now only be used if the relation includes that product Id.
 
-An example: If you have the update referencing `KB5002115` installed on your system, you will also have the KB5002099
+An example: If you have the update referencing `KB5002115` installed on your system, you will also have the `KB5002099`
 installed ([Microsoft Update Catalog](https://www.catalog.update.microsoft.com/ScopedViewInline.aspx?updateid=1ce31df8-5ff8-4633-b9da-54c6e3e78fdd#PackageDetails)).
 As seen in the image below, this fix is only available on product `10753` and `10754`, meaning the KB is only superseded
 if a product with one of the product Ids is in use. This can obviously be ignored if you do not care for what product
@@ -373,7 +370,7 @@ the fix is for.
 
 ### What KBs do I need to fix a CVE?
 
-**Input**: a vulnerability (CVE/ADV) and optionally a product Id
+**Input**: a vulnerability (CVE/ADV) and optionally a product Id  
 **Output**: KB identifiers
 
 This is a relatively easy task:
@@ -390,7 +387,7 @@ This is a relatively easy task:
 <details>
   <summary>Example code</summary>
 
-```
+```java
 final Set<MsrcSupersedeNode> kbIds = new HashSet<>(findNodesByVulnerability(vulnerability, productId));
 final Set<MsrcSupersedeNode> toCheckKbIds = new HashSet<>();
 for (MsrcSupersedeNode node : kbIds) {
@@ -431,7 +428,7 @@ This chart contains all the KBs, no matter what product Id, to give more context
 
 ### What CVEs are in my product with KBs?
 
-**Input**: a product Id and optionally KB identifiers
+**Input**: a product Id and optionally KB identifiers  
 **Output**: CVE/ADV
 
 This task requires a few more steps. Follow these steps to determine the vulnerabilities associated with a given product
@@ -447,7 +444,7 @@ Id:
 <details>
   <summary>Example code</summary>
 
-```
+```java
 final Set<String> vulnerabilities = new HashSet<>();
 
 for (MsrcSupersedeNode node : findNodesByProductId(productId)) {
@@ -479,8 +476,8 @@ return remainingVulnerabilities;
 
 The resulting vulnerability list of this process tends to grow pretty fast, so I will only make a small example here:
 
-To determine the vulnerabilities present in Microsoft SharePoint Server 2013 Service Pack 1 with product Id 10607,
-knowing that KB 3172445 is installed on the system, the following steps should be taken:
+To determine the vulnerabilities present in `Microsoft SharePoint Server 2013 Service Pack 1` with product Id `10607`,
+knowing that `KB3172445` is installed on the system, the following steps should be taken:
 
 1. identify all KB entries with product
    Id: `3039736, 5002218, 4092472, 3213560, 3172445, 3203387, 4018391, 3054862, 4462202, 4022236, 4011586, 4011113, 5002203, 4018392, 3114503, 4484264, 4462139, 4484157, 4461596, 5002219, 4462143`

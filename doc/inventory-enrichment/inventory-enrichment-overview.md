@@ -15,14 +15,36 @@ local directory. Then, they are indexed into a data structure to reduce the numb
 
 This process is split into multiple parts, that are each described in their own document:
 
-- [Mirroring the data sources](mirror/mirror-overview.md)
-  - [Individual downloads](mirror/download.md)
-  - [Individual indexes](mirror/index.md)
-  - MSRC
-    - [KB-Research](msrc/understanding-data.md)
-    - [Downloading the CSV files](msrc/performing-csv-download.md)
-- [Inventory Enrichment Pipeline](enrichment/steps.md)
+- [**Data Sources Mirroring**](mirror/mirror-overview.md)
+    - [List of individual downloads](mirror/download.md)
+    - [List of individual indexes](mirror/index.md)
+    - MSRC (Microsoft Security Response Center)
+        - [KB-Research](msrc/understanding-data.md)
+        - [Downloading the CSV files](msrc/performing-csv-download.md)
+- [**Inventory Enrichment**](enrichment/inventory-enrichment.md)
+    - [List of Inventory Enrichment Steps](enrichment/steps.md)
+    - [Example: Maven POM](enrichment/maven.md)
+    - [Example: Java process](enrichment/java.md)
+    - [Inventory Enrichment process (1): Correlation step](enrichment/artifact-correlation.md)
+    - [Architecture: Superclasses](enrichment/java-super-classes.md) (useful background information for understanding
+      the process)
+    - [Custom Vulnerability Data Sources](enrichment/custom-vulnerabilities.md)
+    - [Inventory CPE data and effective CPE](enrichment/parsing-effective-cpe.md)
+    - [Vulnerability Status files](enrichment/vulnerability-status.md)
+    - [Vulnerability Keywords files](enrichment/vulnerability-keywords.md)
+    - [Vulnerability Filter format](enrichment/vulnerability-filter-format.md)
+
+Other chapters:
+
+- [Inventory Vulnerability Status differ](enrichment/vulnerability-status-differ.md)
+
+## Overview graphs
 
 This image provides a high-level overview over the process:
 
 ![Process overview](inventory-enrichment-overview.svg)
+
+This image provides a list of all classes that are involved and their dependencies/data flow. Open the image in a new
+tab to see all details.
+
+![List of related classes and data flow](dependants.svg)

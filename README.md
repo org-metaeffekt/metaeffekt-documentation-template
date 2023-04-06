@@ -50,11 +50,9 @@ The container enabled process requires that docker daemon is running and the con
 
 ## Documentation
 
-For more information on the process, you can start with one of the documents located in the `doc` directory.
-
-- [Inventory Enrichment Overview](doc/inventory-enrichment/inventory-enrichment-overview.md)
-- [Data Source Mirroring](doc/inventory-enrichment/mirror/mirror-overview.md)
-- [Inventory Enrichment Steps](doc/inventory-enrichment/enrichment/steps.md)
+For more information on the process, see the documents in the `doc` directory. If you are new to this project, start
+with
+[Inventory Enrichment Overview](doc/inventory-enrichment/inventory-enrichment-overview.md).
 
 ## DISCLAIMER
 
