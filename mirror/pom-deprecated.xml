@@ -74,22 +74,6 @@
                                         </resourceLocations>
                                     </certFrDownload>
 
-                                    <msrcDownload>
-                                        <resourceLocations>
-                                            <!-- List of all monthly documents. Contains last update date used to determine whether an update is required.
-                                                 When viewed in a browser, the content will be displayed as XML, but when accessed via the API, the content
-                                                 will be returned as JSON. -->
-                                            <MSRC_UPDATES_URL>https://api.msrc.microsoft.com/cvrf/v2.0/updates</MSRC_UPDATES_URL>
-                                            <!-- REST-API for the Microsoft Security Response Center (MSRC) Common Vulnerability Reporting Framework (CVRF) v2.0.
-                                                 https://api.msrc.microsoft.com/cvrf/v2.0/swagger/index
-                                                 - %s CVRF document ID (yyyy-mmm) (example: 2021-dec)
-                                             -->
-                                            <MSRC_CVRF_BASE_URL>https://api.msrc.microsoft.com/cvrf/v2.0/cvrf/%s</MSRC_CVRF_BASE_URL>
-                                        </resourceLocations>
-                                    </msrcDownload>
-
-                                    <msrcCsvDownload/>
-
                                     <!-- deprecated, use nvdCveDownload -->
                                     <nvdLegacyDownload>
                                         <resourceLocations>
@@ -118,6 +102,23 @@
                                             <CPE_MATCH_URL>https://nvd.nist.gov/feeds/json/cpematch/1.0/nvdcpematch-1.0.json.zip</CPE_MATCH_URL>
                                         </resourceLocations>
                                     </cpeDictionaryDownload>
+
+                                    <msrcDownload>
+                                        <resourceLocations>
+                                            <!-- List of all monthly documents. Contains last update date used to determine whether an update is required.
+                                                 When viewed in a browser, the content will be displayed as XML, but when accessed via the API, the content
+                                                 will be returned as JSON. -->
+                                            <MSRC_UPDATES_URL>https://api.msrc.microsoft.com/cvrf/v2.0/updates</MSRC_UPDATES_URL>
+                                            <!-- REST-API for the Microsoft Security Response Center (MSRC) Common Vulnerability Reporting Framework (CVRF) v2.0.
+                                                 https://api.msrc.microsoft.com/cvrf/v2.0/swagger/index
+                                                 - %s CVRF document ID (yyyy-mmm) (example: 2021-dec)
+                                             -->
+                                            <MSRC_CVRF_BASE_URL>https://api.msrc.microsoft.com/cvrf/v2.0/cvrf/%s</MSRC_CVRF_BASE_URL>
+                                        </resourceLocations>
+                                    </msrcDownload>
+
+                                    <msrcCsvDownload/>
+
                                 </configuration>
                             </execution>
                         </executions>
@@ -152,11 +153,11 @@
 
                                     <certFrAdvisorIndex/>
 
+                                    <nvdLegacyVulnerabilityIndex/>
+
                                     <cpeDictionaryIndex/>
 
                                     <nvdCpeVendorProductIndex/>
-
-                                    <nvdLegacyVulnerabilityIndex/>
 
                                     <msrcProductIndex/>
 

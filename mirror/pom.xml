@@ -193,6 +193,7 @@
                                     <msrcAdvisorIndex/>
 
                                     <msrcKbChainIndex/>
+
                                 </configuration>
                             </execution>
                         </executions>
