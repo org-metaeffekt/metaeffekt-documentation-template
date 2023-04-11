@@ -36,10 +36,6 @@ Data sources include:
 
 ### Java
 
-Commented out download/index classes are deprecated. See
-[deprecated downloads](download.md#list-of-deprecated-downloads) and
-[deprecated indexes](index.md#list-of-deprecated-indexers) for more details.
-
 ```java
 final String MIRROR_NVD_API_KEY = "";
 
@@ -47,12 +43,10 @@ final String MIRROR_NVD_API_KEY = "";
 new CertSeiDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
 new CertFrDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
 
-// new NvdDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
 new NvdCveApiDownload(MIRROR_DIRECTORY)
         .setApiKey(MIRROR_NVD_API_KEY)
         .performDownloadIfRequired();
 
-// new CpeDictionaryDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
 new NvdCpeApiDownload(MIRROR_DIRECTORY)
         .setApiKey(MIRROR_NVD_API_KEY)
         .performDownloadIfRequired();
@@ -65,13 +59,39 @@ new MsrcManualCsvDownload(MIRROR_DIRECTORY).performDownloadIfRequired(); // manu
 new CertSeiAdvisorIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 new CertFrAdvisorIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 
-// new CpeDictionaryIndex(MIRROR_DIRECTORY).createIndexIfRequired();
-// new CpeDictionaryVendorProductIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 new NvdCpeApiIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 new NvdCpeApiVendorProductIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 
-// new NvdVulnerabilityIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 new NvdCveApiIndex(MIRROR_DIRECTORY).createIndexIfRequired();
+
+new MsrcProductIndex(MIRROR_DIRECTORY).createIndexIfRequired();
+new MsrcAdvisorIndex(MIRROR_DIRECTORY).createIndexIfRequired();
+new MsrcKbChainIndex(MIRROR_DIRECTORY).createIndexIfRequired();
+```
+
+Here is a version where the deprecated 1.0 NVD Data Feeds are used. See
+[deprecated downloads](download.md#list-of-deprecated-downloads) and
+[deprecated indexes](index.md#list-of-deprecated-indexers) for more details.
+
+```java
+// download
+new CertSeiDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
+new CertFrDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
+
+new NvdDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
+new CpeDictionaryDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
+
+new MsrcDownload(MIRROR_DIRECTORY).performDownloadIfRequired();
+new MsrcManualCsvDownload(MIRROR_DIRECTORY).performDownloadIfRequired(); // manual download
+
+// index
+new CertSeiAdvisorIndex(MIRROR_DIRECTORY).createIndexIfRequired();
+new CertFrAdvisorIndex(MIRROR_DIRECTORY).createIndexIfRequired();
+
+new CpeDictionaryIndex(MIRROR_DIRECTORY).createIndexIfRequired();
+new NvdCpeApiVendorProductIndex(MIRROR_DIRECTORY).createIndexIfRequired();
+
+new NvdVulnerabilityIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 
 new MsrcProductIndex(MIRROR_DIRECTORY).createIndexIfRequired();
 new MsrcAdvisorIndex(MIRROR_DIRECTORY).createIndexIfRequired();
@@ -85,6 +105,8 @@ As mentioned above, a single goal is enough to create both the download and the 
 mentioning a mirror phase like `<msrcDownload/>` is enough to trigger it. All of them can be found below.  
 You can specify an `active` flag for any of the phases to disable the process while keeping the configuration.  
 The proxy information can be specified on a global level or for each download individually.
+
+For a version with the deprecated mirrors (NVD 1.0 Data Feeds), see [here](../../../mirror/pom-deprecated.xml).
 
 ```xml
 <build>
@@ -135,16 +157,6 @@ The proxy information can be specified on a global level or for each download in
 
             <msrcCsvDownload/>
 
-            <!-- deprecated, use nvdCveDownload -->
-            <nvdLegacyDownload>
-              <active>false</active>
-            </nvdLegacyDownload>
-
-            <!-- deprecated, use nvdCpeDownload -->
-            <cpeDictionaryDownload>
-              <active>false</active>
-            </cpeDictionaryDownload>
-
             <!-- Indexers -->
 
             <certSeiAdvisorIndex/>
@@ -163,20 +175,6 @@ The proxy information can be specified on a global level or for each download in
 
             <msrcKbChainIndex/>
 
-            <!-- deprecated, use nvdVulnerabilityIndex -->
-            <nvdLegacyVulnerabilityIndex>
-              <active>false</active>
-            </nvdLegacyVulnerabilityIndex>
-
-            <!-- deprecated, use nvdCpeIndex -->
-            <cpeDictionaryIndex>
-              <active>false</active>
-            </cpeDictionaryIndex>
-
-            <!-- deprecated, use nvdCpeVendorProductIndex -->
-            <cpeDictionaryVendorProductIndex>
-              <active>false</active>
-            </cpeDictionaryVendorProductIndex>
           </configuration>
         </execution>
       </executions>
