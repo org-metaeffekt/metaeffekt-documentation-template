@@ -116,6 +116,8 @@
                         <failOnMissingSources>false</failOnMissingSources>
 
                         <generateOverviewTablesForAdvisories>CERT-SEI</generateOverviewTablesForAdvisories>
+                        <!-- [alert, notice, news, all, none] -->
+                        <includeAdvisoryTypes>all</includeAdvisoryTypes>
                     </configuration>
 
                 </plugin>
