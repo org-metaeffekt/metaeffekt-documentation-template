@@ -38,10 +38,10 @@ Table of contents:
 
 ## Definitions & Facts
 
-- the MSRC mirror contains ~6500 MSRC Advisors, which may reference security updates (KB) published by Microsoft
-- security updates are identified by KB-Identifiers, e.g. KB5012118 from
+- The MSRC mirror contains ~6500 MSRC Advisors, which may reference security updates (KB) published by Microsoft
+- Security updates are identified by KB-Identifiers, e.g. KB5012118 from
   https://www.catalog.update.microsoft.com/ScopedViewInline.aspx?updateid=39b0464e-f56e-490d-b0fa-bbdde81d1755#PackageDetails
-- these entries can each:
+- These entries can each:
     - replace other KB entries by being a cumulative update, e.g.
       ```
       This update replaces the following updates:
@@ -53,20 +53,20 @@ Table of contents:
       This update has been replaced by the following updates.
       2022-05 Cumulative Update for .NET Framework 4.8 for Windows 10 Version 1607 (KB5013625)
       ```
-- superseded identifiers format:
-    - multiple identifiers split by `;`, `,`, `<br><br>`
+- Superseded identifiers format:
+    - Multiple identifiers split by `;`, `,`, `<br><br>`
         - 7-digit identifiers (`4528760`)
-        - references to other Microsoft Security Bulletins (`MS16-016`)
+        - References to other Microsoft Security Bulletins (`MS16-016`)
         - None
-        - a singular entry `50185` with only *5* digits on `MSRC-CVE-2022-41064`, which seems to be an incomplete
+        - A singular entry `50185` with only *5* digits on `MSRC-CVE-2022-41064`, which seems to be an incomplete
           reference to `5018544`
-        - a singular entry `982666` with only *6* digits
+        - A singular entry `982666` with only *6* digits
           ([Microsoft Update Catalog](https://www.catalog.update.microsoft.com/ScopedViewInline.aspx?updateid=3a3177ac-957a-495c-88b8-dc89eb2403bd))
-    - they may contain ` ` or `\n` at the beginning/end/in between elements of the list
-    - when split by `;`, they reference Microsoft Security Bulletins with KB-Ids in this format: `MSxx-xxx, xxxxxxx`,
+    - They may contain ` ` or `\n` at the beginning/end/in between elements of the list
+    - When split by `;`, they reference Microsoft Security Bulletins with KB-Ids in this format: `MSxx-xxx, xxxxxxx`,
       e.g. `MS16-016, 3124280; MS16-097, 3178034;`.
-    - since we do not mirror the MS Bulletins, we can drop the bulletin IDs.
-- every relation between `KB ↔︎ KB` and `KB ↔︎ CVE/ADV` is contained behind a MS product Id, meaning it can only be
+    - Since we do not mirror the MS Bulletins, we can drop the bulletin IDs.
+- Every relation between `KB ↔︎ KB` and `KB ↔︎ CVE/ADV` is contained behind a MS product Id meaning it can only be
   used, if the referenced product is used
 
 ## Data Sources
@@ -75,24 +75,24 @@ Table of contents:
 
 - [Security Update Guide - Microsoft Security Response Center](https://msrc.microsoft.com/update-guide)
     - can **manually** be downloaded as multiple csv files, one per year. Time frame has to be set manually.
-    - contains `CVE/ADV ↔︎ KB` relations that are not present in the other sources
-    - does not contain `KB ↔︎ KB` relations
-    - a short how-to can be found [here](performing-csv-download.md)
+    - contains `CVE/ADV ↔︎ KB` relations that are not present in the other sources.
+    - does not contain `KB ↔︎ KB` relations.
+    - A short how-to can be found [here](performing-csv-download.md).
 - [Microsoft Security Updates API | MSRC](https://api.msrc.microsoft.com/cvrf/v2.0/swagger/index)
-    - can **automatically** be mirrored using our process (see below)
-    - contains `CVE/ADV ↔︎ KB` relations that are not present in the other sources
-    - contains `KB ↔︎ KB` relations
-    - only contains relations that have a MS Security Update Advisor
+    - can **automatically** be mirrored using our process (see below),
+    - contains `CVE/ADV ↔︎ KB` relations that are not present in the other sources,
+    - contains `KB ↔︎ KB` relations,
+    - only contains relations that have a MS Security Update Advisor.
 - [Microsoft Update Catalog](https://www.catalog.update.microsoft.com/Home.aspx)
-    - **cannot** be mirrored (no API/download available)
-    - contains `KB ↔︎ KB` relations
-    - does not contain `KB ↔︎ CVE/ADV` relations
+    - **cannot** be mirrored (no API/download available),
+    - contains `KB ↔︎ KB` relations,
+    - does not contain `KB ↔︎ CVE/ADV` relations.
 
 ### Problems with the data sources
 
-- only one of the three data sources can be retrieved automatically. The one available for mirroring is the most
+- Only one of the three data sources can be retrieved automatically. The one available for mirroring is the most
   important one, yet it still misses a lot of information.
-- the data in between the different sources is inconsistent. Every data source either contains `CVE/ADV → KB`
+- The data in between the different sources is inconsistent. Every data source either contains `CVE/ADV → KB`
   or `KB → KB`relations that are missing in the other sources. The Update Catalog knows about this information, but is
   inconsistent in itself.  
   An example for `KB4499409`:
@@ -103,10 +103,10 @@ Table of contents:
       it can be seen that it replaces `4499409`.
     - **In the API**: the KB replaces (`4487259` and `4487081`) and is replaced by `4507423`
       ![Example](kb-chain-example-1.png)
-- this means, our data will never be complete unless considering all three data sources, which is impossible to
+- This means, our data will never be complete unless considering all three data sources, which is impossible to
   automate. it is reasonable to manually download the csv files from the MSRC, but scraping the Update Catalog is not
   feasible, manually or automated.
-- the MSRC csv has to be downloaded in time segments of one year, which have to be set manually, which takes quite some
+- The MSRC csv has to be downloaded in time segments of one year, which have to be set manually, which takes quite some
   time
 
 ## Data mirror
@@ -114,7 +114,7 @@ Table of contents:
 ### Getting the data
 
 1. **Data structure used**  
-   The data structure used to store a KB identifier and it’s dependencies is a node-based graph. A Node has these
+   The data structure used to store a KB identifier and its dependencies is a node-based graph. A Node has these
    properties:
 
     - `String kbId`
@@ -132,36 +132,36 @@ Table of contents:
       Go to the Security Update Guides
       [Security Update Guide - Microsoft Security Response Center](https://msrc.microsoft.com/update-guide)
       website. Make sure to be in the `All` section.  
-      You cannot download all entries at once - only ones in a certain time frame (max. one year). Download the csv
-      files from as many time-frames as you need.
+      You cannot download all entries at once - only individual lists in a certain time frame (max. one year). Download
+      the csv files from as many time-frames as you need.
       This may take quite some time, so consider filtering the data to only the CVE that interest you.
-    - for every line in every document you downloaded:
-        - if the `Article` is a KB identifier (see criteria above), check if a `Node` with the KB already exists,
+    - For every line in every document you downloaded:
+        - If the `Article` is a KB identifier (see criteria above), check if a `Node` with the KB already exists,
           otherwise create a new one (`current`).
           There are two columns named Article, select the first one.
-        - get the product name from `Product` and find the corresponding product id from the `MsrcProductIndexQuery`. If
+        - Get the product name from `Product` and find the corresponding product id from the `MsrcProductIndexQuery`. If
           not available, use the name.
-        - if the `ReferenceEntry` for that product Id does not yet exist, create a new one
-        - add the CVE-identifier from `Details` to `affectedVulnerabilities` to the `ReferenceEntry` with the product
+        - If the `ReferenceEntry` for that product Id does not yet exist, create a new one
+        - Add the CVE-identifier from `Details` to `affectedVulnerabilities` to the `ReferenceEntry` with the product
           Id/name of `current`.
-    - store the result
+    - Store the result
 3. **Get KBs from MSRC Api**
-    - download all monthly detail files (see
+    - Download all monthly detail files (see
       [MSRC Download](../mirror/download.md#msrc--advisory-dataproduct-mappings---msrc-))
-    - create index from downloaded files (see [MSRC Index](../mirror/download.md))
-    - for every advisor in the data set iterate over all remediations provided
-        - get the supersedence, description and affected product Ids
-        - if the description is a KB identifier (see criteria above), check if a `Node` with the KB already exists,
+    - Create index from downloaded files (see [MSRC Index](../mirror/download.md))
+    - For every advisor in the data set iterate over all remediations provided
+        - Get the supersedence, description and affected product Ids
+        - If the description is a KB identifier (see criteria above), check if a `Node` with the KB already exists,
           otherwise create a new one (`current`)
-        - set the `kbId` of `current` to the description
-        - for every product Id:
-            - if the `ReferenceEntry` for that product Id does not yet exist, create a new one on `current`
-            - get the entry-id and add it to `affectedVulnerabilities` to the `ReferenceEntry`
-            - split the supersedence into multiple KB identifiers (see criteria above) and for every one:
-                - check if a `Node` with the KB already exists, otherwise create a new one (`ref`)
-                - add `ref` to `supersedes` to the `ReferenceEntry`
-                - add `current` to `supersededBy` to the `ReferenceEntry`
-    - store the result
+        - Set the `kbId` of `current` to the description
+        - For every product Id:
+            - If the `ReferenceEntry` for that product Id does not yet exist, create a new one on `current`
+            - Get the entry-id and add it to `affectedVulnerabilities` to the `ReferenceEntry`
+            - Split the supersedence into multiple KB identifiers (see criteria above) and for every one:
+                - Check if a `Node` with the KB already exists, otherwise create a new one (`ref`)
+                - Add `ref` to `supersedes` to the `ReferenceEntry`
+                - Add `current` to `supersededBy` to the `ReferenceEntry`
+    - Store the result
 4. **Merging the KB Nodes**
    Make sure to update the references of supersededBy and supersedes to the new merged list. This can be quite tricky to
    get right.  
@@ -375,14 +375,14 @@ the fix is for.
 
 This is a relatively easy task:
 
-- map the product name(s) to product Id(s) (e.g. using the `MsrcProductIndexQuery`)
-- create two lists to store KB Ids (`Nodes`) in: a target list kbIds for all the KB Ids that fix the vulnerability and
+- Map the product name(s) to product Id(s) (e.g. using the `MsrcProductIndexQuery`)
+- Create two lists to store KB Ids (`Nodes`) in: a target list kbIds for all the KB Ids that fix the vulnerability and
   one`toCheckKbIds` that contains only the ones that still need to be checked for supersedence
-- add all KB Ids that contain the vulnerability in `affectedVulnerabilities` to `kbIds` and their superseded by `Nodes`
+- Add all KB Ids that contain the vulnerability in `affectedVulnerabilities` to `kbIds` and their superseded by `Nodes`
   to`toCheckKbIds`; if a product Id is given, use only the relations with the according product Id, otherwise use all
-- until the `toCheckKbIds` are empty:
-    - pop a KB Id off the list
-    - perform step 2, but ignore the requirement that the vulnerability has to be in `affectedVulnerabilities`
+- Until the `toCheckKbIds` are empty:
+    - Pop a KB Id off the list
+    - Perform step 2, but ignore the requirement that the vulnerability has to be in `affectedVulnerabilities`
 
 <details>
   <summary>Example code</summary>
@@ -410,13 +410,13 @@ return kbIds;
 An example: You want to check for the vulnerability `CVE-2022-26928` and the product `Windows 10 for x64-based Systems`.
 
 1. `Windows 10 for x64-based Systems` has the Id `10735`
-2. the vulnerability CVE-2022-26928 is contained in the KB
+2. The vulnerability CVE-2022-26928 is contained in the KB
    identifiers `5017328, 5017327, 5017392, 5017308, 5017305, 5017316, 5017315`, but only `5017327` fixes the product
    Id `10735`
-3. find additional KB Ids for the already found ones by following the supersedes chain: `5018425` supersedes `5017327`
+3. Find additional KB Ids for the already found ones by following the supersedes chain: `5018425` supersedes `5017327`
    with product Id `10735`
-4. continue: `5018425` is superseded by `5019970` is superseded by `5021243` each with product `10735`
-5. no more new KBs
+4. Continue: `5018425` is superseded by `5019970` is superseded by `5021243` each with product `10735`
+5. No more new KBs
 
 → the `CVE-2022-26928` on `Windows 10 for x64-based Systems` is fixed by any of `5017327, 5018425, 5019970, 5021243`:
 
@@ -434,12 +434,12 @@ This chart contains all the KBs, no matter what product Id, to give more context
 This task requires a few more steps. Follow these steps to determine the vulnerabilities associated with a given product
 Id:
 
-1. identify all nodes that reference the product Id
-2. collect all vulnerabilities associated with these nodes, but only from the relationships that involve the product Id
-3. for each vulnerability, use the previously described algorithm to determine the KB Ids that can fix it
-4. iterate over all vulnerabilities and determine if the list of fixed KB Ids obtained in step 3 includes any of the KB
+1. Identify all nodes that reference the product Id
+2. Collect all vulnerabilities associated with these nodes, but only from the relationships that involve the product Id
+3. For each vulnerability, use the previously described algorithm to determine the KB Ids that can fix it
+4. Iterate over all vulnerabilities and determine if the list of fixed KB Ids obtained in step 3 includes any of the KB
    Ids provided as a parameter. If so, add the vulnerability to a list of fixed vulnerabilities.
-5. remove all fixed vulnerabilities from the overall list of vulnerabilities
+5. Remove all fixed vulnerabilities from the overall list of vulnerabilities
 
 <details>
   <summary>Example code</summary>
@@ -479,17 +479,17 @@ The resulting vulnerability list of this process tends to grow pretty fast, so I
 To determine the vulnerabilities present in `Microsoft SharePoint Server 2013 Service Pack 1` with product Id `10607`,
 knowing that `KB3172445` is installed on the system, the following steps should be taken:
 
-1. identify all KB entries with product
+1. Identify all KB entries with product
    Id: `3039736, 5002218, 4092472, 3213560, 3172445, 3203387, 4018391, 3054862, 4462202, 4022236, 4011586, 4011113, 5002203, 4018392, 3114503, 4484264, 4462139, 4484157, 4461596, 5002219, 4462143`
-2. identify all vulnerabilities associated with the relationships of the product
+2. Identify all vulnerabilities associated with the relationships of the product
    Id: `CVE-2018-8628, CVE-2017-8629, CVE-2016-0011, CVE-2016-3360, CVE-2022-30158, CVE-2017-8742, CVE-2017-8511, CVE-2016-3357, CVE-2017-8512, CVE-2019-0604, CVE-2018-8378, CVE-2020-0693, CVE-2020-0694, CVE-2018-1028`
-3. determine the KB IDs that can fix these vulnerabilities. (too big of a list, I will not list them here)
-4. compare the KB Ids passed as parameters to the list of fixing KB Ids to determine which vulnerabilities have been
+3. Determine the KB IDs that can fix these vulnerabilities. (too big of a list, I will not list them here)
+4. Compare the KB Ids passed as parameters to the list of fixing KB Ids to determine which vulnerabilities have been
    fixed by the supersedence chains: `CVE-2017-8511, CVE-2016-3357, CVE-2017-8512, CVE-2016-3360`
-5. remove the fixed vulnerabilities from the list, resulting in the final
+5. Remove the fixed vulnerabilities from the list, resulting in the final
    vulnerabilities: `CVE-2018-8628, CVE-2017-8629, CVE-2016-0011, CVE-2022-30158, CVE-2017-8742, CVE-2019-0604, CVE-2018-8378, CVE-2020-0693, CVE-2020-0694, CVE-2018-1028`
 
-This means these vulnerabilities are in still in the system and can be fixed by applying the listed KB Ids:
+This means these vulnerabilities are still in the system and can be fixed by applying the listed KB Ids:
 
 <img alt="Vulnerabilities in Microsoft SharePoint Server 2013 Service Pack 1 with already fixed KB3172445" src="kb-chain-example-5-vuln-in-product.png" width="333"/>
 

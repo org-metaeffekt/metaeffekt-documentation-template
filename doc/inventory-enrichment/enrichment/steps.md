@@ -93,7 +93,7 @@ and an `append`/`remove` section. In all sections, artifact attributes can be li
 
 For each YAML file specified:
 
-1. Parse all `YamlDataEntry` from the file
+1. Parse all `YamlDataEntry` from the file.
 2. For each entry:
     1. Find the artifacts affected by the entry by using `YamlDataEntry#affects()`
     2. Apply the entry to the artifact by appending/setting values in or removing fields by using
@@ -135,7 +135,7 @@ As mentioned above, this usually introduces a lot of false-positives into the pr
 ### Configuration Parameters
 
 - `int maxCorrelatedCpePerArtifact = Integer.MAX_VALUE`  
-  The maximum amount of CPEs are allowed to be matched per artifact, additional CPEs will be dropped. To guarantee
+  The maximum amount of CPEs that are allowed to be matched per artifact, additional CPEs will be dropped. To guarantee
   consistency over runs, the list of CPE is sorted alphabetically before removing elements.
 
 ### Affected attributes
@@ -246,7 +246,7 @@ Iterate over all artifacts in the inventory:
 ### Configuration Parameters
 
 - `int maxCorrelatedVulnerabilitiesPerArtifact = Integer.MAX_VALUE`  
-  the maximum amount of vulnerabilities are allowed to be matched per artifact. Additional vulnerabilities will be
+  The maximum amount of vulnerabilities that are allowed to be matched per artifact. Additional vulnerabilities will be
   dropped. To guarantee consistency over runs, the list is sorted alphabetically before removing the vulnerabilities.
 
 ### Affected attributes
@@ -287,8 +287,8 @@ can use this data.
 
 All detail filling steps provide two methods:
 
-- `shouldMissingInformationBeFilled(vulnerability)`: tells the process to fill details on a vulnerability, or skip it.
-  This is usually decided by checking whether there is no description or URL yet, if the name matches a certain pattern
+- `shouldMissingInformationBeFilled(vulnerability)`: tells the process to fill details on a vulnerability or skip it.
+  This is usually decided by checking whether there is no description or URL yet if the name matches a certain pattern
   or whether an advisory with the given source is present.
 - `fillDetailsOnVulnerability(vulnerability)`: the actual method that fills the details. This is different from step to
   step, but it usually involves adding a description, URL, references, CVSS data, advisor data and more.
@@ -336,7 +336,7 @@ For all `VulnerabilityMetaData` that have a CVE-identifier and are missing both 
         - Weaknesses
         - Source
         - References
-        - (multiple CVSS-scoring related fields)
+        - (Multiple CVSS-scoring related fields)
 
 ## Custom Vulnerability details filling
 
@@ -395,7 +395,7 @@ Adds status information to the vulnerabilities in the inventory.
         - Accepted by
         - Reported by
         - Title
-        - multiple CVSS-scoring related fields
+        - (Multiple CVSS-scoring related fields)
         - Status
         - Rationale
         - Risk
@@ -413,7 +413,7 @@ See [Vulnerability Keywords](vulnerability-keywords.md) to learn more about vuln
        search)
     2. Write the keyword information into the `Matched Keyword Sets` attribute. The data is stored in a json array and
        may contain score, name, category and notes.
-    3. If at least one keyword set has a score, write the total score it into `Matched Keyword Total Score`
+    3. If at least one keyword set has a score, write the total score into `Matched Keyword Total Score`
     4. A keyword file may reference a status entry. If this is the case, apply the status to the matching vulnerability.
        See the `vulnerabilityStatusEnrichment` above for more details.
 
@@ -449,10 +449,10 @@ from the `VulnerabilityDetailsFillingEnrichment` class, which is also the basis 
 1. For every vulnerability, check whether `shouldMissingInformationBeFilled` is true. For the steps below, this is
    always if the `Advisories`attributes do not contain and advisory entry of the given type
    (`MSRC`, `CERT_FR`, `CERT_SEI`), as this would mean that the process has already run on the vulnerability.
-2. If an enrichment is required, call the `fillDetailsOnVulnerability` method:
+2. If an enrichment is required, call the `fillDetailsOnVulnerability` method.
 3. Collect all advisor entries with either the `Name` of the vulnerability as id, or as fallback, all entries that
    reference the current vulnerability `Name` in the referenced ids.
-4. Use the `appendToVulnerabilityMetaData` method to apply the entry to the vulnerability.
+4. Use the `appendToVulnerabilityMetaData` method to apply the entry to the vulnerability:
     1. Use the `toJson` method of the advisory entry to merge existing advisor entries with the new one in `Advisories`
     2. If the vulnerability is missing `Url` or `Description`, fill the data
     3. Merge the references with any existing `References`
@@ -547,7 +547,7 @@ If no filter is provided, this enrichment step is skipped and all vulnerabilitie
         - Last Updated Timestamp
         - Created Timestamp
         - Source
-        - multiple CVSS-scoring related fields
+        - (Multiple CVSS-scoring related fields)
 
 ## Vulnerability Assessment Dashboard (VAD)
 
@@ -557,9 +557,11 @@ The Vulnerability Assessment Dashboard is one of the resulting documents that re
 Pipeline. It is a single-page HTML document that contains a summary of all vulnerabilities, their metadata and
 references. It allows for sorting and filtering the information contained within.
 
-One of the core features, the vulnerability timeline, can make generating the dashboard take quite a long time if many
-unreviewed vulnerabilities are present in the inventory, which is why the `vulnerabilityTimelinesGlobalEnabled`
-configuration parameter can initially be set to `false` in case this information is not yet required.
+Even after several performance updates to one of the core features, the vulnerability timeline, the generation of the
+dashboard can still take quite a long time if many unreviewed vulnerabilities are present in the inventory.  
+You may want to consider setting the `vulnerabilityTimelinesGlobalEnabled` configuration parameter to `false` in case
+this information is not yet required. You could also set the `maximumTimeSpentPerTimeline` configuration parameter to a
+value like `120` (seconds) to limit the time spent on generating the timelines.
 
 ### Configuration Parameters
 
@@ -585,8 +587,11 @@ configuration parameter can initially be set to `false` in case this information
   matched, the versions will be cropped from the left (i.e. the older, lower versions). It is not guaranteed that this
   exact amount of versions is hit, as the normalizing process that follows after that might reduce the amount further.
 - `int maximumTimeSpentOnTimelines = Integer.MAX_VALUE`  
-  The maximum amount of _SECONDS_ the process should spend generating a timeline. If hit, will stop searching for more
-  versions and vulnerabilities.
+  The global maximum amount of _SECONDS_ the process should spend generating all timelines. If hit, will stop searching
+  for more versions and vulnerabilities.
+- `int maximumTimeSpentPerTimeline = Integer.MAX_VALUE`  
+  The maximum amount of _SECONDS_ the process should spend generating a single timeline. If hit, will stop searching for
+  more versions and vulnerabilities.
 - `double insignificantThreshold = Integer.MIN_VALUE`  
   If a vulnerability has a score of `insignificantThreshold` or less, it will be marked as `insignificant` if it has no
   other status. A recommended value for this is `7`.

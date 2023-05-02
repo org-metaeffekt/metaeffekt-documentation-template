@@ -3,7 +3,8 @@
 
 # Maven POM
 
-A full example wil all configuration parameters can be found in [advisors/pom.xml line ~145](../../../advisors/pom.xml).
+A full example with all configuration parameters can be found in
+[advisors/pom.xml line ~145](../../../advisors/pom.xml).
 
 To use it, activate the `com.metaeffekt.artifact.analysis` : `ae-inventory-enrichment-plugin` : `enrich-inventory` goal
 in the plugin section of a build tag. Inside the configuration, the enrichment steps can be defined.

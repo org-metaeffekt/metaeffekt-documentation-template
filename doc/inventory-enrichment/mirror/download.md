@@ -33,37 +33,37 @@ For an overview on the dependencies between downloads and indexes, see [this ove
 
 ## Common steps
 
-Every download data source in encapsulated in a single class that extends `Download`. The downloaded files are stored in
+Every download data source is encapsulated in a single class that extends `Download`. The downloaded files are stored in
 a directory `BASE DIR/download/DOWNLOAD NAME`. The individual downloader manages the internal structure of the download
 by itself.
 
 When a download is asked to initialize/update the downloaded data, it will only do so if one of these criteria is met:
 
-- the download is not yet present at all
-- the last update is further back than a specified time (default: 1 day)
-- the remote datasets have changed since the last update, this is different from download to download
+- The download is not yet present at all.
+- The last update is further back than a specified time (default: 1 day).
+- The remote datasets have changed since the last update, this is different from download to download.
 
 Every download is unique and differs in terms of data source, format, and size, which is why each one is implemented
 very differently. This is the main process that they all share:
 
-- wait for the directory to be unlocked. Other downloads/indexes can lock the directory if they require the directory
+- Wait for the directory to be unlocked. Other downloads/indexes can lock the directory if they require the directory
   not to be changed. The default timeout for this is 10 minutes.
-- lock the directory to prevent other processes to write/read the download information in parallel.
-- if the initial download is older than 4 weeks, the entire download directory is reset to fix any broken information.
+- Lock the directory to prevent other processes to write/read the download information in parallel
+- If the initial download is older than 4 weeks, the entire download directory is reset to fix any broken information.
   This is done to prevent outdated and potentially incorrect data from being stored for an extended period of time. In
   the past, data sources have accidentally provided invalid data, leading to it being stored in the local download. Even
   when the data sources corrected the mistake, the local download still held the invalid information.
-- check whether a download is required at all using the criteria listed above. If not, abort the process now.
-- if the download is required: [perform the individual download step from the downloader](#list-of-downloads)
-- unlock the directory
+- Check whether a download is required at all using the criteria listed above. If not, abort the process now
+- If the download is required: [perform the individual download step from the downloader](#list-of-downloads)
+- Unlock the directory
 
 Some more information:
 
-- downloading data may sometimes fail due to service unavailability or network issues. To mitigate this, the process
+- Downloading data may sometimes fail due to service unavailability or network issues. To mitigate this, the process
   will retry requests a few times before finally failing. Although the mirroring process will continue, the failed
   download will be marked as broken. This allows the index structures to detect and skip the indexing of broken
   downloads.
-- some requests to the data sources can be parallelized, as the data downloaded has to be processed and more requests
+- Some requests to the data sources can be parallelized, as the data downloaded has to be processed and more requests
   can be made during that time. The individual process can define how many threads should be launched in parallel, with
   a maximum of the amount of cores available.
 
@@ -85,7 +85,7 @@ public enum ResourceLocationCertSei implements ResourceLocation {
 }
 ```
 
-This allows the user to customize the data sources, in case the data is stored on a different server than the default
+This allows the user to customize the data sources in case the data is stored on a different server than the default
 one. When using the `DownloadInitializer` class within the `ae-inventory-enrichment-plugin` POM, a list of
 `resourceLocations` can be provided, like this:
 

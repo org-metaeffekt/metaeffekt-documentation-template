@@ -9,7 +9,7 @@ To understand the enrichment process, the `InventoryEnrichment` class has to be 
 the [Java](java.md) chapter.
 
 Every inventory enrichment step inherits from the `InventoryEnricher` class. This class has several abstract methods
-that need to be implemented.
+that need to be implemented:
 
 - `getConfiguration()` - Returns the configuration for this step. Each step has its own configuration class. Considering
   that the configuration instance can be interchanged using the setter, the instance returned by this method should not
