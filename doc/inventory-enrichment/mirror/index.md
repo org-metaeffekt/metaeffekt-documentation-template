@@ -325,6 +325,13 @@ These downloads either have already or will stop working in the future, due to A
 > :warning: In late 2023, the NVD will retire its legacy data feeds while working to guide any remaining data feed users
 > to updated application-programming interfaces (APIs).
 
+Due to changes in the data format, the indexers were made unavailable, as maintaining them was not worth the effort.  
+This, however, has now changed once again: the indexers are now available again, but only for the duration of the
+transition period. They will be removed again once the legacy feeds are shut down.
+
+If you want to use the deprecated NVD mirrors, use the `cpeDictionaryIndex`, then `nvdCpeVendorProductIndex` and for the
+CVEs, use `nvdLegacyVulnerabilityIndex`.
+
 ---
 
 ### CPE Dictionary (CPEs)
@@ -334,6 +341,9 @@ These downloads either have already or will stop working in the future, due to A
 The downloaded files come in JSON for the dictionary and XML for the match file. The JSON contains an array of objects,
 that each have a CPE URI and multiple child-CPEs. The XML contains a list of cpe-item entries with a CPE as name and
 multiple other CPEs in several data structure formats.
+
+The following tables **data structure** columns may not represent the internal structure any more, since the format was
+recently (2023-04-11) changed to match the new API format.
 
 | JSON/XML                                                           | data structure                                                                                                           |
 |:-------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------|

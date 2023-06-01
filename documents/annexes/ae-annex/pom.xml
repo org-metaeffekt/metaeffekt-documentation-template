@@ -92,6 +92,7 @@
 
                     <!-- FIXME: no enforcement yet -->
                     <vulnerabilityScoreThreshold>7.0</vulnerabilityScoreThreshold>
+                    <minimumVulnerabilityIncludeScore>-1.0</minimumVulnerabilityIncludeScore>
 
                     <enableBomReport>true</enableBomReport>
                     <enableVulnerabilityReport>true</enableVulnerabilityReport>
