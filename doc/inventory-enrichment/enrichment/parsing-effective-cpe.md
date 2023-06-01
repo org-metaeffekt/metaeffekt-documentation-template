@@ -15,16 +15,16 @@ The first four columns contain data that will later be read, while the `Matched 
 documentation purposes.
 
 `Derived CPE URIs` are the CPEs that are derived from the artifact data by our
-algorithm([CPE Derivation](steps.md#cpe-derivation)). However, these CPEs are not always accurate due to false positives
-or missing information, which is why, in most cases, they need to manually be adjusted. This is where
-our[correlation-yaml format](artifact-correlation.md) comes into play, allowing us to set or delete attributes on
+algorithm ([CPE Derivation](steps.md#cpe-derivation)). However, these CPEs are not always accurate due to false
+positives or missing information, which is why, in most cases, they need to manually be adjusted. This is where
+our [correlation-yaml format](artifact-correlation.md) comes into play, allowing us to set or delete attributes on
 artifacts. In this step, typically only the`Additional CPE URIs` and `Inapplicable CPE URIs` fields are set. Previously,
 we also set the `CPE URIs` field, but we have since stopped doing so for reasons that will become clear.
 
 ## Effective CPE
 
 This data becomes relevant in e.g. [CPE to CVE](steps.md#nvd-cve-from-cpe) correlation steps, where the effective CPEs
-are calculated, but not stored in the inventory. In pseudo-code, this process works as follows:
+are calculated, but not stored in the inventory. In pseudocode, this process works as follows:
 
 ```
 Effective CPE = isset(CPE URIs) ? (CPE URIs) : ((Derived CPE URIs + Additional CPE URIs) - Inapplicable CPE URIs)

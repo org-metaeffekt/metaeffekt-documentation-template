@@ -27,11 +27,11 @@ an overview on the dependencies between downloads and indexes, see [this overvie
 
 Some base information:
 
-- the index created is a Lucene Index. Such an index contains a list of documents, where each document is a Key-Value
+- The index created is a Lucene Index. Such an index contains a list of documents, where each document is a Key-Value
   Map. Depending on the index, these maps can contain different data.
-- indexes can depend on one or more other downloads or indexes. If an index is attempted to be created or updated while
+- Indexes can depend on one or more other downloads or indexes. If an index is attempted to be created or updated while
   dependent structures are not present, the index will be aborted.
-- internally, every index is encapsulated within a single class that extends `Index`. The index files are stored in
+- Internally, every index is encapsulated within a single class that extends `Index`. The index files are stored in
   `BASE DIR/index/INDEX NAME`.
 
 The indexing process will only be performed if any of the following conditions are met:
@@ -43,34 +43,34 @@ The indexing process will only be performed if any of the following conditions a
 The different indexers work very different from each other, as the data provided by the remote sources comes in a wide
 variety of formats. This is the main structure:
 
-- wait for the directory to be unlocked. Other indexes can lock the directory if they require the directory not to be
+- Wait for the directory to be unlocked. Other indexes can lock the directory if they require the directory not to be
   changed. The default timeout for this is 10 minutes.
-- lock the directory to prevent other processes to write/read the index information in parallel.
-- check whether indexing is required at all using the criteria listed above. If not, abort the process now.
-- backup the index in case an exception occurs
-- fully clear the index
-- create the index:
+- Lock the directory to prevent other processes to write/read the index information in parallel
+- Check whether indexing is required at all using the criteria listed above. If not, abort the process now.
+- Backup the index in case an exception occurs
+- Fully clear the index
+- Create the index:
     - assert that the required downloads and indexes exist
     - create the index documents (different from index to index)
     - if at least one document has been created, write them to the index directory
-- if an exception occurred, rollback to the backup. In any case, clear the backup afterwards.
-- unlock the directory
+- If an exception occurred, rollback to the backup. In any case, clear the backup afterwards.
+- Unlock the directory
 
 ## List of indexes
 
 Similar to the downloading processes, the data sources:
 
-- do not share a common format
-- do not stay consistent within themselves (change format over time)
-- might not even be meant to be machine-readable
+- do not share a common format,
+- do not stay consistent within themselves (change format over time) or
+- might not even be meant to be machine-readable.
 
 This can make it quite challenging to parse the incoming data. Processes have been developed in order to parse these
 formats, which is why a consistent notation is required to document these steps: As the Lucene Index works on documents
 (Key/Value pairs), each index below will show a table with one/multiple source fields and a target field in the index
 that will contain the data from the data sources.
 
-- if split by comma `,` the first available is used
-- if split by `&`, both/all are used
+- If split by comma `,`, the first available is used
+- If split by `&`, both/all are used
 - `longest([...])` will use the longest string of the ones in the parameter body
 - `if [cond]: [...] else if [cond]: [...] else: [...]` will use the element only if the condition is met
 - `[parent] > [child]` is a child accessor, describes from what part of the source document the information comes from
@@ -173,9 +173,9 @@ Array has these fields: `sourceIdentifier`, `references`, `configurations`, `wea
 The CERT-SEI provides multiple JSON files with one note/advisor per file. To parse the JSON files in the download
 directory:
 
-1. Iterate over all JSON files in the directory.
-2. Read and parse the JSON contents of each file.
-3. Use `CertSeiAdvisorEntry.fromDownloadJson` to map the fields to a `CertSeiAdvisorEntry` object.
+1. iterate over all JSON files in the directory,
+2. read and parse the JSON contents of each file,
+3. use `CertSeiAdvisorEntry.fromDownloadJson` to map the fields to a `CertSeiAdvisorEntry` object.
 
 | JSON                                                             | CertSeiAdvisorEntry |
 |:-----------------------------------------------------------------|:--------------------|
