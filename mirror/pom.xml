@@ -13,7 +13,7 @@
 
     <properties>
         <!-- run with the mirror-database profile active to download the database contents -->
-        <input.database>${project.basedir}/../.database/ae-vulnerability-mirror-v2</input.database>
+        <database.path>${project.basedir}/../.database/ae-vulnerability-mirror-v2</database.path>
 
         <proxy.scheme>none</proxy.scheme>
         <proxy.host>none</proxy.host>
@@ -30,7 +30,6 @@
     <profiles>
         <profile>
             <id>mirror-database</id>
-
             <build>
                 <plugins>
                     <plugin>
@@ -47,7 +46,7 @@
 
                                 <configuration>
                                     <mirrorDirectory>
-                                        ${input.database}
+                                        ${database.path}
                                     </mirrorDirectory>
 
                                     <proxyScheme>${proxy.scheme}</proxyScheme>
@@ -158,7 +157,6 @@
 
         <profile>
             <id>index-database</id>
-
             <build>
                 <plugins>
                     <plugin>
@@ -174,26 +172,17 @@
                                 </goals>
 
                                 <configuration>
-                                    <mirrorDirectory>${input.database}</mirrorDirectory>
+                                    <mirrorDirectory>${database.path}</mirrorDirectory>
 
                                     <!-- Indexers -->
-
                                     <certSeiAdvisorIndex/>
-
                                     <certFrAdvisorIndex/>
-
                                     <nvdVulnerabilityIndex/>
-
                                     <nvdCpeIndex/>
-
                                     <nvdCpeVendorProductIndex/>
-
                                     <msrcProductIndex/>
-
                                     <msrcAdvisorIndex/>
-
                                     <msrcKbChainIndex/>
-
                                 </configuration>
                             </execution>
                         </executions>

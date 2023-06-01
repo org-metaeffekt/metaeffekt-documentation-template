@@ -99,9 +99,13 @@
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
 
                         <!-- [default, abstracted] -->
-                        <overviewTablesVulnerabilityStatusMappingFunction>default</overviewTablesVulnerabilityStatusMappingFunction>
+                        <overviewTablesVulnerabilityStatusMappingFunction>abstracted</overviewTablesVulnerabilityStatusMappingFunction>
+
                         <!-- [latest, max, [custom expression]]-->
                         <cvssScoringPreference>latest</cvssScoringPreference>
+
+                        <!-- [alert, notice, news, all, none] -->
+                        <includeAdvisoryTypes>alert</includeAdvisoryTypes>
 
                         <failOnError>false</failOnError>
                         <failOnBanned>false</failOnBanned>
@@ -117,8 +121,6 @@
                         <failOnMissingSources>false</failOnMissingSources>
 
                         <generateOverviewTablesForAdvisories>CERT-SEI</generateOverviewTablesForAdvisories>
-                        <!-- [alert, notice, news, all, none] -->
-                        <includeAdvisoryTypes>all</includeAdvisoryTypes>
                     </configuration>
 
                 </plugin>

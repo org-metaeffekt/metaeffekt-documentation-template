@@ -29,7 +29,7 @@
 
     <chapter href="ae-example-report/tpc_vulnerabilities.dita" />
     <chapter href="ae-example-report/gen/tpc_inventory-vulnerability-statistics.dita" />
-    <chapter href="ae-example-report/gen/tpc_inventory-vulnerability-report-abstracted.dita" />
+    <chapter href="ae-example-report/gen/tpc_inventory-vulnerability-report.dita" />
     <chapter href="ae-example-report/gen/tpc_inventory-vulnerability-details.dita" />
 
     <backmatter>

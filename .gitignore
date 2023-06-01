@@ -13,3 +13,4 @@
 **/gen
 **/.local-README.md
 /scanners/folder-scanner/.license-scanner/
+/test/ae-vulnerability-mirror/
