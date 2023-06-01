@@ -42,6 +42,7 @@
 
         <correlation.dir>../correlation</correlation.dir>
         <keywords.dir>${project.basedir}/context/keywords.yaml</keywords.dir>
+        <keywords.labels></keywords.labels>
         <assessment.dir>${project.basedir}/assessment</assessment.dir>
         <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
 
@@ -222,7 +223,7 @@
                                         <file>${keywords.dir}</file>
                                     </yamlFiles>
                                     <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                    <activeLabels>${keywords.dir}</activeLabels>
+                                    <activeLabels>${keywords.labels}</activeLabels>
                                 </vulnerabilityKeywordsEnrichment>
 
 

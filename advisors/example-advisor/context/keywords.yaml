@@ -1,1 +1,26 @@
-null
+sets:
+  - name: example-keywords-1
+    notes: This is an example keyword set (1)
+    score: 1
+    category: arbitrary code execution
+    all:
+      - arbitrary code
+    min:
+      - amount: 1
+        keywords:
+          - execute
+          - execution
+  - name: example-keywords-2
+    notes: This is an example keyword set (2)
+    score: 2
+    category: deserialization
+    all:
+      - deserialization
+      - untrusted
+  - name: example-keywords-3
+    notes: Identical to example-keywords-2
+    score: 4
+    category: deserialization
+    all:
+      - deserialization
+      - untrusted
