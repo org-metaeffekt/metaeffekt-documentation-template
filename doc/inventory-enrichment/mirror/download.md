@@ -26,6 +26,7 @@ For an overview on the dependencies between downloads and indexes, see [this ove
     * [CERT-FR](#cert-fr-advisory-data) (advisory data)
     * [MSRC](#msrc-advisory-dataproduct-mappings) (advisory data/product mappings)
     * [MSRC CSV](#msrc-csv-kb-chains) (KB chains)
+    * [GHSA](#ghsa-github-security-advisories)
 * [List of deprecated downloads](#list-of-deprecated-downloads)
     * [Legacy NVD CVE/CPE Information](#legacy-nvd-cvecpe-information)
         * [Legacy NVD CPE Dictionary](#legacy-nvd-cpe-dictionary)
@@ -90,6 +91,7 @@ one. When using the `DownloadInitializer` class within the `ae-inventory-enrichm
 `resourceLocations` can be provided, like this:
 
 ```xml
+
 <certSeiDownload>
     <resourceLocations>
         <SUMMARY_API_URL>https://kb.cert.org/vuls/api/%d/summary/</SUMMARY_API_URL>
@@ -365,6 +367,49 @@ into this directory. The index will automatically pick up any CSV file provided 
 Examples:
 
 - CSV file 2023: [local copy](example-data/msrc-csv-2023.csv)
+
+---
+
+### GHSA (GitHub Security Advisories)
+
+`github-advisory-database` / `githubAdvisorDownload`
+
+References:
+
+- GitHub Security Advisory Database: [https://github.com/advisories](https://github.com/advisories)
+- Understanding the GitHub Security Advisory Database: [understanding-data.md](../ghsa/understanding-data.md)
+
+The data is provided, as would be expected by GitHub, in a git repository. You can choose to use the `git` command line
+tool to clone the repository, or use the zip download provided by GitHub by setting the `useGitCommand` flag to `true`
+or `false`.
+
+The downloader will create a directory `github-advisory-database` in the `download` directory, where a directory
+structure will be created that mirrors the structure of the repository.
+
+The advisories are split into two directories: `advisories/github-reviewed` and `advisories/unreviewed`. Each file is
+contained within a separate directory, with the name of the directory being the advisory ID.
+
+```
+.
+└── advisories
+    ├── github-reviewed
+    │   ├── 2017
+    │   │   ├── 10
+    │   │   │   ├── GHSA-229r-pqp6-8w6g
+    │   │   │   │   └── GHSA-229r-pqp6-8w6g.json
+    │   │   │   ├── GHSA-24fg-p96v-hxh8
+    │   │   │   │   └── GHSA-24fg-p96v-hxh8.json
+    └── unreviewed
+        ├── 2021
+        │   ├── 04
+        │   │   └── GHSA-m5pg-8h68-j225
+        │   │       └── GHSA-m5pg-8h68-j225.json
+```
+
+Examples:
+
+- GHSA: [local copy](../ghsa/ghsa-advisory-example-1-GHSA-2mh7-qxcw-q39g.json) or
+  [online](https://github.com/advisories/GHSA-2mh7-qxcw-q39g)
 
 ---
 

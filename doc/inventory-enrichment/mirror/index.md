@@ -17,6 +17,7 @@ an overview on the dependencies between downloads and indexes, see [this overvie
         * [MSRC Products](#msrc-products)
         * [MSRC Advisors](#msrc-advisors-advisory-data) (advisory data)
         * [MSRC KB Chains](#msrc-kb-chains)
+        * [GHSA](#ghsa-github-security-advisories) (advisory data)
     * [List of deprecated downloads](#list-of-deprecated-indexers)
         * [Legacy NVD CVE/CPE Information](#legacy-nvd-cvecpe-information)
             * [CPE Dictionary](#cpe-dictionary-cpes) (CPEs)
@@ -311,6 +312,69 @@ product and are stored in separate fields.
 
 For more details on how this index is built and how it can be used, see
 [Understanding the MSRC data](../msrc/understanding-data.md) and related pages.
+
+---
+
+### GHSA (GitHub Security Advisories)
+
+`github-advisory-database` / `githubAdvisorIndex`
+
+References:
+
+- Understanding the GitHub Security Advisory Database: [understanding-data.md](../ghsa/understanding-data.md)
+
+The GitHub Security Advisories are available as JSON files. Each file contains a single advisory, which is identified
+by its GHSA ID. The ID is also used as the filename.
+
+A speciality with this data source is that it provides matching information, containing the ecosystem, package name and
+version range for each affected package. This information is stored in the `affected` field, which is an array of
+objects.
+
+```json
+"affected": [
+  {
+    "package": {
+      "ecosystem": "Packagist",
+      "name": "francoisjacquet/rosariosis"
+    },
+    "ranges": [
+      {
+        "type": "ECOSYSTEM",
+        "events": [
+          {
+            "introduced": "0"
+          },
+          {
+            "fixed": "8.9.3"
+          }
+        ]
+      }
+    ]
+  }
+]
+```
+
+| JSON                                          | GhsaAdvisorEntry      |
+|:----------------------------------------------|:----------------------|
+| `id`                                          | `id`                  |
+| `published`                                   | `createDate`          |
+| `modified`                                    | `updateDate`          |
+| `references`                                  | `references`          |
+| `aliases` & (`database_specific` > `cwe_ids`) | `referenceIds`        |
+| `summary`                                     | `summary`             |
+| `description`                                 | `description`         |
+| `database_specific` > `severity`              | `severity`            |
+| `database_specific` > `githubReviewed`        | `githubReviewed`      |
+| `database_specific` > `githubReviewedAt`      | `githubReviewedAt`    |
+| `database_specific` > `nvdPublishedAt`        | `nvdPublishedAt`      |
+| `affected` > each `package` and `ranges`      | `vulnerableSoftwares` |
+| `severity` > where `type` == `CVSS_V3`        | `cvss3`               |
+| `severity` > where `type` == `CVSS_V2`        | `cvss2`               |
+
+Examples:
+
+- GHSA: [local copy](../ghsa/ghsa-advisory-example-1-GHSA-2mh7-qxcw-q39g.json) or
+  [online](https://github.com/advisories/GHSA-2mh7-qxcw-q39g)
 
 ---
 

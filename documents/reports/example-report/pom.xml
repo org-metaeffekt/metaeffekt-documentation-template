@@ -95,6 +95,8 @@
                         <minimumVulnerabilityIncludeScore>-1</minimumVulnerabilityIncludeScore>
                         <vulnerabilityAdvisoryFilter></vulnerabilityAdvisoryFilter>
 
+                        <includeAdvisoryTypes>all</includeAdvisoryTypes>
+
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
 
