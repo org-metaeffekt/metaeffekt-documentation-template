@@ -17,12 +17,14 @@ executed in:
     - [`msVulnerabilitiesByProductEnrichment`](#msrc-vulnerabilities-from-ms-products)
     - [`nvdMatchCveFromCpeEnrichment`](#nvd-cve-from-cpe)
     - [`customVulnerabilitiesFromCpeEnrichment`](#custom-vulnerabilities-from-cpe)
+    - [`ghsaVulnerabilitiesEnrichment`](#)
 
 - **[Step 2](#step-2---fill-vulnerability-meta-data-for-matched-identifiers)**: fill vulnerability meta data for matched
   identifiers
     - [`nvdCveFillDetailsEnrichment`](#nvd-cve-details-filling)
     - [`customVulnerabilitiesFillDetailsEnrichment`](#custom-vulnerability-details-filling)
     - [`msrcAdvisorFillDetailsEnrichment`](#msrc-advisor-details-filling)
+    - [`ghsaAdvisorFillDetailsEnrichment`](#)
 
 - **[Step 3](#step-3---add-statuskeyword-data)**: add status/keyword data
     - [`vulnerabilityStatusEnrichment`](#vulnerability-status)
@@ -35,6 +37,7 @@ executed in:
     - [`msrcAdvisorFillDetailsEnrichment`](#msrc-advisor-details-filling)
     - [`certFrAdvisorEnrichment`](#cert-fr-advisors-details-filling)
     - [`certSeiAdvisorEnrichment`](#cert-sei-advisors-details-filling)
+    - [`ghsaAdvisorFillDetailsEnrichment`](#)
 
 - **[Step 5](#step-5---use-data-to-create-vad)**: adjust view and use data to create VAD
     - [`vulnerabilityFilterEnrichment`](#vulnerability-filter)
@@ -42,6 +45,7 @@ executed in:
 
 - **[Other](#other-steps)**: steps that do not belong into the main enrichment process
     - [`advisorPeriodicEnrichment`](#advisor-periodic)
+    - [`inventoryValidationEnrichment`](#)
 
 Open the following image in a new tab to see more details about the requirements between the different steps:
 

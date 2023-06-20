@@ -71,6 +71,8 @@
                                     <msrcDownload />
                                     <msrcCsvDownload/>
 
+                                    <githubAdvisorDownload/>
+
                                 </configuration>
                             </execution>
                         </executions>
@@ -106,6 +108,7 @@
                                     <msrcProductIndex/>
                                     <msrcAdvisorIndex/>
                                     <msrcKbChainIndex/>
+                                    <githubAdvisorIndex/>
                                 </configuration>
                             </execution>
                         </executions>
