@@ -40,12 +40,12 @@ executed in:
     - [`ghsaAdvisorFillDetailsEnrichment`](#)
 
 - **[Step 5](#step-5---use-data-to-create-vad)**: adjust view and use data to create VAD
+    - [`inventoryValidationEnrichment`](#inventory-validation)
     - [`vulnerabilityFilterEnrichment`](#vulnerability-filter)
     - [`vulnerabilityAssessmentDashboardEnrichment`](#vulnerability-assessment-dashboard-vad)
 
 - **[Other](#other-steps)**: steps that do not belong into the main enrichment process
     - [`advisorPeriodicEnrichment`](#advisor-periodic)
-    - [`inventoryValidationEnrichment`](#)
 
 Open the following image in a new tab to see more details about the requirements between the different steps:
 
@@ -524,6 +524,51 @@ This step uses the general step (Step 4) from above.
 See `NVD CVE details filling`.
 
 # Step 5 - use data to create VAD
+
+## Inventory Validation
+
+→ `InventoryValidationEnrichment` / `inventoryValidationEnrichment`
+
+Provides several validators that can be used to validate the integrity of the inventory. Currently, there are the
+following validators available:
+
+- `additionalCpeIsNotEffectiveInventoryValidator`  
+  Asserts that an inventory does not contain the same CPE in the `Additional CPE URIs` and
+  `Inapplicable CPE URIs` fields. Mainly exist to assist with the inventory correlation step.
+- `multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator`  
+  Will fail if a vulnerability has multiple artifacts and multiple version. Has a parameter `versionLevel` that can be
+  either `major`, `minor` or `patch` to specify the level of version granularity that is allowed.
+- `artifactAndCpeVersionsDifferGreatlyInventoryValidator`  
+  Will fail if a major version of an artifact is not present in the CPE versions on a vulnerability. This validator will
+  cause a lot of correlation warnings/errors, as this is quite common to occur and should only be activated when
+  actively checking for version mismatches.
+- `vulnerabilityInvalidNameValidator`  
+  Checks all vulnerabilities for space characters in their name. It might be possible that in the future, we will
+  support spaces, but for now the report would break.
+
+### Configuration Parameters
+
+By merely mentioning the above listed validators as a tag in the configuration, they will be activated.
+
+- `additionalCpeIsNotEffectiveInventoryValidator`
+- `multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator`
+  - `String versionLevel = "major"`  
+    The level of version granularity that is allowed. Can be either `major`, `minor` or `patch`.
+- `artifactAndCpeVersionsDifferGreatlyInventoryValidator`
+- `vulnerabilityInvalidNameValidator`
+
+### Affected attributes
+
+- `Vulnerabilities`
+    - read :mag_right:
+        - any
+- `Artifacts`
+    - read :mag_right:
+        - any
+- `Info`
+    - write :memo:
+        - Id
+        - Warnings
 
 ## Vulnerability Filter
 

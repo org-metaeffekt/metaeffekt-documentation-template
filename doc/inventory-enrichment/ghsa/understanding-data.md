@@ -22,7 +22,6 @@ The advisories reference packages from different ecosystems, which include:
 
 Each advisory may reference one or more packages from these ecosystems.
 
-@formatter:off
 ```json
 "affected": [
   {
@@ -46,7 +45,6 @@ Each advisory may reference one or more packages from these ecosystems.
   }
 ]
 ```
-@formatter:on
 
 There are multiple different `events` that are parsed into our data model of `VulnerableSoftwareVersionRangeEcosystem`s:
 
@@ -73,7 +71,6 @@ ecosystem, a different `GhsaArtifactVulnerabilityMatcher` as specified in `GhsaE
 They all work very similarly, they always take some attributes that the artifact has and perform a query on the index
 using it.
 
-@formatter:off
 ```java
 final String artifactId = normalizeArtifactId(artifact.getId());
 final String groupId = artifact.getGroupId();
@@ -81,7 +78,6 @@ final String version = artifact.getVersion();
 
 return super.ghsaQuery.findByVsMaven(groupId, artifactId, version, super.githubReviewed);
 ```
-@formatter:on
 
 The index will only be using the advisories that are from that ecosystem and will check for the version range. Depending
 on what matcher is used, different attributes and normalization strategies will be used.
