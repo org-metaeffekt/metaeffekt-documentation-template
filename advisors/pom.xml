@@ -61,6 +61,7 @@
         <activate.correlation>true</activate.correlation>
         <activate.status>true</activate.status>
         <activate.keywords>true</activate.keywords>
+        <activate.validation>true</activate.validation>
         <activate.dashboard>true</activate.dashboard>
         <activate.vulnerabilities.custom>true</activate.vulnerabilities.custom>
 
@@ -260,6 +261,19 @@
                                     <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
                                 </certSeiAdvisorEnrichment>
 
+
+                                <inventoryValidationEnrichment>
+                                    <active>${activate.validation}</active>
+                                    <failOnValidationErrors>false</failOnValidationErrors>
+                                    <addAsCorrelationWarnings>true</addAsCorrelationWarnings>
+
+                                    <additionalCpeIsNotEffectiveInventoryValidator/>
+                                    <multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
+                                        <versionLevel>minor</versionLevel>
+                                    </multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
+                                    <artifactAndCpeVersionsDifferGreatlyInventoryValidator/>
+                                    <vulnerabilityInvalidNameValidator/>
+                                </inventoryValidationEnrichment>
 
                                 <vulnerabilityFilterEnrichment>
                                     <active>false</active>

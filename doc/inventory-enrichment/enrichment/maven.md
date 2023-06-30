@@ -121,6 +121,17 @@ inside a tag with the same name. Replace lists entries with child tag entries.
                     </certSeiAdvisorEnrichment>
 
 
+                    <inventoryValidationEnrichment>
+                        <failOnValidationErrors>false</failOnValidationErrors>
+                        <addAsCorrelationWarnings>true</addAsCorrelationWarnings>
+                        <additionalCpeIsNotEffectiveInventoryValidator/>
+                        <multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
+                            <versionLevel>minor</versionLevel>
+                        </multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
+                        <artifactAndCpeVersionsDifferGreatlyInventoryValidator/>
+                        <vulnerabilityInvalidNameValidator/>
+                    </inventoryValidationEnrichment>
+
                     <vulnerabilityFilterEnrichment>
                         <active>false</active>
                         <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>

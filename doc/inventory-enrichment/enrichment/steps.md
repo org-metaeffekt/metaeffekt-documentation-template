@@ -17,14 +17,14 @@ executed in:
     - [`msVulnerabilitiesByProductEnrichment`](#msrc-vulnerabilities-from-ms-products)
     - [`nvdMatchCveFromCpeEnrichment`](#nvd-cve-from-cpe)
     - [`customVulnerabilitiesFromCpeEnrichment`](#custom-vulnerabilities-from-cpe)
-    - [`ghsaVulnerabilitiesEnrichment`](#)
+    - [`ghsaVulnerabilitiesEnrichment`](#ghsa-vulnerabilities)
 
 - **[Step 2](#step-2---fill-vulnerability-meta-data-for-matched-identifiers)**: fill vulnerability meta data for matched
   identifiers
     - [`nvdCveFillDetailsEnrichment`](#nvd-cve-details-filling)
     - [`customVulnerabilitiesFillDetailsEnrichment`](#custom-vulnerability-details-filling)
     - [`msrcAdvisorFillDetailsEnrichment`](#msrc-advisor-details-filling)
-    - [`ghsaAdvisorFillDetailsEnrichment`](#)
+    - [`ghsaAdvisorFillDetailsEnrichment`](#ghsa-advisors-details-filling)
 
 - **[Step 3](#step-3---add-statuskeyword-data)**: add status/keyword data
     - [`vulnerabilityStatusEnrichment`](#vulnerability-status)
@@ -37,7 +37,7 @@ executed in:
     - [`msrcAdvisorFillDetailsEnrichment`](#msrc-advisor-details-filling)
     - [`certFrAdvisorEnrichment`](#cert-fr-advisors-details-filling)
     - [`certSeiAdvisorEnrichment`](#cert-sei-advisors-details-filling)
-    - [`ghsaAdvisorFillDetailsEnrichment`](#)
+    - [`ghsaAdvisorFillDetailsEnrichment`](#ghsa-advisors-details-filling)
 
 - **[Step 5](#step-5---use-data-to-create-vad)**: adjust view and use data to create VAD
     - [`inventoryValidationEnrichment`](#inventory-validation)
@@ -307,6 +307,41 @@ vulnerabilities are introduced to the inventory, their details have to be filled
 enrichment can add new vulnerabilities, but require vulnerability information themselves, the enrichment steps have to
 be performed after those.
 
+## GHSA Vulnerabilities
+
+→ `GhsaVulnerabilitiesEnrichment` / `ghsaVulnerabilitiesEnrichment`
+
+The GHSA vulnerability from inventory data step works a bit differently, as it does not use CPE information to match
+vulnerabilities. See [understanding GHSA data](../ghsa/understanding-data.md#artifacts-to-advisories-to-cve) for more
+details on the process of matching GHSA advisories to artifacts.
+
+Depending on the inventory, you might want to activate or deactivate certain GHSA matchers, like Maven or NPM. You can
+do this using the configuration parameters listed below:
+
+### Configuration Parameters
+
+- `boolean maven = false`
+- `boolean packagist = false`
+- `boolean rubygems = false`
+- `boolean githubactions = false`
+- `boolean pypi = false`
+- `boolean purl_type_swift = false`
+- `boolean go = = false`
+- `boolean hex = false`
+- `boolean npm = false`
+- `boolean crates_io = false`
+- `boolean pub = false`
+- `boolean nuget = false`
+- `boolean githubReviewed = false`
+
+The last parameter `githubReviewed` is a special one. It is not a matcher, but a filter. If set to `true`, only GHSA
+advisories that have been reviewed by GitHub will be matched. In most cases, this will not have too big of an impact,
+as most advisories that have not been reviewed, also don't have matching information attached to them, meaning they
+wouldn't be matched anyway.
+
+All others will activate matchers for the given package manager. See the `GhsaEcosystem` enum for a list of the
+currently supported package managers out of the ones listed above.
+
 ## NVD CVE details filling
 
 → `NvdCveDetailsFillingEnrichment` / `nvdCveFillDetailsEnrichment`
@@ -512,6 +547,12 @@ See `NVD CVE details filling`.
 
 This step uses the general step (Step 4) from above.
 
+## GHSA Advisors details filling
+
+→ `GhsaAdvisorFillDetailsEnrichment` / `ghsaAdvisorFillDetailsEnrichment`
+
+This step uses the general step (Step 4) from above.
+
 ### Configuration Parameters
 
 - `String cvssSeverityRanges = CvssSeverityRanges.CVSS_3_SEVERITY_RANGES.toString()`  
@@ -552,8 +593,8 @@ By merely mentioning the above listed validators as a tag in the configuration, 
 
 - `additionalCpeIsNotEffectiveInventoryValidator`
 - `multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator`
-  - `String versionLevel = "major"`  
-    The level of version granularity that is allowed. Can be either `major`, `minor` or `patch`.
+    - `String versionLevel = "major"`  
+      The level of version granularity that is allowed. Can be either `major`, `minor` or `patch`.
 - `artifactAndCpeVersionsDifferGreatlyInventoryValidator`
 - `vulnerabilityInvalidNameValidator`
 
