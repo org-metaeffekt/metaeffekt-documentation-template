@@ -1,4 +1,5 @@
-> [Vulnerability Monitoring](../inventory-enrichment-overview.md) > GHSA Advisory Data
+> [Vulnerability Monitoring](../inventory-enrichment-overview.md) > [Data Sources Explained](../inventory-enrichment-overview.md) >
+> GHSA Advisory Data
 
 # GHSA Advisory Data
 
