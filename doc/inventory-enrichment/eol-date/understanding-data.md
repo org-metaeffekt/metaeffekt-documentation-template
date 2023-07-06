@@ -15,6 +15,36 @@ how long the artifact will be supported or if it is already unsupported.
 
 The following chapters will explain how the data from the API is structured and how it can be used.
 
+<!-- TOC -->
+
+* [EOL Date Data](#eol-date-data)
+    * [API](#api)
+    * [Data Structure](#data-structure)
+        * [product](#product)
+        * [cycle](#cycle)
+        * [releaseDate](#releasedate)
+        * [latest](#latest)
+        * [latestReleaseDate](#latestreleasedate)
+        * [link](#link)
+        * [eol](#eol)
+        * [lts](#lts)
+        * [discontinued](#discontinued)
+        * [support](#support)
+        * [extendedSupport](#extendedsupport)
+        * [technicalGuidance](#technicalguidance)
+        * [supportedPhpVersions](#supportedphpversions)
+        * [supportedPHPVersions](#supportedphpversions-1)
+        * [latestJdkVersion](#latestjdkversion)
+        * [upgradeVersion](#upgradeversion)
+        * [releaseLabel](#releaselabel)
+        * [supportedKubernetesVersions](#supportedkubernetesversions)
+        * [supportedJavaVersions](#supportedjavaversions)
+        * [minRubyVersion](#minrubyversion)
+        * [minJavaVersion](#minjavaversion)
+        * [codename](#codename)
+
+<!-- TOC -->
+
 ## API
 
 The base URL of the API we use is [https://endoflife.date](https://endoflife.date). The two endpoints that are
@@ -272,3 +302,98 @@ An alternate (project internal) name for the version. Example is android with th
   "cycle": "10"
 }
 ```
+
+## Using the data
+
+### Finding the current cycle of an artifact
+
+We use a field `EOL Id` on our Artifacts in the Inventory, that represents a product from the EOL Date data. This field
+is used to find the lifecycle (all cycles) of the product. Next, the artifact version is used to find the exact cycle
+the artifact is in.
+
+Currently, a very basic algorithm is used to find the cycle:
+
+- check if the version is the latest version of the cycle
+- check if the version starts with the cycle name
+
+### Using the cycle to find useful information
+
+We now have a cycle, that we can use to derive a wide variety of different states and times. The following is an example
+of what could be derived from an angular 15 cycle, where `Long.MAX_VALUE` (`9223372036854775807`) is used to represent
+unknown times, as there was no data passed by the API for that field. The example data uses `2023-07-04` as the current
+date for calculating relative times.
+
+```json
+{
+  "product": "angular",
+  "cycle": "15",
+  "eol": {
+    "date": "2024-05-18",
+    "millisTillEol": 27511634024,
+    "state": "UPCOMING_EOL_DATE",
+    "formattedMillisTillEol": "in 10 months and 1 week"
+  },
+  "support": {
+    "date": "2023-05-03",
+    "millisTillSupportEnd": -5406765977,
+    "formattedMillisTillSupportEnd": "2 months ago",
+    "state": "SUPPORT_END_DATE_REACHED"
+  },
+  "extendedSupport": {
+    "date": "2024-05-18",
+    "formattedMillisTillExtendedSupportEnd": "in 10 months and 1 week",
+    "state": "UPCOMING_SUPPORT_END_DATE",
+    "millisTillExtendedSupportEnd": 27511634020
+  },
+  "lts": {
+    "date": "2023-05-03",
+    "formattedMillisTillLts": "2 months ago",
+    "millisTillLts": -5406765976,
+    "state": "LTS_DATE_REACHED"
+  },
+  "discontinued": {
+    "millisTillDiscontinued": 9223372036854775807,
+    "formattedMillisTillDiscontinued": "never",
+    "state": "NOT_DISCONTINUED"
+  },
+  "technicalGuidance": {
+    "state": "NO_TECHNICAL_GUIDANCE",
+    "millisTillTechnicalGuidanceEnd": 9223372036854775807,
+    "formattedMillisTillTechnicalGuidanceEnd": "never"
+  }
+}
+```
+
+### Interpreting the data
+
+So, the 6 values we use from the data source can either be a Boolean or a date:
+
+- EOL (End of Life): Generally, whether something has reached the end-of-life state, i.e., both support and extended
+  support have expired.
+- Support: Whether the basic support is still valid.
+- Extended Support: Something like security support or similar, is usually either not set or equals the EOL date.
+- LTS (Long Term Support): If Boolean, whether the cycle is LTS; if Date, when the cycle becomes LTS.
+- Discontinued: Whether the cycle is explicitly marked as discontinued, is often not set.
+- Technical Guidance: When the technical guidance support ends, is often not set.
+
+If the value is a date, it always indicates when this state will be reached. Except for LTS, reaching this date is
+always something negative.
+
+We can differentiate the lifecycle state of a product based on whether extended support is available or not. Here are
+the two scenarios:
+
+#### Scenario 1: Extended Support is Available
+
+1. Green: EOL has not been reached, both support and extended support are still valid.
+2. Light Green: Support ends in less than X months (configurable, default is 6 months).
+3. Yellow: Support is no longer valid, but extended support is still in effect.
+4. Orange: Extended support ends in less than X months (configurable, default is 6 months).
+5. Red: EOL has been reached, extended support is no longer valid.
+
+#### Scenario 2: Extended Support is Not Available
+
+In this case, phases 3 and 4 are skipped and the cycle immediately reaches the end of life.
+
+1. Green: EOL has not been reached, support is still valid.
+2. Orange: Support ends in less than X months (configurable, default is 6 months).
+3. Red: EOL has been reached, support is no longer valid.
