@@ -147,6 +147,18 @@
 
                                     <msrcCsvDownload/>
 
+                                    <githubAdvisorDownload>
+                                        <useGitCommand>false</useGitCommand>
+                                        <resourceLocations>
+                                            <!-- Remote repository URL of the
+                                                 https://github.com/github/advisory-database github/advisory-database repository -->
+                                            <GHSA_GIT_URL>https://github.com/github/advisory-database</GHSA_GIT_URL>
+                                            <!-- Remote URL of the zip download of the
+                                                 https://github.com/github/advisory-database github/advisory-database repository -->
+                                            <GHSA_GIT_ZIP_DOWNLOAD_URL>https://github.com/github/advisory-database/archive/refs/heads/main.zip</GHSA_GIT_ZIP_DOWNLOAD_URL>
+                                        </resourceLocations>
+                                    </githubAdvisorDownload>
+
                                 </configuration>
                             </execution>
                         </executions>
@@ -183,6 +195,7 @@
                                     <msrcProductIndex/>
                                     <msrcAdvisorIndex/>
                                     <msrcKbChainIndex/>
+                                    <githubAdvisorIndex/>
                                 </configuration>
                             </execution>
                         </executions>

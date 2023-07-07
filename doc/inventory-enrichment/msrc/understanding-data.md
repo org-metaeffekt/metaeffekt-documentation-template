@@ -1,4 +1,5 @@
-> [Vulnerability Monitoring](../inventory-enrichment-overview.md) > KB research
+> [Vulnerability Monitoring](../inventory-enrichment-overview.md) > [Data Sources Explained](../inventory-enrichment-overview.md) >
+> KB research
 
 # KB Research
 

@@ -38,6 +38,12 @@ View the overview page of the [**Inventory Enrichment**](enrichment/inventory-en
 - [Vulnerability Filter format](enrichment/vulnerability-filter-format.md)
 - [Custom Vulnerability Data Sources](enrichment/custom-vulnerabilities.md)
 
+### Data Sources Explained
+
+- [MSRC](msrc/understanding-data.md)
+- [GHSA](ghsa/understanding-data.md)
+- [EOL Date](eol-date/understanding-data.md)
+
 ### Other chapters:
 
 - [Inventory Vulnerability Status differ](enrichment/vulnerability-status-differ.md)
