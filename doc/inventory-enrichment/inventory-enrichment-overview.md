@@ -36,6 +36,7 @@ View the overview page of the [**Inventory Enrichment**](enrichment/inventory-en
 - [Vulnerability Status files](enrichment/vulnerability-status.md)
 - [Vulnerability Keywords files](enrichment/vulnerability-keywords.md)
 - [Vulnerability Filter format](enrichment/vulnerability-filter-format.md)
+- [Dashboard Detail Levels format](enrichment/vad-detail-levels.md)
 - [Custom Vulnerability Data Sources](enrichment/custom-vulnerabilities.md)
 
 ### Data Sources Explained
