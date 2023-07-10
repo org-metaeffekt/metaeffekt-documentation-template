@@ -16,33 +16,15 @@ how long the artifact will be supported or if it is already unsupported.
 The following chapters will explain how the data from the API is structured and how it can be used.
 
 <!-- TOC -->
-
 * [EOL Date Data](#eol-date-data)
-    * [API](#api)
-    * [Data Structure](#data-structure)
-        * [product](#product)
-        * [cycle](#cycle)
-        * [releaseDate](#releasedate)
-        * [latest](#latest)
-        * [latestReleaseDate](#latestreleasedate)
-        * [link](#link)
-        * [eol](#eol)
-        * [lts](#lts)
-        * [discontinued](#discontinued)
-        * [support](#support)
-        * [extendedSupport](#extendedsupport)
-        * [technicalGuidance](#technicalguidance)
-        * [supportedPhpVersions](#supportedphpversions)
-        * [supportedPHPVersions](#supportedphpversions-1)
-        * [latestJdkVersion](#latestjdkversion)
-        * [upgradeVersion](#upgradeversion)
-        * [releaseLabel](#releaselabel)
-        * [supportedKubernetesVersions](#supportedkubernetesversions)
-        * [supportedJavaVersions](#supportedjavaversions)
-        * [minRubyVersion](#minrubyversion)
-        * [minJavaVersion](#minjavaversion)
-        * [codename](#codename)
-
+  * [API](#api)
+  * [Data Structure](#data-structure)
+  * [Using the data](#using-the-data)
+    * [Finding the current cycle of an artifact](#finding-the-current-cycle-of-an-artifact)
+    * [Using the cycle to find useful information](#using-the-cycle-to-find-useful-information)
+    * [Interpreting the data](#interpreting-the-data)
+      * [Scenario 1: Extended Support is Available](#scenario-1-extended-support-is-available)
+      * [Scenario 2: Extended Support is Not Available](#scenario-2-extended-support-is-not-available)
 <!-- TOC -->
 
 ## API
@@ -125,6 +107,8 @@ on the `rabbitmq` product:
 
 - `https://github.com/rabbitmq/rabbitmq-server/releases/tag/rabbitmq_v{{'__LATEST__'|replace:'.','_'}}`
 - `https://archive.apache.org/dist/kafka/__LATEST__/RELEASE_NOTES.html`
+
+- `OS X __RELEASE_CYCLE__ (__CODENAME__)`
 
 TODO: Find all functions and write a resolver for them to generate the true link. Fields with `__XX__`? Functions with
 `{{ }}`?
@@ -320,53 +304,92 @@ Currently, a very basic algorithm is used to find the cycle:
 
 We now have a cycle, that we can use to derive a wide variety of different states and times. The following is an example
 of what could be derived from an angular 15 cycle, where `Long.MAX_VALUE` (`9223372036854775807`) is used to represent
-unknown times, as there was no data passed by the API for that field. The example data uses `2023-07-04` as the current
-date for calculating relative times.
+unknown times. The example data uses `2023-07-04` as the current date for calculating relative times. The artifact used
+is `angular 15.2.9`.
+
+Additionally, to the data from the API, a few other fields are added:
 
 ```json
 {
-  "product": "angular",
-  "cycle": "15",
+  "artifact": {
+    "id": "angular-15.2.9",
+    "version": "15.2.9"
+  },
+  "cycle": {
+    "product": "angular",
+    "eol": "2024-05-18",
+    "releaseDate": "2022-11-16",
+    "lts": "2023-05-03",
+    "cycle": "15",
+    "support": "2023-05-03",
+    "latestReleaseDate": "2023-05-03",
+    "latest": "15.2.9"
+  },
   "eol": {
     "date": "2024-05-18",
-    "millisTillEol": 27511634024,
+    "millisTillEol": 27561600000,
+    "active": false,
     "state": "UPCOMING_EOL_DATE",
     "formattedMillisTillEol": "in 10 months and 1 week"
   },
   "support": {
     "date": "2023-05-03",
-    "millisTillSupportEnd": -5406765977,
+    "millisTillSupportEnd": -5356800000,
     "formattedMillisTillSupportEnd": "2 months ago",
+    "active": false,
     "state": "SUPPORT_END_DATE_REACHED"
   },
   "extendedSupport": {
     "date": "2024-05-18",
     "formattedMillisTillExtendedSupportEnd": "in 10 months and 1 week",
+    "active": true,
     "state": "UPCOMING_SUPPORT_END_DATE",
-    "millisTillExtendedSupportEnd": 27511634020
+    "millisTillExtendedSupportEnd": 27561600000
   },
   "lts": {
     "date": "2023-05-03",
     "formattedMillisTillLts": "2 months ago",
-    "millisTillLts": -5406765976,
+    "millisTillLts": -5356800000,
+    "active": true,
     "state": "LTS_DATE_REACHED"
   },
   "discontinued": {
     "millisTillDiscontinued": 9223372036854775807,
     "formattedMillisTillDiscontinued": "never",
+    "active": false,
     "state": "NOT_DISCONTINUED"
   },
   "technicalGuidance": {
+    "active": false,
     "state": "NO_TECHNICAL_GUIDANCE",
     "millisTillTechnicalGuidanceEnd": 9223372036854775807,
     "formattedMillisTillTechnicalGuidanceEnd": "never"
+  },
+  "state": {
+    "scenario": "extendedSupportInformationPresent",
+    "extendedSupportAvailable": {
+      "key": "extendedSupportValid"
+      "rating": 3
+    }
+  },
+  "versionRecommendation": {
+    "lifecycle": {
+      "alreadyActive": false,
+      "latest": "16.1.3"
+    },
+    "cycle": {
+      "alreadyActive": true,
+      "latest": "15.2.9"
+    },
+    "nextSupportedExtended": "14.3.0",
+    "nextSupported": "16.1.3"
   }
 }
 ```
 
 ### Interpreting the data
 
-So, the 6 values we use from the data source can either be a Boolean or a date:
+The 6 values we use from the data source can either be a Boolean or a date:
 
 - EOL (End of Life): Generally, whether something has reached the end-of-life state, i.e., both support and extended
   support have expired.
@@ -379,21 +402,25 @@ So, the 6 values we use from the data source can either be a Boolean or a date:
 If the value is a date, it always indicates when this state will be reached. Except for LTS, reaching this date is
 always something negative.
 
-We can differentiate the lifecycle state of a product based on whether extended support is available or not. Here are
-the two scenarios:
+We can differentiate the lifecycle state of a product based on whether extended support differs from the regular
+support (is available) or not. Here are the two scenarios with all their phases of development:
 
 #### Scenario 1: Extended Support is Available
 
-1. Green: EOL has not been reached, both support and extended support are still valid.
-2. Light Green: Support ends in less than X months (configurable, default is 6 months).
-3. Yellow: Support is no longer valid, but extended support is still in effect.
-4. Orange: Extended support ends in less than X months (configurable, default is 6 months).
-5. Red: EOL has been reached, extended support is no longer valid.
+> 1. EOL has not been reached, both support and extended support are still valid. (`supportValid`)
+> 2. Support ends in less than X months (configurable, default is 6 months). (`supportEndingSoon`)
+> 3. Support is no longer valid, but extended support is still in effect. (`extendedSupportValid`)
+> 4. Extended support ends in less than X months (configurable, default is 6 months). (`extendedSupportEnding`)
+> 5. EOL has been reached, extended support is no longer valid. (`extendedSupportExpired`)
 
 #### Scenario 2: Extended Support is Not Available
 
 In this case, phases 3 and 4 are skipped and the cycle immediately reaches the end of life.
 
-1. Green: EOL has not been reached, support is still valid.
-2. Orange: Support ends in less than X months (configurable, default is 6 months).
-3. Red: EOL has been reached, support is no longer valid.
+> 1. EOL has not been reached, support is still valid. (`supportValid`)
+> 2. Support ends in less than X months (configurable, default is 6 months). (`supportEndingSoon`)
+> 3. EOL has been reached, support is no longer valid. (`supportExpired`)
+
+This rating can be found above in the `state` field. The `scenario` field is used to determine which of the two
+scenarios is used. The `key` field is used to determine which of the 5 states is active. The `rating` field is used to
+determine the severity/color of the state in five steps: 1 to 5, where 1 is the best and 5 is the worst.
