@@ -75,9 +75,11 @@ Table of contents:
 ### Sources
 
 - [Security Update Guide - Microsoft Security Response Center](https://msrc.microsoft.com/update-guide)
-    - can **manually** be downloaded as multiple csv files, one per year. Time frame has to be set manually.
-    - contains `CVE/ADV ↔︎ KB` relations that are not present in the other sources.
-    - does not contain `KB ↔︎ KB` relations.
+    - ~~can **manually** be downloaded as multiple csv files, one per year. Time frame has to be set manually,~~
+    - can **automatically** be mirrored using the underlying API used by the CSV generator on the website and using our
+      process (see below),
+    - contains `CVE/ADV ↔︎ KB` relations that are not present in the other sources,
+    - does not contain `KB ↔︎ KB` relations,
     - A short how-to can be found [here](performing-csv-download.md).
 - [Microsoft Security Updates API | MSRC](https://api.msrc.microsoft.com/cvrf/v2.0/swagger/index)
     - can **automatically** be mirrored using our process (see below),
@@ -91,8 +93,7 @@ Table of contents:
 
 ### Problems with the data sources
 
-- Only one of the three data sources can be retrieved automatically. The one available for mirroring is the most
-  important one, yet it still misses a lot of information.
+- One of the three data sources cannot be mirrored automatically or manually, meaning some data is missing.
 - The data in between the different sources is inconsistent. Every data source either contains `CVE/ADV → KB`
   or `KB → KB`relations that are missing in the other sources. The Update Catalog knows about this information, but is
   inconsistent in itself.  
@@ -105,10 +106,7 @@ Table of contents:
     - **In the API**: the KB replaces (`4487259` and `4487081`) and is replaced by `4507423`
       ![Example](kb-chain-example-1.png)
 - This means, our data will never be complete unless considering all three data sources, which is impossible to
-  automate. it is reasonable to manually download the csv files from the MSRC, but scraping the Update Catalog is not
-  feasible, manually or automated.
-- The MSRC csv has to be downloaded in time segments of one year, which have to be set manually, which takes quite some
-  time
+  automate. Scraping the Update Catalog is not feasible, manually or automated.
 
 ## Data mirror
 
@@ -257,6 +255,49 @@ Table of contents:
       ]
     }
   }
+}
+```
+
+... an entry from the underlying MSRC Security Update Guide CSV API
+
+```json
+{
+  "productFamily": "Windows",
+  "productFamilyId": 100000010,
+  "severity": "Important",
+  "temporalScore": "6.5",
+  "product": "Windows 10 Version 1809 for 32-bit Systems",
+  "productId": 11568,
+  "releaseDate": "2023-01-10T08:00:00Z",
+  "impactId": 100000001,
+  "impact": "Denial of Service",
+  "issuingCna": "Microsoft",
+  "platformId": 0,
+  "baseScore": "7.5",
+  "kbArticles": [
+    {
+      "rebootRequired": "Yes",
+      "articleName": "5022286",
+      "knownIssuesName": "5022286",
+      "affectedBinaries": [],
+      "knownIssuesUrl": "https://support.microsoft.com/help/5022286",
+      "downloadUrl": "https://catalog.update.microsoft.com/v7/site/Search.aspx?q=KB5022286",
+      "downloadName": "Security Update",
+      "articleUrl": "https://support.microsoft.com/help/5022286",
+      "fixedBuildNumber": "10.0.17763.3887",
+      "supercedence": "5021237",
+      "ordinal": 0
+    }
+  ],
+  "initialReleaseDate": "2023-01-10T08:00:00Z",
+  "cveNumber": "CVE-2023-21527",
+  "isMariner": false,
+  "productVersion": "10.0.0",
+  "architectureId": 0,
+  "id": "00000000-0000-0000-302d-00006e4d7c04",
+  "releaseNumber": "2023-Jan",
+  "severityId": 100000001,
+  "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:U/RL:O/RC:C"
 }
 ```
 
