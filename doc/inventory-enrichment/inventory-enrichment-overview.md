@@ -51,6 +51,7 @@ View the overview page of the [**Inventory Enrichment**](enrichment/inventory-en
 - [Architecture: Superclasses](enrichment/java-super-classes.md) (useful background information for understanding
   the process)
 - [Inventory CPE data and effective CPE](enrichment/parsing-effective-cpe.md)
+- [Version comparator](other/version-comparator.md)
 
 ## Overview graphs
 
