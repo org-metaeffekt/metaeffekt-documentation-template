@@ -159,6 +159,16 @@
                                         </resourceLocations>
                                     </githubAdvisorDownload>
 
+                                <eolDownload>
+                                    <resourceLocations>
+                                        <!-- URL for the EOL API that is used to fetch the version information for a single product.
+                                             - %s the product identifier to fetch the version information for (example: <code>java</code>) -->
+                                        <EOL_PRODUCT_VERSIONS>https://endoflife.date/api/%s.json</EOL_PRODUCT_VERSIONS>
+                                        <!-- URL for the EOL API that is used to fetch all product identifiers. Returns an array of strings. -->
+                                        <EOL_ALL_PRODUCTS>https://endoflife.date/api/all.json</EOL_ALL_PRODUCTS>
+                                    </resourceLocations>
+                                </eolDownload>
+
                                 </configuration>
                             </execution>
                         </executions>
@@ -196,6 +206,7 @@
                                     <msrcAdvisorIndex/>
                                     <msrcKbChainIndex/>
                                     <githubAdvisorIndex/>
+                                    <eolIndex/>
                                 </configuration>
                             </execution>
                         </executions>

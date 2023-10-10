@@ -33,7 +33,7 @@ View the overview page of the [**Inventory Enrichment**](enrichment/inventory-en
   - [Maven POM](enrichment/maven.md)
   - [Java process](enrichment/java.md)
 - [Artifact Correlation YAML](enrichment/artifact-correlation.md)
-- [Vulnerability Status files](enrichment/vulnerability-status.md)
+- [Vulnerability Assessment (Status) files](enrichment/vulnerability-status.md)
 - [Vulnerability Keywords files](enrichment/vulnerability-keywords.md)
 - [Vulnerability Filter format](enrichment/vulnerability-filter-format.md)
 - [Dashboard Detail Levels format](enrichment/vad-detail-levels.md)
