@@ -24,7 +24,7 @@
 
         <!-- References the mirrored vulnerability databases -->
         <!-- run with the mirror-database profile active to download the database contents -->
-        <input.database>${project.basedir}/../../.database/ae-vulnerability-mirror-v2</input.database>
+        <input.database>${project.basedir}/../../.database/ae-vulnerability-mirror</input.database>
 
         <output.inventory.dir>${project.build.directory}/classes/inventory/</output.inventory.dir>
         <output.inventory.intermediate.dir>${project.build.directory}/classes/inventory-intermediate/</output.inventory.intermediate.dir>
@@ -194,19 +194,18 @@
                                     <active>${activate.ghsa}</active>
                                     <maven>true</maven>
                                     <packagist>false</packagist>
-                                    <rubygems>false</rubygems>
+                                    <rubygems>true</rubygems>
                                     <githubactions>false</githubactions>
-                                    <pypi>false</pypi>
+                                    <pypi>true</pypi>
                                     <purl_type_swift>false</purl_type_swift>
                                     <go>false</go>
-                                    <hex>false</hex>
-                                    <npm>false</npm>
-                                    <crates_io>false</crates_io>
+                                    <hex>true</hex>
+                                    <npm>true</npm>
+                                    <crates_io>true</crates_io>
                                     <pub>false</pub>
-                                    <nuget>false</nuget>
+                                    <nuget>true</nuget>
                                     <githubReviewed>false</githubReviewed>
                                 </ghsaVulnerabilitiesEnrichment>
-
 
                                 <nvdCveFillDetailsEnrichment>
                                     <active>${activate.nvd}</active>
@@ -226,11 +225,12 @@
                                     <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
                                 </msrcAdvisorFillDetailsEnrichment>
 
+                                <!--
                                 <ghsaAdvisorFillDetailsEnrichment>
                                     <active>${activate.ghsa}</active>
                                     <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
                                 </ghsaAdvisorFillDetailsEnrichment>
-
+-->
 
                                 <vulnerabilityStatusEnrichment>
                                     <active>${activate.status}</active>

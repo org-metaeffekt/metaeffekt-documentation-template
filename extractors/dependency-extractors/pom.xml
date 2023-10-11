@@ -81,51 +81,6 @@
                                 </scanIncludes>
 
                                 <scanExcludes>
-                                    <exclude>**/.lock</exclude>
-                                    <exclude>**/*.lock</exclude>
-
-                                    <exclude>**/application-*.properties</exclude>
-                                    <exclude>**/application.properties</exclude>
-                                    <exclude>**/application-*.yml</exclude>
-                                    <exclude>**/application-*.yaml</exclude>
-                                    <exclude>**/application.yml</exclude>
-                                    <exclude>**/application.yaml</exclude>
-
-                                    <exclude>**/additional-spring-configuration-metadata.json</exclude>
-                                    <exclude>**/spring-configuration-metadata.json</exclude>
-
-                                    <exclude>**/build-info.properties</exclude>
-                                    <exclude>**/git.properties</exclude>
-                                    <exclude>**/pom.properties</exclude>
-                                    <exclude>**/pom.xml</exclude>
-                                    <exclude>**/logback.xml</exclude>
-
-                                    <exclude>**/*.conf.js</exclude>
-                                    <exclude>**/*.conf.json</exclude>
-                                    <exclude>**/*.tsconfig.json</exclude>
-                                    <exclude>**/*.tsconfig-*.json</exclude>
-                                    <exclude>**/manifest.json</exclude>
-
-                                    <exclude>**/CHANGELOG.md</exclude>
-                                    <exclude>**/Changelog.md</exclude>
-                                    <exclude>**/db.changelog*.yaml</exclude>
-
-                                    <exclude>**/.travis.yml</exclude>
-                                    <exclude>**/.npmrc</exclude>
-                                    <exclude>**/.nvmrc</exclude>
-                                    <exclude>**/.eslintrc.json</exclude>
-                                    <exclude>**/.eslintrc.yml</exclude>
-                                    <exclude>**/.eslintrc.yaml</exclude>
-                                    <exclude>**/.eslintrc</exclude>
-                                    <exclude>**/eslintignore</exclude>
-                                    <exclude>**/.htmllintrc</exclude>
-                                    <exclude>**/.npmignore</exclude>
-                                    <exclude>**/.coveralls.yml</exclude>
-                                    <exclude>**/.editorconfig.example</exclude>
-                                    <exclude>**/.editorconfig</exclude>
-                                    <exclude>**/.eslintignore</exclude>
-                                    <exclude>**/.stylelintrc</exclude>
-
                                     <!-- These should not be included in the delivery artifacts -->
                                     <exclude>**/.svn/**/*</exclude>
                                     <exclude>**/.svn</exclude>
@@ -134,12 +89,13 @@
                                     <exclude>**/.github/**/*</exclude>
                                     <exclude>**/.github</exclude>
                                     <exclude>**/.git*</exclude>
-
-                                    <!-- Build related -->
-                                    <exclude>**/Makefile</exclude>
-                                    <exclude>**/Jenkinsfile</exclude>
-
                                 </scanExcludes>
+
+                                <!-- unwrap includes/excludes omitted -->
+
+                                <includeEmbedded>true</includeEmbedded>
+                                <enableDetectComponentPatterns>true</enableDetectComponentPatterns>
+                                <enableImplicitUnpack>true</enableImplicitUnpack>
 
                                 <!-- FIXME: this validation can only be enabled as soon as all license obligations are fulfilled (phase 2) -->
 

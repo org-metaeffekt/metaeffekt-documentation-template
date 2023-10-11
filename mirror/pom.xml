@@ -13,7 +13,7 @@
 
     <properties>
         <!-- run with the mirror-database profile active to download the database contents -->
-        <database.path>${project.basedir}/../.database/ae-vulnerability-mirror-v2</database.path>
+        <database.path>${project.basedir}/../.database/ae-vulnerability-mirror</database.path>
 
         <proxy.scheme>none</proxy.scheme>
         <proxy.host>none</proxy.host>
@@ -145,7 +145,9 @@
                                         </resourceLocations>
                                     </msrcDownload>
 
-                                    <msrcCsvDownload/>
+                                    <msrcDownload />
+                                    <msrcCsvDownload />
+                                    <msrcSecurityUpdateGuideDownload />
 
                                     <githubAdvisorDownload>
                                         <useGitCommand>false</useGitCommand>
@@ -159,15 +161,15 @@
                                         </resourceLocations>
                                     </githubAdvisorDownload>
 
-                                <eolDownload>
-                                    <resourceLocations>
-                                        <!-- URL for the EOL API that is used to fetch the version information for a single product.
-                                             - %s the product identifier to fetch the version information for (example: <code>java</code>) -->
-                                        <EOL_PRODUCT_VERSIONS>https://endoflife.date/api/%s.json</EOL_PRODUCT_VERSIONS>
-                                        <!-- URL for the EOL API that is used to fetch all product identifiers. Returns an array of strings. -->
-                                        <EOL_ALL_PRODUCTS>https://endoflife.date/api/all.json</EOL_ALL_PRODUCTS>
-                                    </resourceLocations>
-                                </eolDownload>
+                                    <eolDownload>
+                                        <resourceLocations>
+                                            <!-- URL for the EOL API that is used to fetch the version information for a single product.
+                                                 - %s the product identifier to fetch the version information for (example: <code>java</code>) -->
+                                            <EOL_PRODUCT_VERSIONS>https://endoflife.date/api/%s.json</EOL_PRODUCT_VERSIONS>
+                                            <!-- URL for the EOL API that is used to fetch all product identifiers. Returns an array of strings. -->
+                                            <EOL_ALL_PRODUCTS>https://endoflife.date/api/all.json</EOL_ALL_PRODUCTS>
+                                        </resourceLocations>
+                                    </eolDownload>
 
                                 </configuration>
                             </execution>
