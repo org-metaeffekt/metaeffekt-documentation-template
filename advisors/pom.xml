@@ -37,7 +37,7 @@
 
         <!-- the extracted settings enable to adapt the configuration on module level -->
         <ae.dashboard.timeline>true</ae.dashboard.timeline>
-        <ae.dashboard.cpe.limit>-1</ae.dashboard.cpe.limit>
+        <ae.dashboard.cve.limit>2147483647</ae.dashboard.cve.limit>
         <ae.dashboard.insignificant.threshold>7.0</ae.dashboard.insignificant.threshold>
 
         <correlation.dir>../correlation</correlation.dir>
@@ -250,7 +250,6 @@
                                     <activeLabels>${keywords.labels}</activeLabels>
                                 </vulnerabilityKeywordsEnrichment>
 
-
                                 <certFrAdvisorEnrichment>
                                     <active>${activate.certfr}</active>
                                     <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
@@ -271,7 +270,7 @@
                                     <multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
                                         <versionLevel>minor</versionLevel>
                                     </multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
-                                    <artifactAndCpeVersionsDifferGreatlyInventoryValidator/>
+                                    <!--artifactAndCpeVersionsDifferGreatlyInventoryValidator/ -->
                                     <vulnerabilityInvalidNameValidator/>
                                 </inventoryValidationEnrichment>
 
@@ -293,7 +292,7 @@
 
                                     <vulnerabilityTimelinesGlobalEnabled>${ae.dashboard.timeline}</vulnerabilityTimelinesGlobalEnabled>
                                     <maximumCpeForTimelinesPerVulnerability>2147483647</maximumCpeForTimelinesPerVulnerability>
-                                    <maximumVulnerabilitiesPerTimeline>${ae.dashboard.cpe.limit}</maximumVulnerabilitiesPerTimeline>
+                                    <maximumVulnerabilitiesPerTimeline>${ae.dashboard.cve.limit}</maximumVulnerabilitiesPerTimeline>
                                     <vulnerabilityTimelineHideIrrelevantVersions>true</vulnerabilityTimelineHideIrrelevantVersions>
                                     <maximumVersionsPerTimeline>2147483647</maximumVersionsPerTimeline>
                                     <maximumTimeSpentOnTimelines>2147483647</maximumTimeSpentOnTimelines>

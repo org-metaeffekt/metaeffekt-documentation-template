@@ -150,7 +150,7 @@
                                     <msrcSecurityUpdateGuideDownload />
 
                                     <githubAdvisorDownload>
-                                        <useGitCommand>false</useGitCommand>
+                                        <useGitCommand>true</useGitCommand>
                                         <resourceLocations>
                                             <!-- Remote repository URL of the
                                                  https://github.com/github/advisory-database github/advisory-database repository -->
