@@ -38,8 +38,8 @@
                 <groupId>org.metaeffekt.core</groupId>
                 <artifactId>ae-inventory-maven-plugin</artifactId>
                 <executions>
-                    <!-- FIXME: re-enable or split into several documents -->                   <!--
-                    <execution>
+                    <!-- FIXME: re-enable or split into several documents -->
+                    <!--<execution>
                         <id>create-ae-container-report</id>
                         <goals>
                             <goal>create-inventory-report</goal>
@@ -90,9 +90,7 @@
 
                     <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
-                    <!-- FIXME: no enforcement yet -->
-                    <vulnerabilityScoreThreshold>7.0</vulnerabilityScoreThreshold>
-                    <minimumVulnerabilityIncludeScore>-1.0</minimumVulnerabilityIncludeScore>
+                    <securityPolicyFile>${project.basedir}/../../../security-policy-report.json</securityPolicyFile>
 
                     <enableBomReport>true</enableBomReport>
                     <enableVulnerabilityReport>true</enableVulnerabilityReport>

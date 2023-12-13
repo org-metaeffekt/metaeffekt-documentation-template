@@ -145,9 +145,16 @@
                                         </resourceLocations>
                                     </msrcDownload>
 
-                                    <msrcDownload />
-                                    <msrcCsvDownload />
-                                    <msrcSecurityUpdateGuideDownload />
+                                    <!-- deprecated -->
+                                    <!-- <msrcCsvDownload /> -->
+
+                                    <msrcSecurityUpdateGuideDownload>
+                                        <resourceLocations>
+                                            <!-- Endpoint that the https://msrc.microsoft.com/update-guide/ uses to construct the xlsx and csv files locally.
+                                                 Has parameters that are filled by the code, which are not supplied here. -->
+                                            <AFFECTED_PRODUCTS_BASE_URL>https://api.msrc.microsoft.com/sug/v2.0/en-US/affectedProduct</AFFECTED_PRODUCTS_BASE_URL>
+                                        </resourceLocations>
+                                    </msrcSecurityUpdateGuideDownload>
 
                                     <githubAdvisorDownload>
                                         <useGitCommand>true</useGitCommand>

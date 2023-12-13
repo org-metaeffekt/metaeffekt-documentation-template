@@ -30,6 +30,7 @@
         <output.inventory.intermediate.dir>${project.build.directory}/classes/inventory-intermediate/</output.inventory.intermediate.dir>
         <output.inventory.name>${project.artifactId}-inventory.xls</output.inventory.name>
         <output.inventory>${output.inventory.dir}/${output.inventory.name}</output.inventory>
+        <output.inventory.correlation>${output.inventory.dir}/correlation-${output.inventory.name}</output.inventory.correlation>
         <output.dashboard>${project.build.directory}/classes/dashboard/${project.artifactId}-dashboard.html</output.dashboard>
         <output.svg>${project.build.directory}/classes/resources/svg</output.svg>
 
@@ -38,7 +39,6 @@
         <!-- the extracted settings enable to adapt the configuration on module level -->
         <ae.dashboard.timeline>true</ae.dashboard.timeline>
         <ae.dashboard.cve.limit>2147483647</ae.dashboard.cve.limit>
-        <ae.dashboard.insignificant.threshold>7.0</ae.dashboard.insignificant.threshold>
 
         <correlation.dir>../correlation</correlation.dir>
         <keywords.dir>${project.basedir}/context/keywords.yaml</keywords.dir>
@@ -47,11 +47,6 @@
         <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
 
         <assessment.labels/>
-        <!-- the severity ranges to use when calculating a CVSS severity from a score
-             default CVSS3 ranges: -->
-        <cvssSeverityRanges>
-            None:pastel-gray:0.0:0.0,Low:strong-yellow:0.1:3.9,Medium:strong-light-orange:4.0:6.9,High:strong-dark-orange:7.0:8.9,Critical:strong-red:9.0:10.0
-        </cvssSeverityRanges>
 
         <activate.msrc>true</activate.msrc>
         <activate.nvd>true</activate.nvd>
@@ -137,176 +132,225 @@
                         </execution>
                     </executions>
                 </plugin>
-
-                <plugin>
-                    <groupId>com.metaeffekt.artifact.analysis</groupId>
-                    <artifactId>ae-inventory-enrichment-plugin</artifactId>
-                    <version>${ae.artifact.analysis.version}</version>
-
-                    <executions>
-                        <execution>
-                            <id>inventory-enrichment-execution</id>
-                            <goals>
-                                <goal>enrich-inventory</goal>
-                            </goals>
-
-                            <configuration>
-                                <inventoryInputFile>${input.inventory}</inventoryInputFile>
-                                <inventoryOutputFile>${output.inventory}</inventoryOutputFile>
-                                <mirrorDirectory>${input.database}</mirrorDirectory>
-
-                                <writeIntermediateInventories>true</writeIntermediateInventories>
-                                <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
-                                <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
-
-                                <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
-                                <!--<enrichmentOrder></enrichmentOrder>-->
-
-                                <correlationYamlEnrichment>
-                                    <active>${activate.correlation}</active>
-                                    <yamlFiles>
-                                        <file>${correlation.dir}</file>
-                                    </yamlFiles>
-                                </correlationYamlEnrichment>
-
-                                <cpeDerivationEnrichment>
-                                    <active>${activate.nvd}</active>
-                                    <maxCorrelatedCpePerArtifact>2147483647</maxCorrelatedCpePerArtifact>
-                                </cpeDerivationEnrichment>
-
-                                <msVulnerabilitiesByProductEnrichment>
-                                    <active>${activate.msrc}</active>
-                                </msVulnerabilitiesByProductEnrichment>
-
-                                <nvdMatchCveFromCpeEnrichment>
-                                    <active>${activate.nvd}</active>
-                                    <maxCorrelatedVulnerabilitiesPerArtifact>2147483647</maxCorrelatedVulnerabilitiesPerArtifact>
-                                </nvdMatchCveFromCpeEnrichment>
-
-                                <customVulnerabilitiesFromCpeEnrichment>
-                                    <active>${activate.vulnerabilities.custom}</active>
-                                    <vulnerabilityFiles>
-                                        <file>${vulnerabilities.custom.dir}</file>
-                                    </vulnerabilityFiles>
-                                </customVulnerabilitiesFromCpeEnrichment>
-
-                                <ghsaVulnerabilitiesEnrichment>
-                                    <active>${activate.ghsa}</active>
-                                    <maven>true</maven>
-                                    <packagist>false</packagist>
-                                    <rubygems>true</rubygems>
-                                    <githubactions>false</githubactions>
-                                    <pypi>true</pypi>
-                                    <purl_type_swift>false</purl_type_swift>
-                                    <go>false</go>
-                                    <hex>true</hex>
-                                    <npm>true</npm>
-                                    <crates_io>true</crates_io>
-                                    <pub>false</pub>
-                                    <nuget>true</nuget>
-                                    <githubReviewed>false</githubReviewed>
-                                </ghsaVulnerabilitiesEnrichment>
-
-                                <nvdCveFillDetailsEnrichment>
-                                    <active>${activate.nvd}</active>
-                                    <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                </nvdCveFillDetailsEnrichment>
-
-                                <customVulnerabilitiesFillDetailsEnrichment>
-                                    <active>${activate.vulnerabilities.custom}</active>
-                                    <vulnerabilityFiles>
-                                        <file>${vulnerabilities.custom.dir}</file>
-                                    </vulnerabilityFiles>
-                                    <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                </customVulnerabilitiesFillDetailsEnrichment>
-
-                                <msrcAdvisorFillDetailsEnrichment>
-                                    <active>${activate.msrc}</active>
-                                    <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                </msrcAdvisorFillDetailsEnrichment>
-
-                                <!--
-                                <ghsaAdvisorFillDetailsEnrichment>
-                                    <active>${activate.ghsa}</active>
-                                    <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                </ghsaAdvisorFillDetailsEnrichment>
--->
-
-                                <vulnerabilityStatusEnrichment>
-                                    <active>${activate.status}</active>
-                                    <statusFiles>
-                                        <file>${assessment.dir}</file>
-                                    </statusFiles>
-                                    <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                    <activeLabels>${assessment.labels}</activeLabels>
-                                </vulnerabilityStatusEnrichment>
-
-                                <vulnerabilityKeywordsEnrichment>
-                                    <active>${activate.keywords}</active>
-                                    <yamlFiles>
-                                        <file>${keywords.dir}</file>
-                                    </yamlFiles>
-                                    <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                    <activeLabels>${keywords.labels}</activeLabels>
-                                </vulnerabilityKeywordsEnrichment>
-
-                                <certFrAdvisorEnrichment>
-                                    <active>${activate.certfr}</active>
-                                    <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                </certFrAdvisorEnrichment>
-
-                                <certSeiAdvisorEnrichment>
-                                    <active>${activate.certsei}</active>
-                                    <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                </certSeiAdvisorEnrichment>
-
-
-                                <inventoryValidationEnrichment>
-                                    <active>${activate.validation}</active>
-                                    <failOnValidationErrors>false</failOnValidationErrors>
-                                    <addAsCorrelationWarnings>true</addAsCorrelationWarnings>
-
-                                    <additionalCpeIsNotEffectiveInventoryValidator/>
-                                    <multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
-                                        <versionLevel>minor</versionLevel>
-                                    </multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
-                                    <!--artifactAndCpeVersionsDifferGreatlyInventoryValidator/ -->
-                                    <vulnerabilityInvalidNameValidator/>
-                                </inventoryValidationEnrichment>
-
-                                <vulnerabilityFilterEnrichment>
-                                    <active>false</active>
-                                    <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
-                                </vulnerabilityFilterEnrichment>
-
-                                <vulnerabilityAssessmentDashboardEnrichment>
-                                    <active>${activate.dashboard}</active>
-                                    <outputDashboardFile>${output.dashboard}</outputDashboardFile>
-                                    <svgDirectory>${output.svg}</svgDirectory>
-
-                                    <!-- deprecated: Use vulnerabilityIncludeFilter instead -->
-                                    <minimumVulnerabilityIncludeScore>-2147483648</minimumVulnerabilityIncludeScore>
-                                    <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
-                                    <maximumVulnerabilitiesPerDashboardCount>2147483647</maximumVulnerabilitiesPerDashboardCount>
-                                    <insignificantThreshold>${ae.dashboard.insignificant.threshold}</insignificantThreshold>
-
-                                    <vulnerabilityTimelinesGlobalEnabled>${ae.dashboard.timeline}</vulnerabilityTimelinesGlobalEnabled>
-                                    <maximumCpeForTimelinesPerVulnerability>2147483647</maximumCpeForTimelinesPerVulnerability>
-                                    <maximumVulnerabilitiesPerTimeline>${ae.dashboard.cve.limit}</maximumVulnerabilitiesPerTimeline>
-                                    <vulnerabilityTimelineHideIrrelevantVersions>true</vulnerabilityTimelineHideIrrelevantVersions>
-                                    <maximumVersionsPerTimeline>2147483647</maximumVersionsPerTimeline>
-                                    <maximumTimeSpentOnTimelines>2147483647</maximumTimeSpentOnTimelines>
-
-                                    <failOnVulnerabilityWithoutSpecifiedRisk>true</failOnVulnerabilityWithoutSpecifiedRisk>
-                                    <failOnUnreviewedAdvisories>true</failOnUnreviewedAdvisories>
-                                    <failOnUnreviewedAdvisoriesTypes></failOnUnreviewedAdvisoriesTypes>
-                                    <cvssSeverityRanges>${cvssSeverityRanges}</cvssSeverityRanges>
-                                </vulnerabilityAssessmentDashboardEnrichment>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>advise-correlate</id>
+            <activation> <!-- activate by default, unless disabled via -P-advise-correlate -->
+                <property>
+                    <name>maven.version</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.metaeffekt.artifact.analysis</groupId>
+                            <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                            <version>${ae.artifact.analysis.version}</version>
+
+                            <executions>
+                                <execution>
+                                    <id>inventory-enrichment-advise-correlate-execution</id>
+                                    <phase>generate-resources</phase>
+                                    <goals>
+                                        <goal>enrich-inventory</goal>
+                                    </goals>
+
+                                    <configuration>
+                                        <inventoryInputFile>${input.inventory}</inventoryInputFile>
+                                        <inventoryOutputFile>${output.inventory.correlation}</inventoryOutputFile>
+                                        <mirrorDirectory>${input.database}</mirrorDirectory>
+
+                                        <writeIntermediateInventories>true</writeIntermediateInventories>
+                                        <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
+                                        <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
+
+                                        <securityPolicyFile>${project.basedir}/../../security-policy-dashboard.json</securityPolicyFile>
+
+                                        <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
+                                        <!--<enrichmentOrder></enrichmentOrder>-->
+
+                                        <correlationYamlEnrichment>
+                                            <active>${activate.correlation}</active>
+                                            <yamlFiles>
+                                                <file>${correlation.dir}</file>
+                                            </yamlFiles>
+                                        </correlationYamlEnrichment>
+
+                                        <cpeDerivationEnrichment>
+                                            <active>${activate.nvd}</active>
+                                            <maxCorrelatedCpePerArtifact>2147483647</maxCorrelatedCpePerArtifact>
+                                        </cpeDerivationEnrichment>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>advise-vulnerability</id>
+            <activation> <!-- activate by default, unless disabled via -P-advise-vulnerability -->
+                <property>
+                    <name>maven.version</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.metaeffekt.artifact.analysis</groupId>
+                            <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                            <version>${ae.artifact.analysis.version}</version>
+
+                            <executions>
+                                <execution>
+                                    <id>inventory-enrichment-advise-vulnerability-execution</id>
+                                    <phase>compile</phase>
+                                    <goals>
+                                        <goal>enrich-inventory</goal>
+                                    </goals>
+
+                                    <configuration>
+                                        <inventoryInputFile>${output.inventory.correlation}</inventoryInputFile>
+                                        <inventoryOutputFile>${output.inventory}</inventoryOutputFile>
+                                        <mirrorDirectory>${input.database}</mirrorDirectory>
+
+                                        <writeIntermediateInventories>true</writeIntermediateInventories>
+                                        <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
+                                        <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
+
+                                        <securityPolicyFile>${project.basedir}/../../security-policy-dashboard.json</securityPolicyFile>
+
+                                        <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
+                                        <!--<enrichmentOrder></enrichmentOrder>-->
+
+                                        <msVulnerabilitiesByProductEnrichment>
+                                            <active>${activate.msrc}</active>
+                                        </msVulnerabilitiesByProductEnrichment>
+
+                                        <nvdMatchCveFromCpeEnrichment>
+                                            <active>${activate.nvd}</active>
+                                            <maxCorrelatedVulnerabilitiesPerArtifact>2147483647</maxCorrelatedVulnerabilitiesPerArtifact>
+                                        </nvdMatchCveFromCpeEnrichment>
+
+                                        <customVulnerabilitiesFromCpeEnrichment>
+                                            <active>${activate.vulnerabilities.custom}</active>
+                                            <vulnerabilityFiles>
+                                                <file>${vulnerabilities.custom.dir}</file>
+                                            </vulnerabilityFiles>
+                                        </customVulnerabilitiesFromCpeEnrichment>
+
+                                        <ghsaVulnerabilitiesEnrichment>
+                                            <active>${activate.ghsa}</active>
+                                            <maven>true</maven>
+                                            <packagist>false</packagist>
+                                            <rubygems>true</rubygems>
+                                            <githubactions>false</githubactions>
+                                            <pypi>true</pypi>
+                                            <purl_type_swift>false</purl_type_swift>
+                                            <go>false</go>
+                                            <hex>true</hex>
+                                            <npm>true</npm>
+                                            <crates_io>true</crates_io>
+                                            <pub>false</pub>
+                                            <nuget>true</nuget>
+                                            <githubReviewed>false</githubReviewed>
+                                        </ghsaVulnerabilitiesEnrichment>
+
+                                        <nvdCveFillDetailsEnrichment>
+                                            <active>${activate.nvd}</active>
+                                        </nvdCveFillDetailsEnrichment>
+
+                                        <customVulnerabilitiesFillDetailsEnrichment>
+                                            <active>${activate.vulnerabilities.custom}</active>
+                                            <vulnerabilityFiles>
+                                                <file>${vulnerabilities.custom.dir}</file>
+                                            </vulnerabilityFiles>
+                                        </customVulnerabilitiesFillDetailsEnrichment>
+
+                                        <msrcAdvisorFillDetailsEnrichment>
+                                            <active>${activate.msrc}</active>
+                                        </msrcAdvisorFillDetailsEnrichment>
+
+                                        <ghsaAdvisorFillDetailsEnrichment>
+                                            <active>${activate.ghsa}</active>
+                                        </ghsaAdvisorFillDetailsEnrichment>
+
+                                        <vulnerabilityStatusEnrichment>
+                                            <active>${activate.status}</active>
+                                            <statusFiles>
+                                                <file>${assessment.dir}</file>
+                                            </statusFiles>
+                                            <activeLabels>${assessment.labels}</activeLabels>
+                                        </vulnerabilityStatusEnrichment>
+
+                                        <vulnerabilityKeywordsEnrichment>
+                                            <active>${activate.keywords}</active>
+                                            <yamlFiles>
+                                                <file>${keywords.dir}</file>
+                                            </yamlFiles>
+                                            <activeLabels>${keywords.labels}</activeLabels>
+                                        </vulnerabilityKeywordsEnrichment>
+
+                                        <certFrAdvisorEnrichment>
+                                            <active>${activate.certfr}</active>
+                                        </certFrAdvisorEnrichment>
+
+                                        <certSeiAdvisorEnrichment>
+                                            <active>${activate.certsei}</active>
+                                        </certSeiAdvisorEnrichment>
+
+
+                                        <inventoryValidationEnrichment>
+                                            <active>${activate.validation}</active>
+                                            <failOnValidationErrors>false</failOnValidationErrors>
+                                            <addAsCorrelationWarnings>true</addAsCorrelationWarnings>
+
+                                            <additionalCpeIsNotEffectiveInventoryValidator/>
+                                            <multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
+                                                <versionLevel>minor</versionLevel>
+                                            </multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
+                                            <!--artifactAndCpeVersionsDifferGreatlyInventoryValidator/ -->
+                                            <vulnerabilityInvalidNameValidator/>
+                                        </inventoryValidationEnrichment>
+
+                                        <vulnerabilityFilterEnrichment>
+                                            <active>false</active>
+                                            <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
+                                        </vulnerabilityFilterEnrichment>
+
+                                        <vulnerabilityAssessmentDashboardEnrichment>
+                                            <active>${activate.dashboard}</active>
+                                            <outputDashboardFile>${output.dashboard}</outputDashboardFile>
+                                            <svgDirectory>${output.svg}</svgDirectory>
+
+                                            <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
+                                            <maximumVulnerabilitiesPerDashboardCount>2147483647</maximumVulnerabilitiesPerDashboardCount>
+
+                                            <vulnerabilityTimelinesGlobalEnabled>${ae.dashboard.timeline}</vulnerabilityTimelinesGlobalEnabled>
+                                            <maximumCpeForTimelinesPerVulnerability>2147483647</maximumCpeForTimelinesPerVulnerability>
+                                            <maximumVulnerabilitiesPerTimeline>${ae.dashboard.cve.limit}</maximumVulnerabilitiesPerTimeline>
+                                            <vulnerabilityTimelineHideIrrelevantVersions>true</vulnerabilityTimelineHideIrrelevantVersions>
+                                            <maximumVersionsPerTimeline>2147483647</maximumVersionsPerTimeline>
+                                            <maximumTimeSpentOnTimelines>2147483647</maximumTimeSpentOnTimelines>
+
+                                            <failOnVulnerabilityWithoutSpecifiedRisk>true</failOnVulnerabilityWithoutSpecifiedRisk>
+                                            <failOnUnreviewedAdvisories>true</failOnUnreviewedAdvisories>
+                                            <failOnUnreviewedAdvisoriesTypes></failOnUnreviewedAdvisoriesTypes>
+                                        </vulnerabilityAssessmentDashboardEnrichment>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
 </project>

@@ -29,17 +29,17 @@
                                 <p>
                                     The chart depicts the vulnerability severity distribution without context information.
                                 </p>
-                                <image href="gen/resources/svg/chart_cvss-by-unmodified-vulnerability.svg" width="260" />
+                                <image href="gen/resources/svg/vulnerability-overview-chart-cvss-severity-initial.svg" width="260" />
                             </entry>
                             <entry align="center">
                                 <p>
-                                    <b>Resulting Vulnerability Severity</b>
+                                    <b>Context Vulnerability Severity</b>
                                 </p>
                                 <p>
-                                    The chart provides the distribution of vulnerability severity after evaluation of the
+                                    The chart provides the distribution of vulnerability severities after evaluation of the
                                     vulnerabilities in the given context.
                                 </p>
-                                <image href="gen/resources/svg/chart_cvss-by-effective-vulnerability.svg" width="260" />
+                                <image href="gen/resources/svg/vulnerability-overview-chart-cvss-severity-context.svg" width="260" />
                             </entry>
                         </row>
                     </tbody>
@@ -60,17 +60,16 @@
                                 <p>
                                     The illustration provides information on the current assessment status.
                                 </p>
-                                <image href="gen/resources/svg/chart_vulnerability-status-per-vulnerability.svg" width="260" />
+                                <image href="gen/resources/svg/vulnerability-overview-chart-vulnerability-status.svg" width="260" />
                             </entry>
                             <entry align="center">
                                 <p>
-                                    <b>CVSS Severity per Artifact</b>
+                                    <b>CVSS Severity per Component</b>
                                 </p>
                                 <p>
-                                    The chart visualizes the distribution of vulnerabilities on artifacts and
-                                    components included in ${product.name}.
+                                    The chart visualizes the distribution of vulnerabilities on components included in ${product.name}.
                                 </p>
-                                <image href="gen/resources/svg/chart_cvss-by-artifact.svg" width="260" />
+                                <image href="gen/resources/svg/vulnerability-overview-chart-cvss-severity-context-by-component.svg" width="260" />
                             </entry>
                         </row>
                     </tbody>
