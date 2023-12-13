@@ -38,7 +38,7 @@
 
         <!-- the extracted settings enable to adapt the configuration on module level -->
         <ae.dashboard.timeline>true</ae.dashboard.timeline>
-        <ae.dashboard.cve.limit>2147483647</ae.dashboard.cve.limit>
+        <ae.dashboard.timeline.vulnerabilities.limit>2147483647</ae.dashboard.timeline.vulnerabilities.limit>
 
         <correlation.dir>../correlation</correlation.dir>
         <keywords.dir>${project.basedir}/context/keywords.yaml</keywords.dir>
@@ -306,6 +306,12 @@
                                             <active>${activate.certsei}</active>
                                         </certSeiAdvisorEnrichment>
 
+                                        <eolEnrichment>
+                                            <active>true</active>
+                                            <warningThresholdDaysSupport>180</warningThresholdDaysSupport>
+                                            <warningThresholdDaysExtendedSupport>180</warningThresholdDaysExtendedSupport>
+                                        </eolEnrichment>
+
 
                                         <inventoryValidationEnrichment>
                                             <active>${activate.validation}</active>
@@ -335,7 +341,7 @@
 
                                             <vulnerabilityTimelinesGlobalEnabled>${ae.dashboard.timeline}</vulnerabilityTimelinesGlobalEnabled>
                                             <maximumCpeForTimelinesPerVulnerability>2147483647</maximumCpeForTimelinesPerVulnerability>
-                                            <maximumVulnerabilitiesPerTimeline>${ae.dashboard.cve.limit}</maximumVulnerabilitiesPerTimeline>
+                                            <maximumVulnerabilitiesPerTimeline>${ae.dashboard.timeline.vulnerabilities.limit}</maximumVulnerabilitiesPerTimeline>
                                             <vulnerabilityTimelineHideIrrelevantVersions>true</vulnerabilityTimelineHideIrrelevantVersions>
                                             <maximumVersionsPerTimeline>2147483647</maximumVersionsPerTimeline>
                                             <maximumTimeSpentOnTimelines>2147483647</maximumTimeSpentOnTimelines>
