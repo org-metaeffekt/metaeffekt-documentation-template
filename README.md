@@ -33,9 +33,17 @@ Mirror the vulnerability databases once using the `mirror-database` profile:
 This may take around 10 minutes. The process will create a local mirror of public vulnerability data in the `.database`
 folder. Rerun the process to update the data regularly.
 
-Run the extraction and advisories/documents generation using the `extract,advise,document` profiles:
+Run the extraction and advisories/documents generation using the `extract`, `advise`, `document` profiles:
 
     mvn clean install -Pextract,advise,document,report
+
+The profile `advise` is split into two separate profiles `advise-correlate` and `advise-vulnerability`, which are
+activated by default. To disable one of these, use `-P-advice-correlate` or `-P-advice-vulnerability`. This allows for
+splitting the advise process into two separate steps, see [advisors/pom.xml (~line 148)](advisors/pom.xml) in addition
+to the commands below for more details:
+
+    mvn clean install -Padvise,-advise-vulnerability
+    mvn       install -Padvise,-advise-correlate,document,report
 
 The profiles extract, advise, document and report have been split using profiles to be used separately from the command
 line.
