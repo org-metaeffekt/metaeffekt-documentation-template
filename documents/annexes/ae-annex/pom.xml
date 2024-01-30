@@ -90,7 +90,7 @@
 
                     <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
-                    <securityPolicyFile>${project.basedir}/../../../security-policy-report.json</securityPolicyFile>
+                    <securityPolicyFile>${project.basedir}/../../security-policy-report.json</securityPolicyFile>
 
                     <enableBomReport>true</enableBomReport>
                     <enableVulnerabilityReport>true</enableVulnerabilityReport>

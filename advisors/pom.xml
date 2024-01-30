@@ -169,7 +169,7 @@
                                         <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
                                         <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../../security-policy-dashboard.json</securityPolicyFile>
+                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
 
                                         <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
                                         <!--<enrichmentOrder></enrichmentOrder>-->
@@ -225,7 +225,7 @@
                                         <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
                                         <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../../security-policy-dashboard.json</securityPolicyFile>
+                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
 
                                         <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
                                         <!--<enrichmentOrder></enrichmentOrder>-->

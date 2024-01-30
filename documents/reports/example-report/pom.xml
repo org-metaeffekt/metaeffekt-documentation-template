@@ -91,7 +91,7 @@
 
                         <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
-                        <securityPolicyFile>${project.basedir}/../../../security-policy-report.json</securityPolicyFile>
+                        <securityPolicyFile>${project.basedir}/../../security-policy-report.json</securityPolicyFile>
 
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
