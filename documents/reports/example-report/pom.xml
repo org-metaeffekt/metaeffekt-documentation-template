@@ -91,23 +91,10 @@
 
                         <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
-                        <vulnerabilityScoreThreshold>7.0</vulnerabilityScoreThreshold>
-                        <minimumVulnerabilityIncludeScore>-1</minimumVulnerabilityIncludeScore>
-                        <vulnerabilityAdvisoryFilter></vulnerabilityAdvisoryFilter>
-
-                        <includeAdvisoryTypes>all</includeAdvisoryTypes>
+                        <securityPolicyFile>${project.basedir}/../../../security-policy-report.json</securityPolicyFile>
 
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
-
-                        <!-- [default, abstracted] -->
-                        <overviewTablesVulnerabilityStatusMappingFunction>abstracted</overviewTablesVulnerabilityStatusMappingFunction>
-
-                        <!-- [latest, max, [custom expression]]-->
-                        <cvssScoringPreference>latest</cvssScoringPreference>
-
-                        <!-- [alert, notice, news, all, none] -->
-                        <includeAdvisoryTypes>alert</includeAdvisoryTypes>
 
                         <failOnError>false</failOnError>
                         <failOnBanned>false</failOnBanned>
@@ -122,7 +109,7 @@
                         <failOnMissingNotice>false</failOnMissingNotice>
                         <failOnMissingSources>false</failOnMissingSources>
 
-                        <generateOverviewTablesForAdvisories>CERT-SEI</generateOverviewTablesForAdvisories>
+                        <generateOverviewTablesForAdvisories>CERT_SEI</generateOverviewTablesForAdvisories>
                     </configuration>
 
                 </plugin>

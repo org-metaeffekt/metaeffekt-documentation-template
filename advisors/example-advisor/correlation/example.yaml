@@ -1,3 +1,9 @@
-- Id: openssl-1.1.1i
-  CPE URIs: cpe:/a:redhat:openssl, cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
+- affects:
+    Id: openssl-1.1.1i
+  append:
+    CPE URIs: cpe:/a:redhat:openssl, cpe:/a:openssl_project:openssl, cpe:/a:openssl:openssl
 
+- affects:
+    - Id: log4j-*.jar
+  append:
+    EOL Id: log4j
