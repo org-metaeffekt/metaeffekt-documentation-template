@@ -14,6 +14,7 @@
 
     <properties>
         <source.dir>${project.basedir}/../../extractors/dependency-extractors/ae-dependency-extractor/target/scan</source.dir>
+        <ae.universe.version>1.4.0</ae.universe.version>
     </properties>
 
     <build>
@@ -37,32 +38,6 @@
 
         <pluginManagement>
             <plugins>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>copy-metaeffekt-tmd</id>
-                            <goals>
-                                <goal>unpack</goal>
-                            </goals>
-                            <phase>validate</phase>
-                            <configuration>
-                                <outputDirectory>${project.basedir}/.analysis</outputDirectory>
-                                <includes>**/*.obj</includes>
-                                <artifactItems>
-                                    <artifactItem>
-                                        <groupId>com.metaeffekt.artifact.analysis</groupId>
-                                        <artifactId>ae-term-metadata</artifactId>
-                                        <version>${ae.artifact.analysis.version}</version>
-                                    </artifactItem>
-                                </artifactItems>
-                                <overWriteSnapshots>true</overWriteSnapshots>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
 
                 <plugin>
                     <groupId>org.metaeffekt.core</groupId>
@@ -98,6 +73,7 @@
                                 <scanDirectory>${project.build.directory}/scan</scanDirectory>
 
                                 <enableImplicitUnpack>false</enableImplicitUnpack>
+                                <enableComponentPatternDetection>true</enableComponentPatternDetection>
 
                                 <failOnError>false</failOnError>
                                 <failOnBanned>false</failOnBanned>
@@ -120,7 +96,11 @@
                                 <sourceInventoryDir>${project.basedir}/src/analysis</sourceInventoryDir>
                                 <sourceInventoryIncludes>component-patterns.xls</sourceInventoryIncludes>
 
-                                <targetInventoryDir>${project.build.directory}/classes/inventory</targetInventoryDir>
+                                <scanIncludes>**/*</scanIncludes>
+                                <scanExcludes>-none-</scanExcludes>
+
+
+                                <targetInventoryDir>${project.build.directory}/inventory</targetInventoryDir>
                             </configuration>
                         </execution>
                     </executions>
@@ -159,19 +139,16 @@
                     </executions>
                     <configuration>
                         <id>${project.artifactId}</id>
-                        <base64EncodedKey>${tmd.key}</base64EncodedKey>
-                        <base64EncodedIv>${tmd.iv}</base64EncodedIv>
-                        <scanBaseDir>${project.build.directory}/scan</scanBaseDir>
-                        <targetInventoryDir>${project.build.directory}/classes/inventory</targetInventoryDir>
+
+                        <scanControlPropertiesFile>${project.basedir}/src/analysis/scan-control.properties</scanControlPropertiesFile>
+
+                        <tmdGroupId>com.metaeffekt.universe</tmdGroupId>
+                        <tmdArtifactId>ae-metaeffekt-universe</tmdArtifactId>
+                        <tmdVersion>${ae.universe.version}</tmdVersion>
+
+                        <userPassword>kCnWlgrVBsiSkxTWHMJLSWwy</userPassword>
+                        <userKeysFile>/Volumes/TransferUSB/tmd-keys/dataport-re32/consumer/fc95a2d7-0a2d-435b-bf63-92d8e66d2a22.consumer.keys</userKeysFile>
                     </configuration>
-                    <dependencies>
-                        <!-- FIXME: for some reason the maven dependency resolution is not resolving the correct version -->
-                        <dependency>
-                            <groupId>commons-io</groupId>
-                            <artifactId>commons-io</artifactId>
-                            <version>2.11.0</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
