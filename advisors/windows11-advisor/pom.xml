@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <artifactId>ae-advisors</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+	
+    <artifactId>ae-windows11-advisor</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <input.inventory>${project.basedir}/inventories/windows11-inventory.xls</input.inventory>
+        <correlation.dir>correlation</correlation.dir>
+
+        <activate.msrc>true</activate.msrc>
+        <activate.validation>false</activate.validation>
+
+        <ae.dashboard.timeline>false</ae.dashboard.timeline>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.metaeffekt.core</groupId>
+                <artifactId>ae-inventory-maven-plugin</artifactId>
+            </plugin>
+            <!-- FIXME: fix plugins; remove configuration on project level -->
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-inventory-enrichment-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.metaeffekt.example.documentation</groupId>
+            <artifactId>ae-inventory-extractor</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>

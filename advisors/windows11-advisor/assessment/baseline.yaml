@@ -1,0 +1,18 @@
+# baseline-assessment; applied to all vulnerabilities provide initial context
+history:
+  - rationale:
+      "<p>
+        The windows workstations are integrated in a dedicated network. No access from external is possible
+        ().
+      </p>"
+    date: 2024-02-29
+    author: KKL
+
+scope: inventory
+
+cvssV2:
+  lower: AV:A
+cvssV3:
+  lower: MAV:A
+cvssV4:
+  lower: MAV:A

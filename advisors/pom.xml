@@ -14,6 +14,9 @@
 
     <modules>
         <module>example-advisor</module>
+
+        <module>openssl-advisor</module>
+        <module>selected-component-advisor</module>
     </modules>
 
     <properties>
@@ -41,16 +44,16 @@
         <ae.dashboard.timeline.vulnerabilities.limit>2147483647</ae.dashboard.timeline.vulnerabilities.limit>
 
         <correlation.dir>../correlation</correlation.dir>
-        <keywords.dir>${project.basedir}/context/keywords.yaml</keywords.dir>
+        <keywords.dir>${project.basedir}/context</keywords.dir>
         <keywords.labels></keywords.labels>
         <assessment.dir>${project.basedir}/assessment</assessment.dir>
         <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
 
         <assessment.labels/>
 
-        <activate.msrc>true</activate.msrc>
+        <activate.msrc>false</activate.msrc>
         <activate.nvd>true</activate.nvd>
-        <activate.certfr>true</activate.certfr>
+        <activate.certfr>false</activate.certfr>
         <activate.certsei>true</activate.certsei>
         <activate.ghsa>true</activate.ghsa>
         <activate.correlation>true</activate.correlation>
@@ -126,8 +129,6 @@
 
                                 <targetInventoryDir>${project.build.directory}/inventories/</targetInventoryDir>
                                 <targetInventoryPath>01_${project.artifactId}-inventory_ref.xls</targetInventoryPath>
-
-                                <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
                             </configuration>
                         </execution>
                     </executions>
@@ -330,6 +331,8 @@
                                             <active>false</active>
                                             <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
                                         </vulnerabilityFilterEnrichment>
+
+                                        <vulnerabilityStatusPostProcessingEnrichment />
 
                                         <vulnerabilityAssessmentDashboardEnrichment>
                                             <active>${activate.dashboard}</active>

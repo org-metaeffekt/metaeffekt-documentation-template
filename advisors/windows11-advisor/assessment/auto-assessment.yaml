@@ -1,0 +1,23 @@
+# Automatic, template-based assessment. Vulnerabilities with available security patch are assessed as 'applicable' with
+# a reference to the required security patches.
+history:
+  - status: "applicable"
+    date: "2024-03-18"
+    author: KKL
+    rationale: "<p>
+        This vulnerability affects ${msrc.product.name} (Product Id: ${msrc.product.id}).
+      </p>"
+    measures: "<lq>
+        For this vulnerability security patches are available.
+        Please ensure these updates are installed on the system.
+      </lq>"
+    priority: -1
+
+affects:
+  condition: '[attribute "msrc-fixes" is not empty] and [advisor providers contains "MSRC"]'
+
+# add information on CVSSv2.0 and CVSSv3.1 that an official fix is available
+cvssV2:
+  lower: RL:O
+cvssV3:
+  lower: RL:O
