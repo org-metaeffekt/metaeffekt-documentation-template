@@ -6,6 +6,13 @@ history:
     author: KKL
     rationale: "<p>
         This vulnerability affects ${msrc.product.name} (Product Id: ${msrc.product.id}).
+      </p>
+      <p>
+        The windows workstations are integrated in a dedicated network. No access from external is possible
+        (CVSSv2: AV:A; CVSSv3/CVSSv4: MAV:A).
+      </p>
+      <p>
+        Official fix available (CVSSv2/CVSSv3: RL:O).
       </p>"
     measures: "<lq>
         For this vulnerability security patches are available.
@@ -16,8 +23,10 @@ history:
 affects:
   condition: '[attribute "msrc-fixes" is not empty] and [advisor providers contains "MSRC"]'
 
-# add information on CVSSv2.0 and CVSSv3.1 that an official fix is available
+# add information on CVSSv2.0 and CVSSv3.1 baseline that an official fix is available
 cvssV2:
-  lower: RL:O
+  lower: AV:A/RL:O
 cvssV3:
-  lower: RL:O
+  lower: MAV:A/RL:O
+cvssV4:
+  lower: MAV:A

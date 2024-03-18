@@ -3,7 +3,7 @@ history:
   - rationale:
       "<p>
         The windows workstations are integrated in a dedicated network. No access from external is possible
-        ().
+        (CVSSv2: AV:A; CVSSv3/CVSSV4: MAV:A).
       </p>"
     date: 2024-02-29
     author: KKL
