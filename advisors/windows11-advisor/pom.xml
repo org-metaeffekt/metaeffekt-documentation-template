@@ -17,8 +17,8 @@
         <correlation.dir>correlation</correlation.dir>
 
         <activate.msrc>true</activate.msrc>
-        <activate.validation>false</activate.validation>
 
+        <!-- currently no useful information provided by timeline -->
         <ae.dashboard.timeline>false</ae.dashboard.timeline>
     </properties>
 
