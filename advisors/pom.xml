@@ -307,6 +307,10 @@
                                             <active>${activate.certsei}</active>
                                         </certSeiAdvisorEnrichment>
 
+                                        <kevEnrichment>
+                                            <active>true</active>
+                                        </kevEnrichment>
+
                                         <eolEnrichment>
                                             <active>true</active>
                                             <warningThresholdDaysSupport>180</warningThresholdDaysSupport>

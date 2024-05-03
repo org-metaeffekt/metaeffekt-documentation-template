@@ -168,6 +168,13 @@
                                         </resourceLocations>
                                     </githubAdvisorDownload>
 
+                                    <cisaKevDownload>
+                                        <resourceLocations>
+                                            <!-- URL for the KEV API that is used to fetch all known KEVs known to CISA. -->
+                                            <CISA_KEV>https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json</CISA_KEV>
+                                        </resourceLocations>
+                                    </cisaKevDownload>
+
                                     <eolDownload>
                                         <resourceLocations>
                                             <!-- URL for the EOL API that is used to fetch the version information for a single product.
@@ -215,6 +222,7 @@
                                     <msrcAdvisorIndex/>
                                     <msrcKbChainIndex/>
                                     <githubAdvisorIndex/>
+                                    <kevIndex/>
                                     <eolIndex/>
                                 </configuration>
                             </execution>
