@@ -78,6 +78,19 @@
                                         </resourceLocations>
                                     </certFrDownload>
 
+                                    <certEuDownload>
+                                        <resourceLocations>
+                                            <!-- HTML page containing a list of all CERT-EU entries published in a single year.
+                                                 - %d Year (example: 2020) -->
+                                            <YEARLY_PUBLICATIONS_URL>https://cert.europa.eu/publications/security-advisories/%d</YEARLY_PUBLICATIONS_URL>
+                                            <!-- JSON file containing the details of a single CERT-EU entry.
+                                                 - %s Entry ID (example: 2024-042) -->
+                                            <SINGLE_ENTRY_URL>https://cert.europa.eu/publications/security-advisories/%s/json</SINGLE_ENTRY_URL>
+                                            <!-- RSS feed for the latest updated/ created CERT-EU entries. Used to check if update is required. -->
+                                            <RSS_FEED>https://cert.europa.eu/publications/security-advisories-rss</RSS_FEED>
+                                        </resourceLocations>
+                                    </certEuDownload>
+
                                     <nvdCveDownload>
                                         <!-- you will need an API key in order to download the NVD data:
                                              https://nvd.nist.gov/developers/request-an-api-key
@@ -215,6 +228,7 @@
                                     <!-- Indexers -->
                                     <certSeiAdvisorIndex/>
                                     <certFrAdvisorIndex/>
+                                    <certEuAdvisorIndex/>
                                     <nvdVulnerabilityIndex/>
                                     <nvdCpeIndex/>
                                     <nvdCpeVendorProductIndex/>

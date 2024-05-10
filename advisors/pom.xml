@@ -54,6 +54,7 @@
         <activate.msrc>false</activate.msrc>
         <activate.nvd>true</activate.nvd>
         <activate.certfr>false</activate.certfr>
+        <activate.certeu>true</activate.certeu>
         <activate.certsei>true</activate.certsei>
         <activate.ghsa>true</activate.ghsa>
         <activate.correlation>true</activate.correlation>
@@ -302,6 +303,10 @@
                                         <certFrAdvisorEnrichment>
                                             <active>${activate.certfr}</active>
                                         </certFrAdvisorEnrichment>
+
+                                        <certEuAdvisorEnrichment>
+                                            <active>${activate.certeu}</active>
+                                        </certEuAdvisorEnrichment>
 
                                         <certSeiAdvisorEnrichment>
                                             <active>${activate.certsei}</active>
