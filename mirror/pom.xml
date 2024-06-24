@@ -56,7 +56,6 @@
                                     <proxyPort>${proxy.port}</proxyPort>
 
                                     <!-- Downloads -->
-
                                     <certSeiDownload>
                                         <resourceLocations>
                                             <!-- Summary URL for a given year.
@@ -188,6 +187,12 @@
                                         </resourceLocations>
                                     </cisaKevDownload>
 
+                                    <epssDownload>
+                                        <resourceLocations>
+                                            <EPSS_ALL_SCORES_CSV>https://epss.cyentia.com/epss_scores-current.csv.gz</EPSS_ALL_SCORES_CSV>
+                                        </resourceLocations>
+                                    </epssDownload>
+
                                     <eolDownload>
                                         <resourceLocations>
                                             <!-- URL for the EOL API that is used to fetch the version information for a single product.
@@ -237,6 +242,7 @@
                                     <msrcKbChainIndex/>
                                     <githubAdvisorIndex/>
                                     <kevIndex/>
+                                    <epssIndex />
                                     <eolIndex/>
                                 </configuration>
                             </execution>

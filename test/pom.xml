@@ -54,6 +54,7 @@
                                     <proxyPort>${proxy.port}</proxyPort>
 
                                     <!-- Downloads -->
+
                                     <certSeiDownload />
                                     <certFrDownload />
                                     <nvdCveDownload>
@@ -70,8 +71,9 @@
                                     </nvdCpeDownload>
                                     <msrcDownload />
                                     <msrcCsvDownload/>
-
                                     <githubAdvisorDownload/>
+                                    <epssDownload />
+                                    <kevDownload />
 
                                 </configuration>
                             </execution>
@@ -109,6 +111,8 @@
                                     <msrcAdvisorIndex/>
                                     <msrcKbChainIndex/>
                                     <githubAdvisorIndex/>
+                                    <kevIndex />
+                                    <epssIndex />
                                 </configuration>
                             </execution>
                         </executions>
