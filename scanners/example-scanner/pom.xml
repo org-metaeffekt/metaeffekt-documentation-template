@@ -10,11 +10,15 @@
     </parent>
 
     <artifactId>example-scanner</artifactId>
-    <packaging>jar</packaging>
+
+    <packaging>pom</packaging>
 
     <properties>
+        <!-- example uses output dir of ae-dependency-extractor; overwrite on command line -->
         <source.dir>${project.basedir}/../../extractors/dependency-extractors/ae-dependency-extractor/target/scan</source.dir>
-        <ae.universe.version>1.4.0</ae.universe.version>
+
+        <ae.universe.version>1.7.0</ae.universe.version>
+
     </properties>
 
     <build>
@@ -146,8 +150,8 @@
                         <tmdArtifactId>ae-metaeffekt-universe</tmdArtifactId>
                         <tmdVersion>${ae.universe.version}</tmdVersion>
 
-                        <userPassword>kCnWlgrVBsiSkxTWHMJLSWwy</userPassword>
-                        <userKeysFile>/Volumes/TransferUSB/tmd-keys/dataport-re32/consumer/fc95a2d7-0a2d-435b-bf63-92d8e66d2a22.consumer.keys</userKeysFile>
+                        <userPassword>${universe.consumer.password}</userPassword>
+                        <userKeysFile>${universe.consumer.keys}</userKeysFile>
                     </configuration>
                 </plugin>
             </plugins>

@@ -18,7 +18,7 @@
     </scm>
 
     <properties>
-        <ae.core.version>0.112.0</ae.core.version>
+        <ae.core.version>0.113.0</ae.core.version>
         <ae.artifact.analysis.version>0.107.0</ae.artifact.analysis.version>
         <ae.dita.version>0.29.0</ae.dita.version>
 
