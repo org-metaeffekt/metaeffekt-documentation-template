@@ -3,23 +3,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>ae-scanners</artifactId>
-        <groupId>org.metaeffekt.example.documentation</groupId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>
+    <groupId>org.metaeffekt.example.documentation</groupId>
+    <artifactId>scanner-template</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
-    <artifactId>example-scanner</artifactId>
+    <description>Self-contained template pom.xml for integrated license scanning.</description>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <ae.core.version>0.113.0</ae.core.version>
-        <ae.artifact.analysis.version>0.106.0</ae.artifact.analysis.version>
+        <ae.artifact.analysis.version>0.104.0</ae.artifact.analysis.version>
         <ae.universe.version>1.7.0</ae.universe.version>
 
         <!-- the directory to scan; supply on command line -->
         <source.dir></source.dir>
+
+        <!-- access to the metaeffekt universe requires a license key protected by password; supplied by metaeffekt; provide on command line -->
+        <universe.consumer.password></universe.consumer.password>
+        <universe.consumer.keys></universe.consumer.keys>
     </properties>
 
     <build>
@@ -100,6 +102,7 @@
 
                                 <scanIncludes>**/*</scanIncludes>
                                 <scanExcludes>-none-</scanExcludes>
+
 
                                 <targetInventoryDir>${project.build.directory}/inventory</targetInventoryDir>
                             </configuration>
