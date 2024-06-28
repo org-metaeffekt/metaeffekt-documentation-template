@@ -6,9 +6,11 @@ pipeline {
     }
     stages {
         stage('Build with mirror-database profile') {
-            withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
-                withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Pmirror-database -Dnvd.apikey=$NVD_APIKEY'
+            steps {
+                withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
+                    withMaven(maven: 'maven-3.9.6') {
+                        sh 'mvn -B clean install -Pmirror-database -Dnvd.apikey=$NVD_APIKEY'
+                    }
                 }
             }
         }
@@ -31,7 +33,7 @@ pipeline {
 
         stage('Push index-database artifacts to server') {
             steps {
-                sh "find . -name '*.jar' -exec curl -T {} http://ae-scanner/upload/mirror/{} \\;"
+                sh "find . -name '*.jar' -exec curl -T {} http://ae-scanner/upload/index/{} \\;"
             }
         }
     }
