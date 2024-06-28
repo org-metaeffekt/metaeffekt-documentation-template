@@ -29,7 +29,7 @@ pipeline {
 
         stage('Push index-database artifacts to server') {
             steps {
-                sh "find . -name '*.jar' -exec curl -T {} http://ae-scanner/upload/index/{} \\;"
+                sh "find . -name '*.jar' -exec curl -T {} http://ae-scanner/upload/mirror/{} \\;"
             }
         }
     }
