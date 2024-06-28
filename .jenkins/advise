@@ -7,6 +7,7 @@ pipeline {
     stages {
         stage('Pull artifact from server') {
             steps {
+                //TODO: fix me
                 sh 'curl -O http://ae-scanner/mirror/'
             }
         }
