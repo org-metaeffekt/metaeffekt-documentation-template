@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    tools {
+        maven 'maven-3.9.6'
+        jdk 'ZULU8'
+    }
+    stages {
+        stage('Build with extract profile') {
+            steps {
+                withMaven(maven: 'maven-3.9.6') {
+                    sh 'mvn -B clean install -Pextract'
+                }
+            }
+        }
+
+        stage('Build with document profile') {
+            steps {
+                withMaven(maven: 'maven-3.9.6') {
+                    sh 'mvn -B clean install -Pdocument'
+                }
+            }
+        }
+    }
+}
