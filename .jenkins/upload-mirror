@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build with mirror-database profile') {
+            steps {
+                sh 'export MAVEN_HOME=/opt/maven'
+                sh 'export PATH=$PATH:$MAVEN_HOME/bin'
+                sh 'JAVA_HOME=/usr/lib/jvm/zulu-8-amd64 mvn -B clean install -Pmirror-database'
+            }
+        }
+
+        stage('Push mirror-database artifacts to server') {
+            steps {
+                sh 'find . -name "*.jar" -exec curl -T {} http://ae-scanner/upload/mirror/{} \;'
+            }
+        }
+
+        stage('Build with index-database profile') {
+            steps {
+                sh 'export MAVEN_HOME=/opt/maven'
+                sh 'export PATH=$PATH:$MAVEN_HOME/bin'
+                sh 'JAVA_HOME=/usr/lib/jvm/zulu-8-amd64 mvn -B clean install -Pindex-database'
+            }
+        }
+
+        stage('Push index-database artifacts to server') {
+            steps {
+                sh 'find . -name "*.jar" -exec curl -T {} http://ae-scanner/upload/index/{} \;'
+            }
+        }
+    }
+}
