@@ -8,7 +8,7 @@ pipeline {
         stage('Build with mirror-database profile') {
             steps {
                 withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
-                    withMaven(maven: 'maven-3.9.6') {
+                    withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx4g') {
                         sh 'mvn -B clean install -Pmirror-database -Dnvd.apikey=$NVD_APIKEY'
                     }
                 }
