@@ -17,7 +17,12 @@ pipeline {
 
         stage('Push mirror-database artifacts to server') {
             steps {
-                sh "find . -name '*.jar' -exec curl -T {} http://ae-scanner/upload/mirror/{} \\;"
+                script {
+                    def artifacts = findFiles(glob: '**/target/*.jar')
+                    for (artifact in artifacts) {
+                        sh "curl -T ${artifact.path} http://ae-scanner/upload/mirror/${artifact.name}"
+                    }
+                }
             }
         }
 
@@ -33,7 +38,12 @@ pipeline {
 
         stage('Push index-database artifacts to server') {
             steps {
-                sh "find . -name '*.jar' -exec curl -T {} http://ae-scanner/upload/index/{} \\;"
+                script {
+                    def artifacts = findFiles(glob: '**/target/*.jar')
+                    for (artifact in artifacts) {
+                        sh "curl -T ${artifact.path} http://ae-scanner/upload/index/${artifact.name}"
+                    }
+                }
             }
         }
     }
