@@ -39,7 +39,11 @@ pipeline {
             steps {
                 sh '''
                 for file in $(find . -name "*.jar"); do
-                    curl -T $file http://ae-scanner/upload/index/$(basename $file)
+                    filename=$(basename $file)
+                    response=$(curl --head --silent http://ae-scanner/upload/index/$filename | head -n 1)
+                    if [[ ! $response =~ "200 OK" ]]; then
+                        curl -T $file http://ae-scanner/upload/index/$filename
+                    fi
                 done
                 '''
             }
