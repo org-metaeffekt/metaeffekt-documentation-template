@@ -18,11 +18,7 @@ pipeline {
         stage('Push mirror-database artifacts to server') {
             steps {
                 sh '''
-                for file in .database/ae-vulnerability-mirror/download/*; do
-                    if [[ -f $file ]]; then
-                        curl -T $file http://ae-scanner/upload/mirror/download/$(basename $file)
-                    fi
-                done
+                rsync -avz --delete .database/ae-vulnerability-mirror/download/ rsync://ae-scanner/upload/mirror/download/
                 '''
             }
         }
@@ -40,11 +36,7 @@ pipeline {
         stage('Push index-database artifacts to server') {
             steps {
                 sh '''
-                for file in .database/ae-vulnerability-mirror/index/*; do
-                    if [[ -f $file ]]; then
-                        curl -T $file http://ae-scanner/upload/mirror/index/$(basename $file)
-                    fi
-                done
+                rsync -avz --delete .database/ae-vulnerability-mirror/index/ rsync://ae-scanner/upload/mirror/index/
                 '''
             }
         }
