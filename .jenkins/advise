@@ -5,7 +5,7 @@ pipeline {
         jdk 'ZULU8'
     }
     environment {
-        PROJECT_BASEDIR = "${env.WORKSPACE}"
+        MIRROR_BASEDIR = "${env.WORKSPACE}/.database/ae-vulnerability-mirror"
     }
     stages {
         stage('Pull artifact from server') {
@@ -20,7 +20,7 @@ pipeline {
         stage('Build with extract profile') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Pextract -Dproject.basedir=$PROJECT_BASEDIR'
+                    sh 'mvn -B clean install -Pextract'
                 }
             }
         }
@@ -28,7 +28,7 @@ pipeline {
         stage('Build with advise profile') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Padvise -Dproject.basedir=$PROJECT_BASEDIR'
+                    sh 'mvn -B clean install -Padvise -Dinput.database=$MIRROR_BASEDIR'
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
         stage('Build with report profile') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Preport -Dproject.basedir=$PROJECT_BASEDIR'
+                    sh 'mvn -B clean install -Preport -Dinput.database=$MIRROR_BASEDIR'
                 }
             }
         }
