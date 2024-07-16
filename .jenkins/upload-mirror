@@ -15,16 +15,6 @@ pipeline {
             }
         }
 
-         stage('Zip and Push mirror-database artifacts to server') {
-            steps {
-                sh '''
-                cd .database/ae-vulnerability-mirror
-                zip -r mirror-database.zip download
-                curl --create-dirs -T mirror-database.zip http://ae-scanner/upload/mirror/download/mirror-database.zip
-                '''
-            }
-        }
-
         stage('Build with index-database profile') {
             steps {
                 withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
@@ -35,11 +25,13 @@ pipeline {
             }
         }
 
-        stage('Zip and Push index-database artifacts to server') {
+        stage('zip and push') {
             steps {
                 sh '''
                 cd .database/ae-vulnerability-mirror
                 zip -r index-database.zip index
+                zip -r mirror-database.zip download
+                curl --create-dirs -T mirror-database.zip http://ae-scanner/upload/mirror/download/mirror-database.zip
                 curl --create-dirs -T index-database.zip http://ae-scanner/upload/mirror/index/index-database.zip
                 '''
             }
