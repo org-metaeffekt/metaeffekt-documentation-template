@@ -20,7 +20,7 @@ pipeline {
                 sh '''
                 for file in .database/ae-vulnerability-mirror/download/*; do
                     if [[ -f $file ]]; then
-                        curl -T $file http://ae-scanner/upload/mirror/$(basename $file)
+                        curl -T $file http://ae-scanner/upload/mirror/download/$(basename $file)
                     fi
                 done
                 '''
@@ -42,7 +42,7 @@ pipeline {
                 sh '''
                 for file in .database/ae-vulnerability-mirror/index/*; do
                     if [[ -f $file ]]; then
-                        curl -T $file http://ae-scanner/upload/index/$(basename $file)
+                        curl -T $file http://ae-scanner/upload/mirror/index/$(basename $file)
                     fi
                 done
                 '''
