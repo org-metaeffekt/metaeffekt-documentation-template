@@ -18,8 +18,10 @@ pipeline {
         stage('Push mirror-database artifacts to server') {
             steps {
                 sh '''
-                for file in $(find . -name "*.jar"); do
-                    curl -T $file http://ae-scanner/upload/mirror/$(basename $file)
+                for file in .database/ae-vulnerability-mirror/download/*; do
+                    if [[ -f $file ]]; then
+                        curl -T $file http://ae-scanner/upload/mirror/$(basename $file)
+                    fi
                 done
                 '''
             }
@@ -38,11 +40,9 @@ pipeline {
         stage('Push index-database artifacts to server') {
             steps {
                 sh '''
-                for file in $(find . -name "*.jar"); do
-                    filename=$(basename $file)
-                    response=$(curl --head --silent http://ae-scanner/upload/index/$filename | head -n 1)
-                    if [[ ! $response =~ "200 OK" ]]; then
-                        curl -T $file http://ae-scanner/upload/index/$filename
+                for file in .database/ae-vulnerability-mirror/index/*; do
+                    if [[ -f $file ]]; then
+                        curl -T $file http://ae-scanner/upload/index/$(basename $file)
                     fi
                 done
                 '''
