@@ -9,7 +9,7 @@ pipeline {
             steps {
                 sh '''
                 mkdir -p .database/ae-vulnerability-mirror/index
-                wget -r -np -nH --cut-dirs=1 -P .database/ae-vulnerability-mirror/ -R "index.html*" http://ae-scanner/mirror/index
+                wget -r -np -nH --cut-dirs=3 -P .database/ae-vulnerability-mirror/index -R "index.html*" http://ae-scanner/mirror/index
                 '''
             }
         }
