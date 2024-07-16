@@ -7,7 +7,10 @@ pipeline {
     stages {
         stage('Pull artifact from server') {
             steps {
-                sh 'wget -r -np -nH --cut-dirs=1 -R "index.html*" http://ae-scanner/mirror/'
+                sh '''
+                mkdir -p .database/ae-vulnerability-mirror/
+                wget -r -np -nH --cut-dirs=1 -P .database/ae-vulnerability-mirror/ -R "index.html*" http://ae-scanner/mirror/
+                '''
             }
         }
 
