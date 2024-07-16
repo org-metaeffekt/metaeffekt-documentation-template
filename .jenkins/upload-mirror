@@ -20,12 +20,15 @@ pipeline {
                 sh '''
                 upload_files() {
                     for file in "$1"/*; do
-                        if [[ -d $file ]]; then
-                            # If the file is a directory, call upload_files recursively
+                        if [ -d "$file" ]; then
+                            # Create directory on the server
+                            relative_path=${file#.database/ae-vulnerability-mirror/download/}
+                            curl -X MKCOL "http://ae-scanner/upload/mirror/download/$relative_path"
+                            # Recursively call the function for the new directory
                             upload_files "$file"
                         else
                             # Upload the file
-                            relative_path="${file#.database/ae-vulnerability-mirror/download/}"
+                            relative_path=${file#.database/ae-vulnerability-mirror/download/}
                             curl --create-dirs -T "$file" "http://ae-scanner/upload/mirror/download/$relative_path"
                         fi
                     done
@@ -51,12 +54,15 @@ pipeline {
                 sh '''
                 upload_files() {
                     for file in "$1"/*; do
-                        if [[ -d $file ]]; then
-                            # If the file is a directory, call upload_files recursively
+                        if [ -d "$file" ]; then
+                            # Create directory on the server
+                            relative_path=${file#.database/ae-vulnerability-mirror/index/}
+                            curl -X MKCOL "http://ae-scanner/upload/mirror/index/$relative_path"
+                            # Recursively call the function for the new directory
                             upload_files "$file"
                         else
                             # Upload the file
-                            relative_path="${file#.database/ae-vulnerability-mirror/index/}"
+                            relative_path=${file#.database/ae-vulnerability-mirror/index/}
                             curl --create-dirs -T "$file" "http://ae-scanner/upload/mirror/index/$relative_path"
                         fi
                     done
