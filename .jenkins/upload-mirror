@@ -23,7 +23,6 @@ pipeline {
                         if [ -d "$file" ]; then
                             # Create directory on the server
                             relative_path=${file#.database/ae-vulnerability-mirror/download/}
-                            curl -X MKCOL "http://ae-scanner/upload/mirror/download/$relative_path"
                             # Recursively call the function for the new directory
                             upload_files "$file"
                         else
@@ -57,7 +56,6 @@ pipeline {
                         if [ -d "$file" ]; then
                             # Create directory on the server
                             relative_path=${file#.database/ae-vulnerability-mirror/index/}
-                            curl -X MKCOL "http://ae-scanner/upload/mirror/index/$relative_path"
                             # Recursively call the function for the new directory
                             upload_files "$file"
                         else
