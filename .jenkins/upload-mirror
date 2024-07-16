@@ -18,7 +18,20 @@ pipeline {
         stage('Push mirror-database artifacts to server') {
             steps {
                 sh '''
-                rsync -avz --delete .database/ae-vulnerability-mirror/download/ rsync://ae-scanner/upload/mirror/download/
+                upload_files() {
+                    for file in "$1"/*; do
+                        if [[ -d $file ]]; then
+                            # If the file is a directory, call upload_files recursively
+                            upload_files "$file"
+                        else
+                            # Upload the file
+                            relative_path="${file#.database/ae-vulnerability-mirror/download/}"
+                            curl --create-dirs -T "$file" "http://ae-scanner/upload/mirror/download/$relative_path"
+                        fi
+                    done
+                }
+
+                upload_files ".database/ae-vulnerability-mirror/download"
                 '''
             }
         }
@@ -36,7 +49,20 @@ pipeline {
         stage('Push index-database artifacts to server') {
             steps {
                 sh '''
-                rsync -avz --delete .database/ae-vulnerability-mirror/index/ rsync://ae-scanner/upload/mirror/index/
+                upload_files() {
+                    for file in "$1"/*; do
+                        if [[ -d $file ]]; then
+                            # If the file is a directory, call upload_files recursively
+                            upload_files "$file"
+                        else
+                            # Upload the file
+                            relative_path="${file#.database/ae-vulnerability-mirror/index/}"
+                            curl --create-dirs -T "$file" "http://ae-scanner/upload/mirror/index/$relative_path"
+                        fi
+                    done
+                }
+
+                upload_files ".database/ae-vulnerability-mirror/index"
                 '''
             }
         }
