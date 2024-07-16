@@ -4,12 +4,15 @@ pipeline {
         maven 'maven-3.9.6'
         jdk 'ZULU8'
     }
+    environment {
+        PROJECT_BASEDIR = "${env.WORKSPACE}"
+    }
     stages {
         stage('Pull artifact from server') {
             steps {
                 sh '''
                 mkdir -p .database/ae-vulnerability-mirror/index
-                wget -r -np -nH --cut-dirs=3 -P .database/ae-vulnerability-mirror/index -R "index.html*" http://ae-scanner/mirror/index
+                wget -r -np -nH --cut-dirs=3 -P .database/ae-vulnerability-mirror/index -R "index.html*" http://ae-scanner/mirror/index/
                 '''
             }
         }
@@ -17,7 +20,7 @@ pipeline {
         stage('Build with extract profile') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Pextract'
+                    sh 'mvn -B clean install -Pextract -Dproject.basedir=$PROJECT_BASEDIR'
                 }
             }
         }
@@ -25,7 +28,7 @@ pipeline {
         stage('Build with advise profile') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Padvise'
+                    sh 'mvn -B clean install -Padvise -Dproject.basedir=$PROJECT_BASEDIR'
                 }
             }
         }
@@ -33,7 +36,7 @@ pipeline {
         stage('Build with report profile') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Preport'
+                    sh 'mvn -B clean install -Preport -Dproject.basedir=$PROJECT_BASEDIR'
                 }
             }
         }
