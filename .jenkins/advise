@@ -7,8 +7,7 @@ pipeline {
     stages {
         stage('Pull artifact from server') {
             steps {
-                //TODO: fix me
-                sh 'curl -O http://ae-scanner/mirror/'
+                sh 'wget -r -np -nH --cut-dirs=1 -R "index.html*" http://ae-scanner/mirror/'
             }
         }
 
