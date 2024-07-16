@@ -13,7 +13,7 @@ pipeline {
                 sh '''
                 mkdir -p .database/ae-vulnerability-mirror/index
                 curl -o .database/ae-vulnerability-mirror/index/index-database.zip http://ae-scanner/mirror/index/index-database.zip
-                unzip -o .database/ae-vulnerability-mirror/index/index-database.zip -d .database/ae-vulnerability-mirror/index
+                unzip -o .database/ae-vulnerability-mirror/index/index-database.zip -d .database/ae-vulnerability-mirror
                 '''
             }
         }
