@@ -109,7 +109,9 @@
                         <failOnMissingNotice>false</failOnMissingNotice>
                         <failOnMissingSources>false</failOnMissingSources>
 
-                        <generateOverviewTablesForAdvisories>CERT_SEI</generateOverviewTablesForAdvisories>
+                        <generateOverviewTablesForAdvisories>
+                            <CERT_SEI/>
+                        </generateOverviewTablesForAdvisories>
                     </configuration>
 
                 </plugin>

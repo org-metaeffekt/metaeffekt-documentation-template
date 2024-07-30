@@ -7,3 +7,4 @@
     - Id: log4j-*.jar
   append:
     EOL Id: log4j
+    Additional CPE URIs: cpe:/a:gnu:glibc, cpe:/a:gnu:libc
