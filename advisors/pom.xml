@@ -311,6 +311,10 @@
                                             <active>true</active>
                                         </kevEnrichment>
 
+                                        <epssEnrichment>
+                                            <active>true</active>
+                                        </epssEnrichment>
+
                                         <eolEnrichment>
                                             <active>true</active>
                                             <warningThresholdDaysSupport>180</warningThresholdDaysSupport>
