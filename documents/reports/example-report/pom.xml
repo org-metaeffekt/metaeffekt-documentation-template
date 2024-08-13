@@ -110,7 +110,7 @@
                         <failOnMissingSources>false</failOnMissingSources>
 
                         <generateOverviewTablesForAdvisories>
-                            <CERT_SEI/>
+                            [ {"name":"CERT_SEI"} ]
                         </generateOverviewTablesForAdvisories>
                     </configuration>
 
