@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    tools {
+        maven 'maven-3.9.6'
+        jdk 'ZULU8'
+    }
+    stages {
+        stage('Build with mirror-database profile') {
+            steps {
+                withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
+                    withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
+                        sh 'mvn -B clean install -Pmirror-database -Dnvd.apikey=$NVD_APIKEY'
+                    }
+                }
+            }
+        }
+
+        stage('Build with index-database profile') {
+            steps {
+                withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
+                    withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
+                        sh 'mvn -B clean install -Pindex-database -Dnvd.apikey=$NVD_APIKEY'
+                    }
+                }
+            }
+        }
+
+        stage('zip and push') {
+            steps {
+                sh '''
+                cd .database/ae-vulnerability-mirror
+                zip -r index-database.zip index
+                zip -r mirror-database.zip download
+                curl --create-dirs -T mirror-database.zip http://ae-scanner/upload/mirror/download/mirror-database.zip
+                curl --create-dirs -T index-database.zip http://ae-scanner/upload/mirror/index/index-database.zip
+                '''
+            }
+        }
+    }
+}

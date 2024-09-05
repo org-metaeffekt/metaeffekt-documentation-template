@@ -45,9 +45,7 @@
                                 </goals>
 
                                 <configuration>
-                                    <mirrorDirectory>
-                                        ${database.path}
-                                    </mirrorDirectory>
+                                    <mirrorDirectory>${database.path}</mirrorDirectory>
 
                                     <proxyScheme>${proxy.scheme}</proxyScheme>
                                     <proxyHost>${proxy.host}</proxyHost>
@@ -56,7 +54,6 @@
                                     <proxyPort>${proxy.port}</proxyPort>
 
                                     <!-- Downloads -->
-
                                     <certSeiDownload>
                                         <resourceLocations>
                                             <!-- Summary URL for a given year.
@@ -72,11 +69,24 @@
                                         <resourceLocations>
                                             <!-- Yearly archive download URL.
                                                  - %d Archive year (example: 2020) -->
-                                            <CERT_FR_ARCHIVE>https://www.cert.ssi.gouv.fr/tar/%d.tar</CERT_FR_ARCHIVE>
+                                            <CERT_FR_ARCHIVE>https://metaeffekt.com/mirror/cert-fr/txt/%d.tar</CERT_FR_ARCHIVE>
                                             <!-- RSS feed that contains the latest changes to the mirror. Used to check if update is required. -->
                                             <CERT_FR_RSS_FEED>https://www.cert.ssi.gouv.fr/feed/</CERT_FR_RSS_FEED>
                                         </resourceLocations>
                                     </certFrDownload>
+
+                                    <certEuDownload>
+                                        <resourceLocations>
+                                            <!-- HTML page containing a list of all CERT-EU entries published in a single year.
+                                                 - %d Year (example: 2020) -->
+                                            <YEARLY_PUBLICATIONS_URL>https://cert.europa.eu/publications/security-advisories/%d</YEARLY_PUBLICATIONS_URL>
+                                            <!-- JSON file containing the details of a single CERT-EU entry.
+                                                 - %s Entry ID (example: 2024-042) -->
+                                            <SINGLE_ENTRY_URL>https://cert.europa.eu/publications/security-advisories/%s/json</SINGLE_ENTRY_URL>
+                                            <!-- RSS feed for the latest updated/ created CERT-EU entries. Used to check if update is required. -->
+                                            <RSS_FEED>https://cert.europa.eu/publications/security-advisories-rss</RSS_FEED>
+                                        </resourceLocations>
+                                    </certEuDownload>
 
                                     <nvdCveDownload>
                                         <!-- you will need an API key in order to download the NVD data:
@@ -175,6 +185,12 @@
                                         </resourceLocations>
                                     </cisaKevDownload>
 
+                                    <epssDownload>
+                                        <resourceLocations>
+                                            <EPSS_ALL_SCORES_CSV>https://epss.cyentia.com/epss_scores-current.csv.gz</EPSS_ALL_SCORES_CSV>
+                                        </resourceLocations>
+                                    </epssDownload>
+
                                     <eolDownload>
                                         <resourceLocations>
                                             <!-- URL for the EOL API that is used to fetch the version information for a single product.
@@ -215,6 +231,7 @@
                                     <!-- Indexers -->
                                     <certSeiAdvisorIndex/>
                                     <certFrAdvisorIndex/>
+                                    <certEuAdvisorIndex/>
                                     <nvdVulnerabilityIndex/>
                                     <nvdCpeIndex/>
                                     <nvdCpeVendorProductIndex/>
@@ -223,6 +240,7 @@
                                     <msrcKbChainIndex/>
                                     <githubAdvisorIndex/>
                                     <kevIndex/>
+                                    <epssIndex />
                                     <eolIndex/>
                                 </configuration>
                             </execution>

@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+    tools {
+        maven 'maven-3.9.6'
+        jdk 'ZULU8'
+    }
+    environment {
+        MIRROR_BASEDIR = "${env.WORKSPACE}/.database/ae-vulnerability-mirror"
+    }
+    stages {
+        stage('Pull artifact from server') {
+            steps {
+                sh '''
+                mkdir -p .database/ae-vulnerability-mirror/index
+                curl -o .database/ae-vulnerability-mirror/index/index-database.zip http://ae-scanner/mirror/index/index-database.zip
+                unzip -o .database/ae-vulnerability-mirror/index/index-database.zip -d .database/ae-vulnerability-mirror
+                '''
+            }
+        }
+
+        stage('Build with extract profile') {
+            steps {
+                withMaven(maven: 'maven-3.9.6') {
+                    sh 'mvn -B clean install -Pextract'
+                }
+            }
+        }
+
+        stage('Build with advise profile') {
+            steps {
+                withMaven(maven: 'maven-3.9.6') {
+                    sh 'mvn -B clean install -Padvise -Dinput.database=$MIRROR_BASEDIR'
+                }
+            }
+        }
+
+        stage('Build with report profile') {
+            steps {
+                withMaven(maven: 'maven-3.9.6') {
+                    sh 'mvn -B clean install -Preport -Dinput.database=$MIRROR_BASEDIR'
+                }
+            }
+        }
+    }
+}

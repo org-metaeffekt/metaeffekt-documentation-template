@@ -30,8 +30,18 @@ Mirror the vulnerability databases once using the `mirror-database` profile:
 
     mvn clean install -Pmirror-database,index-database
 
-This may take around 10 minutes. The process will create a local mirror of public vulnerability data in the `.database`
+To successfully mirror the database an API-Key might be necessary if not provided already.
+Either create a new top-level directory `.maven` containing a `maven.config` file which should contain the following:
+
+    -Dnvd.apikey=<api-key>
+
+Or append the flag directly via CLI:
+
+    mvn clean install -Pmirror-database,index-database -Dnvd.apikey=<api-key>
+
+This process may take around 40 minutes. The process will create a local mirror of public vulnerability data in the `.database`
 folder. Rerun the process to update the data regularly.
+
 
 Run the extraction and advisories/documents generation using the `extract`, `advise`, `document` profiles:
 
