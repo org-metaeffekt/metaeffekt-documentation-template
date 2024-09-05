@@ -18,8 +18,8 @@
     </scm>
 
     <properties>
-        <ae.core.version>0.113.0</ae.core.version>
-        <ae.artifact.analysis.version>0.107.0</ae.artifact.analysis.version>
+        <ae.core.version>HEAD-SNAPSHOT</ae.core.version>
+        <ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>
         <ae.dita.version>0.29.0</ae.dita.version>
 
         <artifact.inventory.validation>false</artifact.inventory.validation>
@@ -86,13 +86,13 @@
         </profile>
 
         <profile>
-            <id>mirror-database</id>
+            <id>mirror-download</id>
             <modules>
                 <module>mirror</module>
             </modules>
         </profile>
         <profile>
-            <id>index-database</id>
+            <id>mirror-index</id>
             <modules>
                 <module>mirror</module>
             </modules>

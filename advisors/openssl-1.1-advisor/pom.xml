@@ -9,12 +9,15 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 	
-    <artifactId>ae-openssl-advisor</artifactId>
+    <artifactId>ae-openssl-1.1-advisor</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <input.inventory>${project.build.directory}/input/inventory/ae-inventory-extractor-inventory.xls</input.inventory>
-        <correlation.dir>correlation</correlation.dir>
+        <input.inventory>${project.basedir}/inventory/openssl-inventory.xls</input.inventory>
+
+        <dashboard.title>OpenSSL-1.1.1o</dashboard.title>
+        <dashboard.subtitle>Vulnerability Assessment Dashboard</dashboard.subtitle>
+        <dashboard.footer>Demo Dashboard for OpenSSL-1.1.1o</dashboard.footer>
     </properties>
 
     <build>

@@ -29,7 +29,7 @@
 
     <profiles>
         <profile>
-            <id>mirror-database</id>
+            <id>mirror-download</id>
             <build>
                 <plugins>
                     <plugin>
@@ -210,7 +210,7 @@
         </profile>
 
         <profile>
-            <id>index-database</id>
+            <id>mirror-index</id>
             <build>
                 <plugins>
                     <plugin>

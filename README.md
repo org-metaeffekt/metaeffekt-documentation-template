@@ -26,9 +26,9 @@
 
 ## Build Instructions
 
-Mirror the vulnerability databases once using the `mirror-database` profile:
+Mirror the vulnerability databases once using the `mirror-download` profile:
 
-    mvn clean install -Pmirror-database,index-database
+    mvn clean install -Pmirror-download,mirror-index
 
 To successfully mirror the database an API-Key might be necessary if not provided already.
 Either create a new top-level directory `.maven` containing a `maven.config` file which should contain the following:
@@ -37,7 +37,7 @@ Either create a new top-level directory `.maven` containing a `maven.config` fil
 
 Or append the flag directly via CLI:
 
-    mvn clean install -Pmirror-database,index-database -Dnvd.apikey=<api-key>
+    mvn clean install -Pmirror-download,mirror-index -Dnvd.apikey=<api-key>
 
 This process may take around 40 minutes. The process will create a local mirror of public vulnerability data in the `.database`
 folder. Rerun the process to update the data regularly.

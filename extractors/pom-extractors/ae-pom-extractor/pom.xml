@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <artifactId>ae-pom-extractors</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+	
+    <artifactId>ae-pom-extractor</artifactId>
+    <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.metaeffekt.core</groupId>
+                <artifactId>ae-inventory-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-artifact-analysis-plugin</artifactId>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.metaeffekt.core</groupId>
+                    <artifactId>ae-inventory-maven-plugin</artifactId>
+                    <version>${ae.core.version}</version>
+
+                    <executions>
+                        <execution>
+                            <id>extract-from-pom</id>
+                            <goals>
+                                <goal>create-pom-report</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                        </execution>
+                    </executions>
+
+                    <configuration>
+                        <includeScopeProvided>false</includeScopeProvided>
+                        <includeScopeSystem>false</includeScopeSystem>
+                        <includeScopeTest>false</includeScopeTest>
+                        <includeOptional>false</includeOptional>
+
+                        <!-- FIXME: currently plugins are included; why? -->
+                        <includePlugins>false</includePlugins>
+                        <managePlugins>false</managePlugins>
+
+                        <sourceInventoryDir>${project.build.directory}</sourceInventoryDir>
+                        <sourceInventoryIncludes>*.xls</sourceInventoryIncludes>
+                        <failOnUnknown>false</failOnUnknown>
+                    </configuration>
+                    <dependencies>
+                        <!-- FIXME: check why this is required -->
+                        <dependency>
+                            <groupId>org.apache.logging.log4j</groupId>
+                            <artifactId>log4j-core</artifactId>
+                            <version>2.20.0</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.metaeffekt.artifact.analysis</groupId>
+                    <artifactId>ae-artifact-analysis-plugin</artifactId>
+                    <version>${ae.artifact.analysis.version}</version>
+                    <executions>
+                        <execution>
+                            <id>export-spdx</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>export-inventory-to-spdx</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <inputFile>${project.build.directory}/inventory/${project.artifactId}-${project.version}-inventory.xls</inputFile>
+                        <outDir>${project.build.directory}/spdx</outDir>
+
+                        <tmdGroupId>com.metaeffekt.universe</tmdGroupId>
+                        <tmdArtifactId>ae-metaeffekt-universe</tmdArtifactId>
+                        <tmdVersion>1.7.0</tmdVersion>
+
+                        <userPassword>${universe.consumer.password}</userPassword>
+                        <userKeysFile>${universe.consumer.keys}</userKeysFile>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.14.0</version>
+        </dependency>
+    </dependencies>
+
+</project>
