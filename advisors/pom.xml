@@ -45,7 +45,7 @@
         <ae.dashboard.timeline>true</ae.dashboard.timeline>
         <ae.dashboard.timeline.vulnerabilities.limit>2147483647</ae.dashboard.timeline.vulnerabilities.limit>
 
-        <correlation.dir>/Users/ywittmann/workspace/metaeffekt-vulnerability-correlation/correlation</correlation.dir>
+        <correlation.dir>../correlation</correlation.dir>
         <keywords.dir>${project.basedir}/context</keywords.dir>
         <keywords.labels></keywords.labels>
         <assessment.dir>${project.basedir}/assessment</assessment.dir>
