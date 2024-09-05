@@ -15,7 +15,8 @@
     <modules>
         <module>example-advisor</module>
 
-        <module>openssl-advisor</module>
+        <module>openssl-1.1-advisor</module>
+        <module>openssl-3.0-advisor</module>
         <module>selected-component-advisor</module>
     </modules>
 
@@ -56,6 +57,7 @@
         <activate.certfr>false</activate.certfr>
         <activate.certeu>true</activate.certeu>
         <activate.certsei>true</activate.certsei>
+        <activate.ghsa.correlation>false</activate.ghsa.correlation>
         <activate.ghsa>true</activate.ghsa>
         <activate.correlation>true</activate.correlation>
         <activate.status>true</activate.status>
@@ -65,6 +67,10 @@
         <activate.vulnerabilities.custom>true</activate.vulnerabilities.custom>
 
         <ae.advisor.phase>process-resources</ae.advisor.phase>
+
+        <dashboard.title>Vulnerability Assessment Dashboard</dashboard.title>
+        <dashboard.subtitle>${project.artifactId}</dashboard.subtitle>
+        <dashboard.footer>${project.artifactId}</dashboard.footer>
     </properties>
 
     <build>
@@ -155,6 +161,28 @@
                             <version>${ae.artifact.analysis.version}</version>
 
                             <executions>
+                                <execution>
+                                    <id>set-inventory-info</id>
+                                    <phase>generate-resources</phase>
+                                    <goals>
+                                        <goal>set-inventory-info</goal>
+                                    </goals>
+                                    <configuration>
+                                        <active>true</active>
+
+                                        <entryId>vad-customization</entryId>
+                                        <values>
+                                            <Title>${dashboard.title}</Title>
+                                            <Subtitle>${dashboard.subtitle}</Subtitle>
+                                            <Footer>${dashboard.footer}</Footer>
+                                        </values>
+
+                                        <inventoryInputFile>${input.inventory}</inventoryInputFile>
+                                        <inventoryOutputFile>${input.inventory}</inventoryOutputFile>
+                                    </configuration>
+                                </execution>
+
+
                                 <execution>
                                     <id>inventory-enrichment-advise-correlate-execution</id>
                                     <phase>generate-resources</phase>
@@ -249,7 +277,7 @@
                                         </customVulnerabilitiesFromCpeEnrichment>
 
                                         <ghsaVulnerabilitiesEnrichment>
-                                            <active>${activate.ghsa}</active>
+                                            <active>${activate.ghsa.correlation}</active>
                                             <maven>true</maven>
                                             <packagist>false</packagist>
                                             <rubygems>true</rubygems>

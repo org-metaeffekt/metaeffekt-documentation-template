@@ -9,7 +9,7 @@ history:
           application service are deployed (MAV:A; AV:A). Additional privileges are required (MAC:H) as the adversary 
           must have already passed the gateway-level security perimeter or the physical protection of the data center.
       </p>"
-    date: 2023-07-14
+    date: 2024-08-24
     author: KKL
 
 scope: inventory
