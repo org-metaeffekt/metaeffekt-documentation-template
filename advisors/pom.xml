@@ -15,6 +15,7 @@
     <modules>
         <module>example-advisor</module>
 
+        <module>keycloak-advisor</module>
         <module>openssl-1.1-advisor</module>
         <module>openssl-3.0-advisor</module>
         <module>selected-component-advisor</module>
@@ -44,7 +45,7 @@
         <ae.dashboard.timeline>true</ae.dashboard.timeline>
         <ae.dashboard.timeline.vulnerabilities.limit>2147483647</ae.dashboard.timeline.vulnerabilities.limit>
 
-        <correlation.dir>../correlation</correlation.dir>
+        <correlation.dir>/Users/ywittmann/workspace/metaeffekt-vulnerability-correlation/correlation</correlation.dir>
         <keywords.dir>${project.basedir}/context</keywords.dir>
         <keywords.labels></keywords.labels>
         <assessment.dir>${project.basedir}/assessment</assessment.dir>
@@ -208,6 +209,7 @@
                                             <active>${activate.correlation}</active>
                                             <yamlFiles>
                                                 <file>${correlation.dir}</file>
+                                                <file>/Users/ywittmann/workspace/metaeffekt-vulnerability-correlation/correlation</file>
                                             </yamlFiles>
                                         </correlationYamlEnrichment>
 

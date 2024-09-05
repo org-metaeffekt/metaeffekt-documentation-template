@@ -13,7 +13,7 @@
 
     <properties>
         <!-- run with the mirror-database profile active to download the database contents -->
-        <database.path>${project.basedir}/../.database/ae-vulnerability-mirror</database.path>
+        <database.path>/Users/ywittmann/workspace/ref/mirror-1.0</database.path>
 
         <proxy.scheme>none</proxy.scheme>
         <proxy.host>none</proxy.host>
@@ -24,7 +24,7 @@
         <!-- you will need an API key in order to download the NVD data:
              https://nvd.nist.gov/developers/request-an-api-key
              more information: https://nvd.nist.gov/developers/start-here -->
-        <nvd.apikey></nvd.apikey>
+        <nvd.apikey>cda5ccec-4245-4784-b654-2665c4894f8c</nvd.apikey>
     </properties>
 
     <profiles>
