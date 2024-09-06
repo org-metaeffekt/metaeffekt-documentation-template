@@ -14,6 +14,18 @@
     <packaging>pom</packaging>
 
     <properties>
+        <!-- use there properties to explicitly define image repo and tag to use -->
+        <image.registry></image.registry>
+        <image.repo></image.repo>
+        <image.tag></image.tag>
+
+        <image.qualifier>${image.repo}-${image.tag}</image.qualifier>
+        <image.id>${image.registry}/${image.repo}:${image.tag}</image.id>
+
+        <ae.extractor.resources.dir>${project.build.directory}/extractor/resources</ae.extractor.resources.dir>
+        <ae.extractor.scan.dir>${project.build.directory}/extractor/scan</ae.extractor.scan.dir>
+        <ae.extractor.target.dir>${project.build.directory}/classes/inventory</ae.extractor.target.dir>
+
     </properties>
 
     <modules>
@@ -21,82 +33,8 @@
     </modules>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20.1</version>
-            </plugin>
-        </plugins>
-
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.6.0</version>
-                    <executions>
-                        <execution>
-                            <id>unpack-container-scripts</id>
-                            <goals>
-                                <goal>unpack</goal>
-                            </goals>
-                            <phase>generate-sources</phase>
-                            <configuration>
-                                <outputDirectory>${project.build.directory}</outputDirectory>
-                                <artifactItems>
-                                    <artifactItem>
-                                        <groupId>org.metaeffekt.core</groupId>
-                                        <artifactId>ae-system-analysis-scripts</artifactId>
-                                        <version>${ae.core.version}</version>
-                                        <includes>ae-system-analysis-scripts-assembled/container-extractors/*.sh</includes>
-                                        <fileMappers>
-                                            <org.codehaus.plexus.components.io.filemappers.FlattenFileMapper/>
-                                            <org.codehaus.plexus.components.io.filemappers.PrefixFileMapper>
-                                                <prefix>container-extractors/</prefix>
-                                            </org.codehaus.plexus.components.io.filemappers.PrefixFileMapper>
-                                        </fileMappers>
-                                    </artifactItem>
-                                </artifactItems>
-                                <overWriteSnapshots>true</overWriteSnapshots>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.8</version>
-                    <executions>
-                        <execution>
-                            <id>container-extractors-chmod</id>
-                            <phase>generate-sources</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <target>
-                                    <chmod perm="+x">
-                                        <fileSet dir="${project.build.directory}/container-extractors" includes="**/*.sh" />
-                                    </chmod>
-                                    <mkdir dir="${project.build.directory}/classes/analysis" />
-                                </target>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
@@ -107,63 +45,30 @@
                             <goals>
                                 <goal>exec</goal>
                             </goals>
-                            <phase>compile</phase>
+                            <phase>generate-resources</phase>
                             <configuration>
                                 <executable>docker</executable>
                                 <arguments>
                                     <argument>inspect</argument>
                                     <argument>${image.id}</argument>
                                 </arguments>
-                                <outputFile>${ae.extractor.analysis.dir}/image-inspect.yaml</outputFile>
+                                <outputFile>${ae.extractor.resources.dir}/${image.qualifier}.json</outputFile>
                             </configuration>
                         </execution>
-
                         <execution>
-                            <id>run-inventory-extractor</id>
+                            <id>run-image-save</id>
                             <goals>
                                 <goal>exec</goal>
                             </goals>
-                            <phase>compile</phase>
+                            <phase>generate-resources</phase>
                             <configuration>
                                 <executable>docker</executable>
                                 <arguments>
-                                    <argument>run</argument>
-                                    <argument>--rm</argument>
-                                    <argument>-i</argument>
-                                    <argument>-v</argument>
-                                    <argument>${project.build.directory}/container-extractors/:/container-extractors</argument>
-                                    <argument>-v</argument>
-                                    <argument>${ae.extractor.analysis.dir}/:/analysis</argument>
-                                    <argument>--entrypoint</argument>
-                                    <!-- NOTE: here an image-os-specific extractor can be used -->
-                                    <argument>/container-extractors/extract.sh</argument>
+                                    <argument>save</argument>
                                     <argument>${image.id}</argument>
+                                    <argument>-o</argument>
+                                    <argument>${ae.extractor.resources.dir}/${image.qualifier}.tar</argument>
                                 </arguments>
-                                <outputFile>${ae.extractor.analysis.dir}/image-analysis.txt</outputFile>
-                            </configuration>
-                        </execution>
-
-                        <execution>
-                            <id>run-file-extractor</id>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                            <phase>test-compile</phase>
-                            <configuration>
-                                <executable>docker</executable>
-                                <arguments>
-                                    <argument>run</argument>
-                                    <argument>--rm</argument>
-                                    <argument>-i</argument>
-                                    <argument>-v</argument>
-                                    <argument>${project.build.directory}/container-extractors/:/container-extractors</argument>
-                                    <argument>-v</argument>
-                                    <argument>${ae.extractor.analysis.dir}/:/analysis</argument>
-                                    <argument>--entrypoint</argument>
-                                    <argument>/container-extractors/extract-filtered-files.sh</argument>
-                                    <argument>${image.id}</argument>
-                                </arguments>
-                                <outputFile>${ae.extractor.analysis.dir}/image-extracted-files.txt</outputFile>
                             </configuration>
                         </execution>
                     </executions>
@@ -175,111 +80,66 @@
                     <version>${ae.core.version}</version>
                     <executions>
                         <execution>
-                            <goals>
-                                <goal>extract-container-inventory</goal>
-                            </goals>
-                            <phase>process-test-resources</phase>
-                            <configuration>
-                                <analysisDir>${ae.extractor.analysis.dir}</analysisDir>
-                                <targetInventoryFile>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</targetInventoryFile>
-                                <filterPackagesWithoutVersion>true</filterPackagesWithoutVersion>
-                                <excludes>
-                                    <exclude>/var/cache/ldconfig/**/*</exclude>
-                                    <exclude>/var/log/**/*</exclude>
-
-                                    <exclude>/var/lib/rpm/**/*</exclude>
-                                    <exclude>/var/lib/dpkg/**/*</exclude>
-                                    <exclude>/var/lib/pacman/**/*</exclude>
-
-                                    <exclude>/var/cache/apt/**/*</exclude>
-                                    <exclude>/var/cache/debconf/**/*</exclude>
-                                    <exclude>/var/lib/apt/**/*</exclude>
-                                    <exclude>/var/lib/pam/**/*</exclude>
-                                    <exclude>/var/lib/systemd/deb-systemd-helper-enabled/**/*</exclude>
-                                    <exclude>/var/lib/yum/yumdb/**/*</exclude>
-
-                                    <exclude>/lib/apk/db/**/*</exclude>
-
-                                    <exclude>/sys/**/*</exclude>
-                                    <exclude>/proc/**/*</exclude>
-                                    <exclude>/root/.*</exclude>
-                                    <exclude>/etc/**/*</exclude>
-
-                                    <exclude>/usr/lib/locale/locale-archive</exclude>
-
-                                    <exclude>**/.lock</exclude>
-                                    <exclude>**/lock</exclude>
-
-                                    <exclude>/run/utmp</exclude>
-                                </excludes>
-                            </configuration>
-                        </execution>
-
-                        <execution>
-                            <id>scan-extracted</id>
+                            <id>image-scan</id>
                             <goals>
                                 <goal>create-directory-report</goal>
                             </goals>
-                            <phase>test-compile</phase>
+                            <phase>process-resources</phase>
                             <configuration>
-                                <inputDirectory>${ae.extractor.analysis.dir}/extracted-files</inputDirectory>
-                                <scanDirectory>${ae.extractor.analysis.dir}/extracted-scan</scanDirectory>
+                                <inputDirectory>${ae.extractor.resources.dir}</inputDirectory>
+                                <scanDirectory>${ae.extractor.scan.dir}/extracted-scan</scanDirectory>
+
                                 <scanIncludes>**/*</scanIncludes>
-                                <scanExcludes>-none-</scanExcludes>
-                                <enableImplicitUnpack>false</enableImplicitUnpack>
+
+                                <!-- general exclude for containers; review constantly; minimize -->
+                                <scanExcludes>
+                                    <exclude>**/var/log/**/*</exclude>
+
+                                    <exclude>**/sys/**/*</exclude>
+                                    <exclude>**/proc/**/*</exclude>
+
+                                    <exclude>**/dev/*</exclude>
+
+                                    <exclude>**/run/utmp</exclude>
+
+                                    <exlcude>**/var/lib/alternatives/*</exlcude>
+
+                                    <exlcude>**/etc/**/*.bak</exlcude>
+                                    <exlcude>**/etc/**/*.repo</exlcude>
+
+                                    <exclude>**/usr/share/terminfo/**/*</exclude>
+                                    <exclude>**/var/lib/dnf/history.sqlite-shm/**/*</exclude>
+                                </scanExcludes>
+
+                                <includeEmbedded>true</includeEmbedded>
+                                <enableDetectComponentPatterns>true</enableDetectComponentPatterns>
+                                <enableImplicitUnpack>true</enableImplicitUnpack>
 
                                 <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
                                 <sourceInventoryIncludes>inventory/*.xls</sourceInventoryIncludes>
 
-                                <targetInventoryDir>${ae.extractor.analysis.dir}</targetInventoryDir>
-                                <targetInventoryPath>${project.artifactId}-file-inventory.xls</targetInventoryPath>
+                                <targetInventoryDir>${ae.extractor.target.dir}</targetInventoryDir>
+                                <targetInventoryPath>${project.artifactId}-inventory.xls</targetInventoryPath>
 
-                                <failOnUnknown>false</failOnUnknown>
-                                <failOnUnknownVersion>false</failOnUnknownVersion>
-                                <failOnError>false</failOnError>
-                                <failOnMissingLicense>false</failOnMissingLicense>
-                                <failOnMissingLicenseFile>false</failOnMissingLicenseFile>
-                                <failOnInternal>false</failOnInternal>
+                                <!-- configure validation during extraction -->
+                                <failOnError>${ae.extractor.validation}</failOnError>
+                                <failOnBanned>${ae.extractor.validation}</failOnBanned>
+                                <failOnInternal>${ae.extractor.validation}</failOnInternal>
+                                <failOnUnknownVersion>${ae.extractor.validation}</failOnUnknownVersion>
+                                <failOnUnknown>${ae.extractor.validation}</failOnUnknown>
+                                <failOnUpgrade>false</failOnUpgrade>
+                                <failOnDowngrade>false</failOnDowngrade>
+                                <failOnDevelopment>${ae.extractor.validation}</failOnDevelopment>
+                                <failOnMissingLicense>${ae.extractor.validation}</failOnMissingLicense>
+                                <failOnMissingLicenseFile>${ae.extractor.validation}</failOnMissingLicenseFile>
+                                <failOnMissingNotice>${ae.extractor.validation}</failOnMissingNotice>
+
                             </configuration>
                         </execution>
-
-                        <execution>
-                            <id>merge-inventory</id>
-                            <goals>
-                                <goal>merge-inventories</goal>
-                            </goals>
-                            <phase>test-compile</phase>
-                            <configuration>
-                                <sourceInventory>${ae.extractor.analysis.dir}/${project.artifactId}-file-inventory.xls</sourceInventory>
-                                <targetInventory>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</targetInventory>
-                            </configuration>
-                        </execution>
-
-                        <execution>
-                            <id>include-asset-details</id>
-                            <goals>
-                                <goal>extract-container-asset</goal>
-                            </goals>
-                            <phase>test-compile</phase>
-                            <configuration>
-                                <inventoryFile>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</inventoryFile>
-                                <repo>${image.repo}</repo>
-                                <tag>${image.tag}</tag>
-                                <assetQualifier>${image.repo}:${image.tag}</assetQualifier>
-                            </configuration>
-                        </execution>
-
                     </executions>
-
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.metaeffekt.example.documentation</groupId>
-                            <artifactId>ae-inventory</artifactId>
-                            <version>${project.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
 
+                <!-- FIXME: why is this required -->
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.0.2</version>
@@ -298,64 +158,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>org.metaeffekt.core</groupId>
-            <artifactId>ae-inventory-processor</artifactId>
-            <version>${ae.core.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.1.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.1.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.15.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.36</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.18.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.18.0</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
 
 </project>

@@ -15,10 +15,12 @@
     <properties>
         <artifact.inventory.enabled>${ae.extractor.validation}</artifact.inventory.enabled>
 
-        <!-- use properties to explicitly define image repo and tag to use -->
-        <image.repository></image.repository>
-        <image.repo></image.repo>
-        <image.tag></image.tag>
+        <ae.extractor.analysis.dir>${project.build.directory}/classes/analysis</ae.extractor.analysis.dir>
+        <ae.extractor.validation>false</ae.extractor.validation>
+
+        <image.registry>quay.io/keycloak</image.registry>
+        <image.repo>keycloak</image.repo>
+        <image.tag>25.0.0</image.tag>
     </properties>
 
     <build>
@@ -26,11 +28,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
             </plugin>
 
             <plugin>
