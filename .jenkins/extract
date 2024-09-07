@@ -12,7 +12,7 @@ pipeline {
                     sh 'mkdir -p .metaeffekt-core'
                     dir ('.metaeffekt-core') {
                         withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            git url: 'https://github.com/org-metaeffekt/metaeffekt-core.git', branch: 'main', credentialsId: 'JenkinsGithubAccess'
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-core.git', branch: 'master', credentialsId: 'JenkinsGithubAccess'
                         }
                     }
                 }
