@@ -15,6 +15,8 @@
     <modules>
         <module>example-advisor</module>
 
+        <module>keycloak-advisor</module>
+        <module>keycloak-contextualized-advisor</module>
         <module>openssl-1.1-advisor</module>
         <module>openssl-3.0-advisor</module>
         <module>selected-component-advisor</module>
@@ -208,6 +210,7 @@
                                             <active>${activate.correlation}</active>
                                             <yamlFiles>
                                                 <file>${correlation.dir}</file>
+                                                <file>/Users/ywittmann/workspace/metaeffekt-vulnerability-correlation/correlation</file>
                                             </yamlFiles>
                                         </correlationYamlEnrichment>
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE bookmap PUBLIC "-//OASIS//DTD DITA BookMap//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/bookmap.dtd">
+<bookmap id="dcc-bill-of-material">
+    <title>
+        <ph>${product.name} ${product.version}</ph>
+    </title>
+    <bookmeta>
+        <category>Vulnerability Report</category>
+        <bookid>
+            <bookpartno>${document.id}</bookpartno>
+        </bookid>
+        <bookrights>
+            <copyrlast>
+                <year>2021</year>
+            </copyrlast>
+            <bookowner>
+                <organization>${organization.name}</organization>
+            </bookowner>
+        </bookrights>
+    </bookmeta>
+
+    <frontmatter>
+        <topicref href="ae-common-content/imprint/en/tpc_imprint.dita" />
+        <topicref href="ae-keycloak-contextualized-report/tmp/tpc_vulnerability-report-notice.dita" />
+        <booklists>
+            <toc/>
+        </booklists>
+    </frontmatter>
+
+    <chapter href="ae-keycloak-contextualized-report/tpc_vulnerabilities.dita" />
+    <chapter href="ae-keycloak-contextualized-report/gen/tpc_inventory-vulnerability-statistics.dita" />
+    <chapter href="ae-keycloak-contextualized-report/gen/tpc_inventory-vulnerability-report.dita" />
+    <chapter href="ae-keycloak-contextualized-report/gen/tpc_inventory-vulnerability-details.dita" />
+
+    <backmatter>
+        <booklists>
+            <tablelist />
+            <glossarylist>
+                <topicref format="ditamap" href="ae-keycloak-contextualized-report/gen/glossary/en/gmap_glossary.ditamap" />
+            </glossarylist>
+        </booklists>
+    </backmatter>
+
+</bookmap>

@@ -14,6 +14,8 @@
 
     <modules>
         <module>example-report</module>
+        <module>keycloak-report</module>
+        <module>keycloak-contextualized-report</module>
     </modules>
 
     <properties>

@@ -9,15 +9,15 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ae-example-report</artifactId>
+    <artifactId>keycloak-contextualized-report</artifactId>
     <packaging>jar</packaging>
 
     <properties>
         <document.version>00.01</document.version>
         <document.status_en>Draft</document.status_en>
 
-        <asset.id>Example Asset</asset.id>
-        <asset.name>Example Asset</asset.name>
+        <asset.id>Keycloak</asset.id>
+        <asset.name>Keycloak</asset.name>
         <asset.version>${project.version}</asset.version>
 
         <document.id>XXXX-YYY-ZZ-VR</document.id>
@@ -76,8 +76,8 @@
                             <phase>process-sources</phase>
                             <configuration>
                                 <sourceInventoryDir>${project.build.directory}/inventories/inventory</sourceInventoryDir>
-                                <sourceInventoryIncludes>ae-example-advisor-inventory.xls</sourceInventoryIncludes>
-                                <inventory>${project.build.directory}/inventories/inventory/ae-example-advisor-inventory.xls</inventory>
+                                <sourceInventoryIncludes>ae-keycloak-contextualized-advisor-inventory.xls</sourceInventoryIncludes>
+                                <inventory>${project.build.directory}/inventories/inventory/ae-keycloak-contextualized-advisor-inventory.xls</inventory>
                                 <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
                             </configuration>
                         </execution>
@@ -154,7 +154,7 @@
 
         <dependency>
             <groupId>org.metaeffekt.example.documentation</groupId>
-            <artifactId>ae-example-advisor</artifactId>
+            <artifactId>ae-keycloak-contextualized-advisor</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>

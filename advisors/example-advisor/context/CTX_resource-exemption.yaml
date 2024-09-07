@@ -1,6 +1,7 @@
 sets:
   - name: resource exemption
     category: external threat
+    notes: The adversary may attempt to exhaust resources of the application service by injecting foreign log messages.
     score: 1.0
     min:
       - amount: 1
