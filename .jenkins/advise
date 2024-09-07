@@ -8,6 +8,53 @@ pipeline {
         MIRROR_BASEDIR = "${env.WORKSPACE}/.database/ae-vulnerability-mirror"
     }
     stages {
+
+        stage('Checkout metaeffekt-core') {
+            steps {
+                script {
+                    sh 'mkdir -p .metaeffekt-core'
+                    dir ('.metaeffekt-core') {
+                        withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-core.git', branch: 'main', credentialsId: 'JenkinsGithubAccess'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Checkout metaeffekt-artifact-analysis') {
+            steps {
+                script {
+                    sh 'mkdir -p .metaeffekt-artifact-analysis'
+                    dir ('.metaeffekt-terms-metadata') {
+                        withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-artifact-analysis.git', branch: 'main', credentialsId: 'JenkinsGithubAccess'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Build metaeffekt-core (skipping tests)') {
+            steps {
+                dir ('.metaeffekt-core') {
+                    sh 'export MAVEN_HOME=/opt/maven'
+                    sh 'export PATH=$PATH:$MAVEN_HOME/bin'
+                    sh 'JAVA_HOME=/usr/lib/jvm/zulu-8-amd64 mvn -B clean install -DskipTests'
+                }
+            }
+        }
+
+        stage('Build metaeffekt-artifact-analysis (skipping tests)') {
+            steps {
+                dir ('.metaeffekt-terms-metadata') {
+                    sh 'export MAVEN_HOME=/opt/maven'
+                    sh 'export PATH=$PATH:$MAVEN_HOME/bin'
+                    sh 'JAVA_HOME=/usr/lib/jvm/zulu-8-amd64 mvn -B clean install -DskipTests'
+                }
+            }
+        }
+
         stage('Pull artifact from server') {
             steps {
                 sh '''
@@ -21,7 +68,7 @@ pipeline {
         stage('Build with extract profile') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Pextract'
+                    sh 'mvn -B clean install -Pextract -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
                 }
             }
         }
@@ -29,7 +76,7 @@ pipeline {
         stage('Build with advise profile') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Padvise -Dinput.database=$MIRROR_BASEDIR'
+                    sh 'mvn -B clean install -Padvise -Dinput.database=$MIRROR_BASEDIR -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
                 }
             }
         }
@@ -37,7 +84,7 @@ pipeline {
         stage('Build with report profile') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh 'mvn -B clean install -Preport -Dinput.database=$MIRROR_BASEDIR'
+                    sh 'mvn -B clean install -Preport -Dinput.database=$MIRROR_BASEDIR -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
                 }
             }
         }

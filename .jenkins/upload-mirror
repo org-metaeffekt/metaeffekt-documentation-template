@@ -5,11 +5,58 @@ pipeline {
         jdk 'ZULU8'
     }
     stages {
+
+        stage('Checkout metaeffekt-core') {
+            steps {
+                script {
+                    sh 'mkdir -p .metaeffekt-core'
+                    dir ('.metaeffekt-core') {
+                        withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-core.git', branch: 'main', credentialsId: 'JenkinsGithubAccess'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Checkout metaeffekt-artifact-analysis') {
+            steps {
+                script {
+                    sh 'mkdir -p .metaeffekt-artifact-analysis'
+                    dir ('.metaeffekt-terms-metadata') {
+                        withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-artifact-analysis.git', branch: 'main', credentialsId: 'JenkinsGithubAccess'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Build metaeffekt-core (skipping tests)') {
+            steps {
+                dir ('.metaeffekt-core') {
+                    sh 'export MAVEN_HOME=/opt/maven'
+                    sh 'export PATH=$PATH:$MAVEN_HOME/bin'
+                    sh 'JAVA_HOME=/usr/lib/jvm/zulu-8-amd64 mvn -B clean install -DskipTests'
+                }
+            }
+        }
+
+        stage('Build metaeffekt-artifact-analysis (skipping tests)') {
+            steps {
+                dir ('.metaeffekt-terms-metadata') {
+                    sh 'export MAVEN_HOME=/opt/maven'
+                    sh 'export PATH=$PATH:$MAVEN_HOME/bin'
+                    sh 'JAVA_HOME=/usr/lib/jvm/zulu-8-amd64 mvn -B clean install -DskipTests'
+                }
+            }
+        }
+
         stage('Build with mirror-database profile') {
             steps {
                 withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
                     withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
-                        sh 'mvn -B clean install -Pmirror-database -Dnvd.apikey=$NVD_APIKEY'
+                        sh 'mvn -B clean install -Pmirror-database -Dnvd.apikey=$NVD_APIKEY -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
                     }
                 }
             }
@@ -19,7 +66,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
                     withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
-                        sh 'mvn -B clean install -Pindex-database -Dnvd.apikey=$NVD_APIKEY'
+                        sh 'mvn -B clean install -Pindex-database -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
                     }
                 }
             }
