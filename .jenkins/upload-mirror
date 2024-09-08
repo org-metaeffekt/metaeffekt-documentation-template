@@ -56,7 +56,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
                     withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
-                        sh 'mvn -B clean install -Pmirror-database -Dnvd.apikey=$NVD_APIKEY -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
+                        sh 'mvn -B clean install -Pmirror-download -Dnvd.apikey=$NVD_APIKEY -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
                     }
                 }
             }
@@ -66,7 +66,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
                     withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
-                        sh 'mvn -B clean install -Pindex-database -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
+                        sh 'mvn -B clean install -Pmirror-index -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
                     }
                 }
             }
