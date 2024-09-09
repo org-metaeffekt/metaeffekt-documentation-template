@@ -50,15 +50,19 @@
         </pluginManagement>
     </build>
 
-    <!-- use profiles to enable selection of different extractors or use-cases -->
-    <profiles>
-    </profiles>
-
     <modules>
-        <!-- FIXME: reintroduce container example -->
-        <!-- <module>container-extractors</module> -->
         <module>dependency-extractors</module>
         <module>inventory-extractors</module>
     </modules>
+
+    <!-- use profiles to enable selection of different extractors or use-cases -->
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <modules>
+                <module>container-extractors</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

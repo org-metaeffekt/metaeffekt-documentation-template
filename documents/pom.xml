@@ -26,6 +26,8 @@
         <organization.address>https://...</organization.address>
         <organization.license>EC Proprietary</organization.license>
 
+        <document.brandingId>ae-default-branding_en</document.brandingId>
+
         <dita.source.dir>${basedir}/src/main/dita</dita.source.dir>
     </properties>
 
@@ -157,9 +159,9 @@
                             </configuration>
                         </execution>
 
-                        <!--
+                        <!-- Apply branding customization -->
                         <execution>
-                            <id>retrieve-customer-branding</id>
+                            <id>customize-branding</id>
                             <goals>
                                 <goal>unpack</goal>
                             </goals>
@@ -167,14 +169,13 @@
                                 <outputDirectory>${project.build.directory}/branding-base/ae-dita-branding</outputDirectory>
                                 <artifactItems>
                                     <artifactItem>
-                                        <groupId>org.metaeffekt.example.documentation</groupId>
-                                        <artifactId>ae-branding</artifactId>
+                                        <groupId>${project.groupId}</groupId>
+                                        <artifactId>${document.brandingId}</artifactId>
                                         <version>${project.version}</version>
                                     </artifactItem>
                                 </artifactItems>
                             </configuration>
                         </execution>
-                        -->
 
                     </executions>
                 </plugin>
@@ -206,6 +207,7 @@
                             </configuration>
                         </execution>
 
+                        <!-- Copy branding applying current properties -->
                         <execution>
                             <id>copy-branding-resources</id>
                             <phase>process-resources</phase>

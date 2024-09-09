@@ -16,8 +16,19 @@
     <properties>
 		<buildnumber.plugin.version>1.4</buildnumber.plugin.version>
 
+        <asset.title>Example</asset.title>
         <asset.name>Example Asset</asset.name>
+        <asset.id>Example-001</asset.id>
         <asset.version>${project.version}</asset.version>
+        <asset.environment>n.a.</asset.environment>
+
+        <supplier.name>metaeffekt GmbH, HD</supplier.name>
+        <supplier.contact>contact@metaeffekt.com</supplier.contact>
+
+        <organization.name>metaeffekt GmbH</organization.name>
+        <organization.accronym>ae</organization.accronym>
+        <organization.address>https://metaeffekt.com</organization.address>
+        <organization.license>distinct</organization.license>
 
 		<document.id>XXXX-YYY-ZZ</document.id>
 
@@ -348,14 +359,6 @@
     </build>
 
     <dependencies>
-        <!-- split into separate annex
-        <dependency>
-            <groupId>org.metaeffekt.example.documentation</groupId>
-            <artifactId>ae-container-extractor</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        -->
 
         <dependency>
             <groupId>org.metaeffekt.example.documentation</groupId>
@@ -363,6 +366,15 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--
+            <dependency>
+                <groupId>org.metaeffekt.example.documentation</groupId>
+                <artifactId>keycloak-container-extractor</artifactId>
+                <version>${project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+        -->
     </dependencies>
 
 </project>

@@ -56,9 +56,7 @@
         <profile>
             <id>document</id>
             <modules>
-                <!-- FIXME: add example branding
-                <module>branding</module>
-                -->
+                <module>brandings</module>
                 <module>documents</module>
             </modules>
         </profile>

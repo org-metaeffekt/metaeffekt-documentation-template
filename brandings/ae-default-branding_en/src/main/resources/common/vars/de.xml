@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='ASCII'?>
+<vars xmlns="http://www.idiominc.com/opentopic/vars">
+
+    <variable id="cover-image-path">Customization/OpenTopic/common/artwork/cover-first-page.svg</variable>
+
+    <!-- Image path to use for a note of "note" type. -->
+    <variable id="note Note Image Path">Customization/OpenTopic/common/artwork/note.svg</variable>
+    <!-- Image path to use for a note of "notice" type. -->
+    <variable id="notice Note Image Path">Customization/OpenTopic/common/artwork/note.svg</variable>
+    <!-- Image path to use for a note of "attention" type. -->
+    <variable id="attention Note Image Path">Customization/OpenTopic/common/artwork/attention.svg</variable>
+    <!-- Image path to use for a note of "caution" type. -->
+    <variable id="caution Note Image Path">Customization/OpenTopic/common/artwork/caution.svg</variable>
+    <!-- Image path to use for a note of "danger" type. -->
+    <variable id="danger Note Image Path">Customization/OpenTopic/common/artwork/caution.svg</variable>
+    <!-- Image path to use for a note of "warning" type. -->
+    <variable id="warning Note Image Path">Customization/OpenTopic/common/artwork/caution.svg</variable>
+    <!-- Image path to use for a note of "fastpath" type. -->
+    <variable id="fastpath Note Image Path">Customization/OpenTopic/common/artwork/note.svg</variable>
+    <!-- Image path to use for a note of "important" type. -->
+    <variable id="important Note Image Path">Customization/OpenTopic/common/artwork/important.svg</variable>
+    <!-- Image path to use for a note of "remember" type. -->
+    <variable id="remember Note Image Path">Customization/OpenTopic/common/artwork/yes.svg</variable>
+    <!-- Image path to use for a note of "restriction" type. -->
+    <variable id="restriction Note Image Path">Customization/OpenTopic/common/artwork/no.svg</variable>
+    <!-- Image path to use for a note of "tip" type. -->
+    <variable id="tip Note Image Path">Customization/OpenTopic/common/artwork/tip.svg</variable>
+    <variable id="trouble Note Image Path">Customization/OpenTopic/common/artwork/caution.svg</variable>
+    <!-- Image path to use for a note of "other" type. -->
+    <variable id="other Note Image Path">Customization/OpenTopic/common/artwork/note.svg</variable>
+
+    <!-- get rid of chapter header -->
+    <variable id="Chapter with number"></variable>
+    <!-- get rid of appendix header -->
+    <variable id="Appendix with number"></variable>
+
+    <variable id="Body first header" />
+    <variable id="Body odd header" />
+    <variable id="Body even header" />
+    <variable id="Preface odd header" />
+    <variable id="Preface even header" />
+    <variable id="Preface first header" />
+    <variable id="Toc odd header" />
+    <variable id="Toc even header" />
+    <variable id="Index odd header" />
+    <variable id="Index even header" />
+    <variable id="Glossary odd header" />
+    <variable id="Glossary even header" />
+    <variable id="Body odd footer"><param ref-name="pagenum" /></variable>
+    <variable id="Body even footer"><param ref-name="pagenum" /></variable>
+    <variable id="Body first footer"><param ref-name="pagenum" /></variable>
+    <variable id="Preface odd footer"><param ref-name="pagenum" /></variable>
+    <variable id="Preface even footer"><param ref-name="pagenum" /></variable>
+    <variable id="Preface first footer"><param ref-name="pagenum" /></variable>
+
+    <!-- The heading string to put at the top of the Table of Contents -->
+    <variable id="Table of Contents">Inhaltsverzeichnis</variable>
+    <variable id="Toc odd footer"><param ref-name="pagenum" /></variable>
+    <variable id="Toc even footer"><param ref-name="pagenum" /></variable>
+
+    <variable id="Index odd footer"><param ref-name="pagenum" /></variable>
+    <variable id="Index even footer"><param ref-name="pagenum" /></variable>
+    <variable id="Glossary odd footer"><param ref-name="pagenum" /></variable>
+    <variable id="Glossary even footer"><param ref-name="pagenum" /></variable>
+    <variable id="Ordered List Number 1"><param ref-name="number" />. </variable>
+    <variable id="Ordered List Number 2"><param ref-name="number" />. </variable>
+    <variable id="Ordered List Number 3"><param ref-name="number" />. </variable>
+    <variable id="Ordered List Number 4"><param ref-name="number" />. </variable>
+    <variable id="Ordered List Format 1">1</variable>
+    <variable id="Ordered List Format 2">1</variable>
+    <variable id="Ordered List Format 3">1</variable>
+    <variable id="Ordered List Format 4">1</variable>
+    <variable id="Unordered List bullet 1">&#8226;</variable>
+    <variable id="Unordered List bullet 2">&#8226;</variable>
+    <variable id="Unordered List bullet 3">&#8226;</variable>
+    <variable id="Unordered List bullet 4">&#8226;</variable>
+
+    <variable id="Custom Footer Page Number"><param ref-name="pagenum"/></variable>
+
+    <!--
+        The following definitions seem to be missing in:
+            ./plugins/org.dita.pdf2/cfg/common/vars/en.xml
+        and all other languages. This causes the LoT and LoF to not contain any titles.
+    -->
+    <variable id="Figure">Abbildung <param ref-name="number"/>: <param ref-name="title"/></variable>
+    <variable id="Table">Tabelle <param ref-name="number"/>: <param ref-name="title"/></variable>
+</vars>

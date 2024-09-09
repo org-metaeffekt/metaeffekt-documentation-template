@@ -9,7 +9,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-	<artifactId>ae-container-extractor</artifactId>
+	<artifactId>keycloak-container-extractor</artifactId>
 	<packaging>jar</packaging>
 
     <properties>
@@ -18,9 +18,11 @@
         <ae.extractor.analysis.dir>${project.build.directory}/classes/analysis</ae.extractor.analysis.dir>
         <ae.extractor.validation>false</ae.extractor.validation>
 
+        <version.selector>24.0.5</version.selector>
+
         <image.registry>quay.io/keycloak</image.registry>
         <image.repo>keycloak</image.repo>
-        <image.tag>25.0.0</image.tag>
+        <image.tag>${version.selector}</image.tag>
     </properties>
 
     <build>

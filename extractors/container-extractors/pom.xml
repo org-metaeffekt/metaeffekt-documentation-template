@@ -119,7 +119,7 @@
                                 <sourceInventoryIncludes>inventory/*.xls</sourceInventoryIncludes>
 
                                 <targetInventoryDir>${ae.extractor.target.dir}</targetInventoryDir>
-                                <targetInventoryPath>${project.artifactId}-inventory.xls</targetInventoryPath>
+                                <targetInventoryPath>${project.artifactId}-inventory.xlsx</targetInventoryPath>
 
                                 <!-- configure validation during extraction -->
                                 <failOnError>${ae.extractor.validation}</failOnError>
