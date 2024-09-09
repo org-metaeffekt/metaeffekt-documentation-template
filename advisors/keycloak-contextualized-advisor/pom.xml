@@ -15,7 +15,7 @@
     <properties>
         <input.inventory>${project.basedir}/inventory/ae-example-keycloak-25.0.0.xlsx</input.inventory>
 
-        <dashboard.title>Keycloak</dashboard.title>
+        <dashboard.title>Keycloak 25.0.0</dashboard.title>
         <dashboard.subtitle>Vulnerability Assessment Dashboard</dashboard.subtitle>
         <dashboard.footer>Demo Dashboard for Keycloak</dashboard.footer>
     </properties>

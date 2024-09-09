@@ -13,9 +13,11 @@
     <packaging>jar</packaging>
 
     <properties>
-        <input.inventory>${project.basedir}/inventory/ae-example-keycloak-25.0.0.xlsx</input.inventory>
+        <version.selector>24.0.5</version.selector>
 
-        <dashboard.title>Keycloak</dashboard.title>
+        <input.inventory>${project.basedir}/inventory/keycloak-extractor-inventory-${version.selector}.xlsx</input.inventory>
+
+        <dashboard.title>Keycloak ${version.selector}</dashboard.title>
         <dashboard.subtitle>Vulnerability Assessment Dashboard</dashboard.subtitle>
         <dashboard.footer>Demo Dashboard for Keycloak</dashboard.footer>
     </properties>
@@ -30,7 +32,7 @@
                 <groupId>org.metaeffekt.core</groupId>
                 <artifactId>ae-inventory-maven-plugin</artifactId>
             </plugin>
-            <!-- FIXME: fix plugins; remove configuration on project level -->
+            <!-- FIXME: fix plugins (do not apply on poms); remove configuration on project level -->
             <plugin>
                 <groupId>com.metaeffekt.artifact.analysis</groupId>
                 <artifactId>ae-inventory-enrichment-plugin</artifactId>

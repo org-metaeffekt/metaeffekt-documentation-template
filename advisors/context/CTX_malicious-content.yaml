@@ -2,6 +2,7 @@ sets:
   - name: malicious content
     category: integrity threat
     score: 3.0
+    notes: An adversary may attempt to inject executable code or drafted messages to destabilize or compromise the system.
     min:
       - amount: 1
         keywords:
@@ -13,5 +14,8 @@ sets:
           - XML External Entity Injection
           - XML Entity Expansion
           - XXE
-          - specifically crafted request
-          - specifically crafted conent
+          - crafted request
+          - crafted content
+          - crafted document
+          - crafted PDF
+          - crafted HTML

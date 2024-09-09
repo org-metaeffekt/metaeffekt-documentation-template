@@ -47,8 +47,11 @@
         <ae.dashboard.timeline.vulnerabilities.limit>2147483647</ae.dashboard.timeline.vulnerabilities.limit>
 
         <correlation.dir>../correlation</correlation.dir>
-        <keywords.dir>${project.basedir}/context</keywords.dir>
-        <keywords.labels></keywords.labels>
+
+        <!-- FIXME: these need to be renamed; fail the build when they are still in use -->
+        <keywords.dir>../context</keywords.dir>
+        <keywords.labels />
+
         <assessment.dir>${project.basedir}/assessment</assessment.dir>
         <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
 
@@ -210,7 +213,6 @@
                                             <active>${activate.correlation}</active>
                                             <yamlFiles>
                                                 <file>${correlation.dir}</file>
-                                                <file>/Users/ywittmann/workspace/metaeffekt-vulnerability-correlation/correlation</file>
                                             </yamlFiles>
                                         </correlationYamlEnrichment>
 
@@ -367,7 +369,6 @@
                                             <multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
                                                 <versionLevel>minor</versionLevel>
                                             </multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
-                                            <!--artifactAndCpeVersionsDifferGreatlyInventoryValidator/ -->
                                             <vulnerabilityInvalidNameValidator/>
                                         </inventoryValidationEnrichment>
 

@@ -2,6 +2,7 @@ sets:
   - name: external attacker
     category: external threat
     score: 3.0
+    notes: An adversary may attempt to attack the system from remote. The adversary may modify / reconfigure existing code or introduce code from remote.
     min:
       - amount: 1
         keywords:
