@@ -16,15 +16,27 @@
         <document.version>00.01</document.version>
         <document.status_en>Draft</document.status_en>
 
+        <asset.title>Example</asset.title>
         <asset.id>Example Asset</asset.id>
         <asset.name>Example Asset</asset.name>
         <asset.version>${project.version}</asset.version>
+        <asset.type>Libraries</asset.type>
+
+        <supplier.name>metaeffekt GmbH</supplier.name>
+        <supplier.contact>contact@metaeffekt.com</supplier.contact>
+
+        <organization.name>metaeffekt GmbH</organization.name>
+        <organization.accronym>ae</organization.accronym>
+        <organization.address>https://metaeffekt.com</organization.address>
+        <organization.license>distinct</organization.license>
 
         <document.id>XXXX-YYY-ZZ-VR</document.id>
 
         <document.version>0.1</document.version>
         <document.status_en>Preview</document.status_en>
         <document.classifier>vulnerability-report_en</document.classifier>
+
+        <document.classification_en>Public</document.classification_en>
     </properties>
 
     <build>

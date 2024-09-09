@@ -18,11 +18,9 @@
         <ae.extractor.analysis.dir>${project.build.directory}/classes/analysis</ae.extractor.analysis.dir>
         <ae.extractor.validation>false</ae.extractor.validation>
 
-        <version.selector>24.0.5</version.selector>
-
         <image.registry>quay.io/keycloak</image.registry>
         <image.repo>keycloak</image.repo>
-        <image.tag>${version.selector}</image.tag>
+        <image.tag>${keycloak.version.selector}</image.tag>
     </properties>
 
     <build>

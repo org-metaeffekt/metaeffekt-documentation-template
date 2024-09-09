@@ -27,6 +27,8 @@
         <artifact.extractor.validation>false</artifact.extractor.validation>          
         
         <assembly.plugin.version>3.1.0</assembly.plugin.version>
+
+        <keycloak.version.selector>25.0.4</keycloak.version.selector>
     </properties>
 
     <modules>
@@ -63,9 +65,7 @@
         <profile>
             <id>report</id>
             <modules>
-                <!-- FIXME: add example branding
-                <module>branding</module>
-                -->
+                <module>brandings</module>
                 <module>documents</module>
             </modules>
         </profile>

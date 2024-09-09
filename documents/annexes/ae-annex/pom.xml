@@ -22,7 +22,7 @@
         <asset.version>${project.version}</asset.version>
         <asset.environment>n.a.</asset.environment>
 
-        <supplier.name>metaeffekt GmbH, HD</supplier.name>
+        <supplier.name>metaeffekt GmbH</supplier.name>
         <supplier.contact>contact@metaeffekt.com</supplier.contact>
 
         <organization.name>metaeffekt GmbH</organization.name>

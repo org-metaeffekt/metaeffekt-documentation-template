@@ -18,6 +18,9 @@
         <dashboard.title>OpenSSL-3.0.6</dashboard.title>
         <dashboard.subtitle>Vulnerability Assessment Dashboard</dashboard.subtitle>
         <dashboard.footer>Demo Dashboard for OpenSSL-3.0.6</dashboard.footer>
+
+        <!-- FIXME: correlates gems to linux packages if activated -->
+        <activate.ghsa.correlation>false</activate.ghsa.correlation>
     </properties>
 
     <build>

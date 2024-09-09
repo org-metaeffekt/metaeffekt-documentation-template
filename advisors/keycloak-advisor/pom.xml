@@ -13,11 +13,9 @@
     <packaging>jar</packaging>
 
     <properties>
-        <version.selector>24.0.5</version.selector>
+        <input.inventory>${project.basedir}/inventory/keycloak-extractor-inventory-${keycloak.version.selector}.xlsx</input.inventory>
 
-        <input.inventory>${project.basedir}/inventory/keycloak-extractor-inventory-${version.selector}.xlsx</input.inventory>
-
-        <dashboard.title>Keycloak ${version.selector}</dashboard.title>
+        <dashboard.title>Keycloak ${keycloak.version.selector}</dashboard.title>
         <dashboard.subtitle>Vulnerability Assessment Dashboard</dashboard.subtitle>
         <dashboard.footer>Demo Dashboard for Keycloak</dashboard.footer>
     </properties>

@@ -23,7 +23,7 @@
 
         <!-- Header - Right - Watermark -->
         <text style="font-size:14px;text-align:right;text-anchor:end">
-            <tspan x="705" y="45">${product.watermark.name}</tspan>
+            <tspan x="705" y="50">${product.watermark.name}</tspan>
         </text>
 
         <!-- Header - Separator -->

@@ -9,22 +9,34 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>keycloak-contextualized-report</artifactId>
+    <artifactId>ae-keycloak-contextualized-report</artifactId>
     <packaging>jar</packaging>
 
     <properties>
         <document.version>00.01</document.version>
         <document.status_en>Draft</document.status_en>
 
-        <asset.id>Keycloak</asset.id>
-        <asset.name>Keycloak</asset.name>
-        <asset.version>${project.version}</asset.version>
+        <asset.title>Keycloak</asset.title>
 
-        <document.id>XXXX-YYY-ZZ-VR</document.id>
+        <asset.name>Keycloak</asset.name>
+        <asset.id>quay.io/keycloak/keycloak</asset.id>
+        <asset.version>${keycloak.version.selector}</asset.version>
+        <asset.type>Container</asset.type>
+        <asset.environment>isolated</asset.environment>
+
+        <supplier.name>metaeffekt GmbH</supplier.name>
+        <supplier.contact>contact@metaeffekt.com</supplier.contact>
+
+        <organization.name>metaeffekt GmbH</organization.name>
+        <organization.accronym>ae</organization.accronym>
+        <organization.address>https://metaeffekt.com</organization.address>
+        <organization.license>distinct</organization.license>
 
         <document.version>0.1</document.version>
         <document.status_en>Preview</document.status_en>
         <document.classifier>vulnerability-report_en</document.classifier>
+        <document.classification_en>Public</document.classification_en>
+
     </properties>
 
     <build>
