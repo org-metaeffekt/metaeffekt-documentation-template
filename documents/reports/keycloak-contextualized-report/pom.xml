@@ -122,7 +122,7 @@
                         <failOnMissingSources>false</failOnMissingSources>
 
                         <generateOverviewTablesForAdvisories>
-                            [ {"name":"CERT_SEI"} ]
+                            [ {"name":"CERT_EU"} ]
                         </generateOverviewTablesForAdvisories>
                     </configuration>
 
