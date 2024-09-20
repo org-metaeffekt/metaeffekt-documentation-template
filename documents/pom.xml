@@ -29,6 +29,8 @@
         <document.brandingId>ae-default-branding_en</document.brandingId>
 
         <dita.source.dir>${basedir}/src/main/dita</dita.source.dir>
+
+        <database.path>${project.basedir}/../../.database/ae-vulnerability-mirror</database.path>
     </properties>
 
     <build>

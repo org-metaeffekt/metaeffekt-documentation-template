@@ -220,6 +220,11 @@
     "kev": {
       "exploit": 2,
       "ransomware": 1
+    },
+    "vulnerabilityStatus": {
+      "set": {
+        "void": 0.0
+      }
     }
   }
 }

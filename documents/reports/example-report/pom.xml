@@ -43,7 +43,7 @@
         <pluginManagement>
             <plugins>
 
-				<plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <executions>
@@ -77,6 +77,44 @@
 				</plugin>
 
                 <plugin>
+                    <groupId>com.metaeffekt.artifact.analysis</groupId>
+                    <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                    <version>${ae.artifact.analysis.version}</version>
+                    <executions>
+                        <!-- Queries the recent security advisory entries and merges the information from the provided inventories-->
+                        <execution>
+                            <id>last-updated-advisors</id>
+                            <goals>
+                                <goal>enrich-inventory</goal>
+                            </goals>
+                            <phase>generate-sources</phase>
+                            <configuration>
+                                <inventoryInputFile>
+                                    ${project.build.directory}/inventories/inventory/ae-example-advisor-inventory.xls
+                                </inventoryInputFile>
+                                <inventoryOutputFile>
+                                    ${project.build.directory}/inventories/inventory/${project.artifactId}-summary.xlsx
+                                </inventoryOutputFile>
+                                <mirrorDirectory>${database.path}</mirrorDirectory>
+
+                                <advisorPeriodicEnrichment>
+                                    <active>true</active>
+
+                                    <changedSince>2021-05-01</changedSince>
+                                    <changedUntil>2022-05-01</changedUntil>
+
+                                    <advisoryProviders>
+                                        [{"name":"CERT_FR"}, {"name":"CERT_SEI"}, {"name":"CERT_EU"}]
+                                    </advisoryProviders>
+                                    <filterUnaffected>false</filterUnaffected>
+                                    <!--  <includeAdvisoryTypes>alert, news</includeAdvisoryTypes> -->
+                                </advisorPeriodicEnrichment>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
                     <groupId>org.metaeffekt.core</groupId>
                     <artifactId>ae-inventory-maven-plugin</artifactId>
                     <executions>
@@ -88,8 +126,8 @@
                             <phase>process-sources</phase>
                             <configuration>
                                 <sourceInventoryDir>${project.build.directory}/inventories/inventory</sourceInventoryDir>
-                                <sourceInventoryIncludes>ae-example-advisor-inventory.xls</sourceInventoryIncludes>
-                                <inventory>${project.build.directory}/inventories/inventory/ae-example-advisor-inventory.xls</inventory>
+                                <sourceInventoryIncludes>${project.artifactId}-summary.xlsx</sourceInventoryIncludes>
+                                <inventory>${project.build.directory}/inventories/inventory/${project.artifactId}-summary.xlsx</inventory>
                                 <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
                             </configuration>
                         </execution>
@@ -107,6 +145,8 @@
 
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
+
+                        <!--<filterAdvisorySummary>true</filterAdvisorySummary>-->
 
                         <failOnError>false</failOnError>
                         <failOnBanned>false</failOnBanned>
@@ -142,6 +182,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-inventory-enrichment-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.metaeffekt.dita</groupId>
