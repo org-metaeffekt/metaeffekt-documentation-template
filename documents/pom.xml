@@ -30,7 +30,7 @@
 
         <dita.source.dir>${basedir}/src/main/dita</dita.source.dir>
 
-        <database.path>${project.basedir}/../../.database/ae-vulnerability-mirror</database.path>
+        <input.database>${project.basedir}/../../.database/ae-vulnerability-mirror</input.database>
     </properties>
 
     <build>
