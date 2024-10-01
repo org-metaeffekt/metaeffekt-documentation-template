@@ -95,7 +95,7 @@
                                 <inventoryOutputFile>
                                     ${project.build.directory}/inventories/inventory/${project.artifactId}-summary.xlsx
                                 </inventoryOutputFile>
-                                <mirrorDirectory>${database.path}</mirrorDirectory>
+                                <mirrorDirectory>${input.database}</mirrorDirectory>
 
                                 <advisorPeriodicEnrichment>
                                     <active>true</active>
