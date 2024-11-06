@@ -36,7 +36,8 @@
         <topicref href="ae-dependency/gen/tpc_inventory-artifact-report-effective.dita" />
         <topicref href="ae-dependency/gen/tpc_inventory-webmodule-report-effective.dita" />
         <topicref href="ae-dependency/gen/tpc_inventory-package-report-effective.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-licenses.dita" />
+        <topicref href="ae-dependency/gen/tpc_inventory-licenses-effective.dita" />
+        <topicref href="ae-dependency/gen/tpc_inventory-license-usage.dita" />
         <topicref href="ae-dependency/gen/tpc_inventory-notices.dita" keys="license-notices" />
 	</chapter>
 
