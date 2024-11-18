@@ -223,7 +223,11 @@
     },
     "vulnerabilityStatus": {
       "set": {
-        "void": 0.0
+        "void": 0.0,
+        "not applicable": 0.0
+      },
+      "add":{
+        "applicable": 2.0
       }
     }
   }

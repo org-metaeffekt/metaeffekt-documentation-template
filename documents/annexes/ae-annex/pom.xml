@@ -104,9 +104,6 @@
                     <securityPolicyFile>${project.basedir}/../../security-policy-report.json</securityPolicyFile>
 
                     <enableBomReport>true</enableBomReport>
-                    <enableVulnerabilityReport>true</enableVulnerabilityReport>
-                    <enableDiffReport>false</enableDiffReport>
-                    <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
                 </configuration>
 
             </plugin>
@@ -348,7 +345,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>${project.basedir}/src/main/dita/ae-dependency/gen/vulnerability-report.properties</file>
+                                <file>${project.basedir}/src/main/dita/ae-dependency/gen/inventory-report.properties</file>
                             </files>
                         </configuration>
                     </execution>

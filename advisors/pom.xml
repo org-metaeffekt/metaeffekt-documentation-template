@@ -59,7 +59,7 @@
 
         <activate.msrc>false</activate.msrc>
         <activate.nvd>true</activate.nvd>
-        <activate.certfr>false</activate.certfr>
+        <activate.certfr>true</activate.certfr>
         <activate.certeu>true</activate.certeu>
         <activate.certsei>true</activate.certsei>
         <activate.ghsa.correlation>true</activate.ghsa.correlation>
