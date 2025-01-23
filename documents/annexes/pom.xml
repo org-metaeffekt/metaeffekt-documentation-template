@@ -32,7 +32,7 @@
                     <configuration>
                         <artifactExcludes>-nothing-</artifactExcludes>
 
-                        <enableDita>true</enableDita>
+                        <!-- <enableDita>true</enableDita> -->
 
                         <failOnError>${annex.validation}</failOnError>
                         <failOnBanned>${annex.validation}</failOnBanned>
@@ -55,7 +55,7 @@
                         <targetLicenseDir>${project.build.directory}/annex/licenses</targetLicenseDir>
                         <targetComponentDir>${project.build.directory}/annex/components</targetComponentDir>
 
-                        <targetDitaPath>${basedir}/src/main/dita/${project.artifactId}/gen</targetDitaPath>
+                        <!-- <targetDitaPath>${basedir}/src/main/dita/${project.artifactId}/gen</targetDitaPath> -->
                     </configuration>
                 </plugin>
 
