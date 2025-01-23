@@ -1,25 +1,18 @@
 inventories:
   - "reference":
       file: "target/inventories/inventory/ae-example-report-summary.xlsx"
-  - "AE-Example":
+      type: INPUT
+  - "ae-example":
       file: "target/inventories/inventory/ae-example-report-summary.xlsx"
-  - "Test":
-      file: "target/inventories/inventory/ae-example-report-summary.xlsx"
-
+      type: INPUT
 
 documents:
   - inventories:
-      - inventoryRef: "AE-Example"
+      - inventoryRef: "ae-example"
         assetName: "AE-Example"
         assetVersion: "1.0"
         reportContextTitle: "AE-Example"
         reportContext: "AE-Example"
-        referenceInventory: "reference"
-      - inventoryRef: "Test"
-        assetName: "Test"
-        assetVersion: "1.0"
-        reportContextTitle: "Test"
-        reportContext: "Test"
         referenceInventory: "reference"
     type: VULNERABILITY_REPORT
     params:

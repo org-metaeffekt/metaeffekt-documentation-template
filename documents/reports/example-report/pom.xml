@@ -100,8 +100,8 @@
                                 <advisorPeriodicEnrichment>
                                     <active>true</active>
 
-                                    <changedSince>2021-05-01</changedSince>
-                                    <changedUntil>2022-05-01</changedUntil>
+                                    <changedSince>1 week</changedSince>
+                                    <changedUntil>now</changedUntil>
 
                                     <advisoryProviders>
                                         [{"name":"CERT_FR"}, {"name":"CERT_SEI"}, {"name":"CERT_EU"}]
