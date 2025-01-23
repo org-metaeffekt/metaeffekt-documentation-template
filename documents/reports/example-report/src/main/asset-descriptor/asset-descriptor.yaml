@@ -1,9 +1,12 @@
 inventories:
   - "reference":
-      file: "target/inventories/inventory/ae-example-report-summary.xlsx"
+      file: "../../../target/inventories/inventory/ae-example-report-summary.xlsx"
       type: INPUT
   - "ae-example":
-      file: "target/inventories/inventory/ae-example-report-summary.xlsx"
+      file: "../../../target/inventories/inventory/ae-example-report-summary.xlsx"
+      type: INPUT
+  - "test":
+      file: "../../../target/inventories/inventory/ae-example-report-summary.xlsx"
       type: INPUT
 
 documents:
@@ -13,6 +16,12 @@ documents:
         assetVersion: "1.0"
         reportContextTitle: "AE-Example"
         reportContext: "AE-Example"
+        referenceInventory: "reference"
+      - inventoryRef: "test"
+        assetName: "test"
+        assetVersion: "1.0"
+        reportContextTitle: "test"
+        reportContext: "test"
         referenceInventory: "reference"
     type: VULNERABILITY_REPORT
     params:

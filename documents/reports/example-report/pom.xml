@@ -122,7 +122,7 @@
                         <execution>
                             <id>default-descriptor</id>
                             <goals>
-                                <goal>generate-reports</goal>
+                                <goal>generate-documents</goal>
                             </goals>
                             <phase>process-sources</phase>
                             <configuration>

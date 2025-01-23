@@ -1,0 +1,22 @@
+inventories:
+  - "reference":
+      file: "../../../target/inventories/inventory/ae-dependency-extractor-inventory.xls"
+      type: INPUT
+  - "ae-dependency-extractor":
+      file: "../../../target/inventories/inventory/ae-dependency-extractor-inventory.xls"
+      type: INPUT
+
+documents:
+  - inventories:
+      - inventoryRef: "ae-dependency-extractor"
+        assetName: "ae-dependency-extractor"
+        assetVersion: "1.0"
+        reportContextTitle: "ae-dependency-extractor"
+        reportContext: "ae-dependency-extractor"
+        referenceInventory: "reference"
+    type: ANNEX
+    params:
+      "targetLicensesDir": "license"
+      "targetComponentDir": "component"
+      "securityPolicyFile": "security-policy-report.json"
+    language: "en"
