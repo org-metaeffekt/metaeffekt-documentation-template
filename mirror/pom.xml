@@ -261,7 +261,8 @@
                                     <msrcProductIndex/>
                                     <msrcAdvisorIndex/>
                                     <msrcKbChainIndex/>
-                                    <githubAdvisorIndex/>
+                                    <osvAdvisorIndex/>
+                                    <csafAdvisorIndex/>
                                     <kevIndex/>
                                     <epssIndex />
                                     <eolIndex/>
