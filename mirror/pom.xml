@@ -166,6 +166,29 @@
                                         </resourceLocations>
                                     </msrcSecurityUpdateGuideDownload>
 
+                                    <osvAdvisoryDownload>
+                                        <resourceLocations>
+                                            <!-- URL to fetch the list of ecosystems available for download.<br>
+                                                Response contains one entry per line. -->
+                                            <ECOSYSTEMS_URL>https://osv-vulnerabilities.storage.googleapis.com/ecosystems.txt</ECOSYSTEMS_URL>
+                                            <!-- URL to fetch metadata of a specific file, like name, generationId, updated, etc.
+                                            Ecosystem name (example: npm)
+                                            - %s Wanted File (example: zip.all)-->
+                                            <INDIVIDUAL_FILE_METADATA>https://www.googleapis.com/storage/v1/b/osv-vulnerabilities/o/%s%%2F%s</INDIVIDUAL_FILE_METADATA>
+                                            <!-- URL to download the specified file from the specific location with ecosystem, name, and generationId.
+                                            - %s Ecosystem name (example: npm)
+                                            - %s Wanted File (example: zip.all)
+                                            - %s GenerationId (example: 1725867421795347) -->
+                                            <DOWNLOAD_FILE>https://www.googleapis.com/download/storage/v1/b/osv-vulnerabilities/o/%s%%2F%s?generation=%s&amp;alt=media</DOWNLOAD_FILE>
+                                        </resourceLocations>
+                                    </osvAdvisoryDownload>
+
+                                    <csafAdvisoryDownload>
+                                        <resourceLocation>
+
+                                        </resourceLocation>
+                                    </csafAdvisoryDownload>
+
                                     <githubAdvisorDownload>
                                         <useGitCommand>true</useGitCommand>
                                         <resourceLocations>
