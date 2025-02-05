@@ -62,8 +62,10 @@
         <activate.certfr>true</activate.certfr>
         <activate.certeu>true</activate.certeu>
         <activate.certsei>true</activate.certsei>
-        <activate.ghsa.correlation>true</activate.ghsa.correlation>
-        <activate.ghsa>true</activate.ghsa>
+        <activate.osv.enrichment>true</activate.osv.enrichment>
+        <activate.osv>true</activate.osv>
+        <activate.csaf.enrichment>true</activate.csaf.enrichment>
+        <activate.csaf>true</activate.csaf>
         <activate.correlation>true</activate.correlation>
         <activate.status>true</activate.status>
         <activate.keywords>true</activate.keywords>
@@ -281,8 +283,8 @@
                                             </vulnerabilityFiles>
                                         </customVulnerabilitiesFromCpeEnrichment>
 
-                                        <ghsaVulnerabilitiesEnrichment>
-                                            <active>${activate.ghsa.correlation}</active>
+                                        <osvVulnerabilitiesEnrichment>
+                                            <active>${activate.osv.activate.osv.enrichment}</active>
                                             <maven>true</maven>
                                             <packagist>false</packagist>
                                             <rubygems>true</rubygems>
@@ -296,7 +298,12 @@
                                             <pub>false</pub>
                                             <nuget>true</nuget>
                                             <githubReviewed>false</githubReviewed>
-                                        </ghsaVulnerabilitiesEnrichment>
+                                        </osvVulnerabilitiesEnrichment>
+
+                                        <!-- TODO-TMA -->
+                                        <csafVulnerabilitiesEnrichment>
+                                            <active>${activate.csaf.activate.csaf.enrichment}</active>
+                                        </csafVulnerabilitiesEnrichment>
 
                                         <nvdCveFillDetailsEnrichment>
                                             <active>${activate.nvd}</active>
@@ -313,9 +320,13 @@
                                             <active>${activate.msrc}</active>
                                         </msrcAdvisorFillDetailsEnrichment>
 
-                                        <ghsaAdvisorFillDetailsEnrichment>
-                                            <active>${activate.ghsa}</active>
-                                        </ghsaAdvisorFillDetailsEnrichment>
+                                        <osvAdvisorFillDetailsEnrichment>
+                                            <active>${activate.osv}</active>
+                                        </osvAdvisorFillDetailsEnrichment>
+
+                                        <csafAdvisorFillDetailsEnrichment>
+                                            <active>${activate.csaf}</active>
+                                        </csafAdvisorFillDetailsEnrichment>
 
                                         <vulnerabilityStatusEnrichment>
                                             <active>${activate.status}</active>

@@ -20,7 +20,8 @@
         <dashboard.footer>Demo Dashboard for OpenSSL-1.1.1o</dashboard.footer>
 
         <!-- FIXME: correlates gems to linux packages if activated -->
-        <activate.ghsa.correlation>false</activate.ghsa.correlation>
+        <activate.osv.enrichment>false</activate.osv.enrichment>
+        <activate.csaf.enrichment>false</activate.csaf.enrichment>
     </properties>
 
     <build>
