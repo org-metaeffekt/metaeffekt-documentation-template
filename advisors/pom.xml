@@ -70,7 +70,7 @@
         <activate.validation>true</activate.validation>
         <activate.dashboard>true</activate.dashboard>
         <activate.vulnerabilities.custom>true</activate.vulnerabilities.custom>
-        <activate.csaf>true</activate.csaf>
+        <activate.csaf>false</activate.csaf>
 
         <ae.advisor.phase>process-resources</ae.advisor.phase>
 
