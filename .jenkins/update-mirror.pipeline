@@ -79,18 +79,6 @@ pipeline {
             }
         }
 
-        stage('Update local legacy indexes using mirror-index_legacy profile') {
-            steps {
-                script {
-                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', message: 'Could not index all data sources.') {
-                        withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
-                            sh 'mvn -B clean install -Pmirror-index_legacy -Dae.core.version=0.135.2 -Dae.artifact.analysis.version=0.135.5'
-                        }
-                    }
-                }
-            }
-        }
-
         stage('Zip and push mirror to internal share') {
             steps {
                 sh '''
@@ -100,6 +88,29 @@ pipeline {
                 curl --create-dirs -T mirror-database.zip http://ae-scanner/upload/mirror/download/mirror-database.zip
                 curl --create-dirs -T index-database.zip http://ae-scanner/upload/mirror/index/index-database.zip
                 '''
+            }
+        }
+
+        // currently the index plugin does not allow different input (download) and output (index) dbs
+        stage('Share download with old legacy indexer') {
+            steps {
+                sh '''
+                rm -rf .database/ae-vulnerability-mirror_legacy/download
+                mkdir -p .database/ae-vulnerability-mirror_legacy
+                cp -R .database/ae-vulnerability-mirror/download .database/ae-vulnerability-mirror_legacy
+                '''
+            }
+        }
+
+        stage('Update local legacy indexes using mirror-index_legacy profile') {
+            steps {
+                script {
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', message: 'Could not index all data sources.') {
+                        withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
+                            sh 'mvn -B clean install -Pmirror-index_legacy -Dae.core.version=0.135.2 -Dae.artifact.analysis.version=0.135.5'
+                        }
+                    }
+                }
             }
         }
 
