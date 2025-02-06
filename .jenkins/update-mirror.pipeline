@@ -53,7 +53,7 @@ pipeline {
             }
         }
 
-        stage('Update local mirror using mirror-database profile') {
+        stage('Update local mirror using mirror-download profile') {
             steps {
                 script {
                     catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', message: 'Could not update all data sources.') {
@@ -67,7 +67,7 @@ pipeline {
             }
         }
 
-        stage('Update local indexes using index-database profile') {
+        stage('Update local indexes using mirror-index profile') {
             steps {
                 script {
                     catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', message: 'Could not index all data sources.') {
@@ -79,7 +79,19 @@ pipeline {
             }
         }
 
-        stage('Zip and push to internal share') {
+        stage('Update local legacy indexes using mirror-index_legacy profile') {
+            steps {
+                script {
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', message: 'Could not index all data sources.') {
+                        withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
+                            sh 'mvn -B clean install -Pmirror-index_legacy -Dae.core.version=0.135.2 -Dae.artifact.analysis.version=0.135.4'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Zip and push mirror to internal share') {
             steps {
                 sh '''
                 cd .database/ae-vulnerability-mirror
@@ -87,6 +99,18 @@ pipeline {
                 zip -r mirror-database.zip download
                 curl --create-dirs -T mirror-database.zip http://ae-scanner/upload/mirror/download/mirror-database.zip
                 curl --create-dirs -T index-database.zip http://ae-scanner/upload/mirror/index/index-database.zip
+                '''
+            }
+        }
+
+        stage('Zip and push legacy mirror to internal share') {
+            steps {
+                sh '''
+                cd .database/ae-vulnerability-mirror_legacy
+                zip -r index-database_legacy.zip index
+                zip -r mirror-database_legacy.zip download
+                curl --create-dirs -T mirror-database_legacy.zip http://ae-scanner/upload/mirror/download/mirror-database_legacy.zip
+                curl --create-dirs -T index-database_legacy.zip http://ae-scanner/upload/mirror/index/index-database_legacy.zip
                 '''
             }
         }

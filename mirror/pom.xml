@@ -14,6 +14,7 @@
     <properties>
         <!-- run with the mirror-database profile active to download the database contents -->
         <database.path>${project.basedir}/../.database/ae-vulnerability-mirror</database.path>
+        <database.path_legacy>${project.basedir}/../.database/ae-vulnerability-mirror_legacy</database.path_legacy>
 
         <proxy.scheme>none</proxy.scheme>
         <proxy.host>none</proxy.host>
@@ -278,6 +279,46 @@
                                     <osvAdvisorIndex/>
                                     <csafAdvisoryIndex/>
                                     <csafVulnerabilityIndex/>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>mirror-index_legacy</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.metaeffekt.artifact.analysis</groupId>
+                        <artifactId>ae-mirror-plugin</artifactId>
+                        <version>${ae.artifact.analysis.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>data-index</id>
+                                <goals>
+                                    <goal>data-mirror</goal>
+                                </goals>
+
+                                <configuration>
+                                    <mirrorDirectory>${database.path_legacy}</mirrorDirectory>
+
+                                    <!-- Indexers -->
+                                    <nvdVulnerabilityIndex/>
+                                    <nvdCpeIndex/>
+                                    <nvdCpeVendorProductIndex/>
+                                    <msrcProductIndex/>
+                                    <msrcAdvisorIndex/>
+                                    <msrcKbChainIndex/>
+                                    <certSeiAdvisorIndex/>
+                                    <certFrAdvisorIndex/>
+                                    <certEuAdvisorIndex/>
+                                    <kevIndex/>
+                                    <epssIndex/>
+                                    <eolIndex/>
                                 </configuration>
                             </execution>
                         </executions>
