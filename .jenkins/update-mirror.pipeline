@@ -84,7 +84,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', message: 'Could not index all data sources.') {
                         withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
-                            sh 'mvn -B clean install -Pmirror-index_legacy -Dae.core.version=0.135.2 -Dae.artifact.analysis.version=0.135.4'
+                            sh 'mvn -B clean install -Pmirror-index_legacy -Dae.core.version=0.135.2 -Dae.artifact.analysis.version=0.135.5'
                         }
                     }
                 }
