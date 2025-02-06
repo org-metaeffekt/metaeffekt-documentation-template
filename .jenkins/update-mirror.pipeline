@@ -56,15 +56,12 @@ pipeline {
         stage('Update local mirror using mirror-database profile') {
             steps {
                 script {
-                    try {
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', message: 'Could not update all data sources.') {
                         withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
                             withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
                                 sh 'mvn -B clean install -Pmirror-download -Dnvd.apikey=$NVD_APIKEY -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
                             }
                         }
-                    } catch (Error error) {
-                        // in case of a failing download we mark the build as UNSTABLE
-                        currentBuild.result = 'UNSTABLE'
                     }
                 }
             }
@@ -73,13 +70,10 @@ pipeline {
         stage('Update local indexes using index-database profile') {
             steps {
                 script {
-                    try {
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', message: 'Could not index all data sources.') {
                         withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
                             sh 'mvn -B clean install -Pmirror-index -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
                         }
-                    } catch (Error error) {
-                        // in case of a failing download we mark the build as UNSTABLE
-                        currentBuild.result = 'UNSTABLE'
                     }
                 }
             }
