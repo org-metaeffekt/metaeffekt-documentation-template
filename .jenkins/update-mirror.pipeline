@@ -1,3 +1,4 @@
+#!/usr/bin/env groovy
 pipeline {
     agent any
     tools {
@@ -52,27 +53,35 @@ pipeline {
             }
         }
 
-        stage('Build with mirror-database profile') {
+        stage('Update local mirror using mirror-database profile') {
             steps {
                 withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
                     withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
-                        sh 'mvn -B clean install -Pmirror-download -Dnvd.apikey=$NVD_APIKEY -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
+                        try {
+                            sh 'mvn -B clean install -Pmirror-download -Dnvd.apikey=$NVD_APIKEY -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
+                        } catch (Error error) {
+                            // in case of a failing download we mark the build as UNSTABLE
+                            currentBuild.result = 'UNSTABLE'
+                        }
                     }
                 }
             }
         }
 
-        stage('Build with index-database profile') {
+        stage('Update local indexes using index-database profile') {
             steps {
-                withCredentials([string(credentialsId: 'metaeffekt-nvd-apikey', variable: 'NVD_APIKEY')]) {
-                    withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
+                withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
+                    try {
                         sh 'mvn -B clean install -Pmirror-index -Dae.core.version=HEAD-SNAPSHOT -Dae.artifact.analysis.version=HEAD-SNAPSHOT'
+                    } catch (Error error) {
+                        // in case of a failing download we mark the build as UNSTABLE
+                        currentBuild.result = 'UNSTABLE'
                     }
                 }
             }
         }
 
-        stage('zip and push') {
+        stage('Zip and push to internal share') {
             steps {
                 sh '''
                 cd .database/ae-vulnerability-mirror

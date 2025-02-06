@@ -18,8 +18,10 @@
     </scm>
 
     <properties>
+        <!-- FIXME-KKL: for integration testing purposes, we currently use HEAD-SNAPSHOTs to built -->
         <ae.core.version>HEAD-SNAPSHOT</ae.core.version>
         <ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>
+
         <ae.dita.version>0.29.0</ae.dita.version>
 
         <artifact.inventory.validation>false</artifact.inventory.validation>
