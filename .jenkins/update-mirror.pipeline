@@ -83,10 +83,10 @@ pipeline {
             steps {
                 sh '''
                 cd .database/ae-vulnerability-mirror
-                zip -r index-database.zip index
-                zip -r mirror-database.zip download
-                curl --create-dirs -T mirror-database.zip http://ae-scanner/upload/mirror/download/mirror-database.zip
+                zip -rd index-database.zip index
                 curl --create-dirs -T index-database.zip http://ae-scanner/upload/mirror/index/index-database.zip
+                zip -rd mirror-database.zip download
+                curl --create-dirs -T mirror-database.zip http://ae-scanner/upload/mirror/download/mirror-database.zip
                 '''
             }
         }
@@ -118,9 +118,7 @@ pipeline {
             steps {
                 sh '''
                 cd .database/ae-vulnerability-mirror_legacy
-                zip -r index-database_legacy.zip index
-                zip -r mirror-database_legacy.zip download
-                curl --create-dirs -T mirror-database_legacy.zip http://ae-scanner/upload/mirror/download/mirror-database_legacy.zip
+                zip -rd index-database_legacy.zip index
                 curl --create-dirs -T index-database_legacy.zip http://ae-scanner/upload/mirror/index/index-database_legacy.zip
                 '''
             }
