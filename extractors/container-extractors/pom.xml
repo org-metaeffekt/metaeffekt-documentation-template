@@ -89,7 +89,6 @@
                             </configuration>
                         </execution>
                     </executions>
-
                 </plugin>
 
                 <plugin>
@@ -132,7 +131,7 @@
                                     <argument>inspect</argument>
                                     <argument>${image.id}</argument>
                                 </arguments>
-                                <outputFile>${ae.extractor.analysis.dir}/image-inspect.yaml</outputFile>
+                                <outputFile>${ae.extractor.analysis.dir}/image-inspect.json</outputFile>
                             </configuration>
                         </execution>
 
@@ -232,7 +231,6 @@
 
                                     <exclude>/run/utmp</exclude>
 
-                                    <exclude>/root/buildinfo/**/*</exclude>
                                     <exclude>/**/*.log</exclude>
 
                                     <exclude>/var/lib/alternatives/**/*</exclude>
@@ -283,7 +281,7 @@
 
                         <execution>
                             <id>infer-inventory</id>
-                            <phase>test-compile</phase>
+                            <phase>test-compileXXS</phase>
                             <goals>
                                 <goal>update-inventory</goal>
                             </goals>
@@ -298,6 +296,20 @@
                                         <className>org.metaeffekt.core.inventory.processor.InferMetaDataProcessor</className>
                                     </processor>
                                 </processors>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>include-asset-details</id>
+                            <goals>
+                                <goal>extract-container-asset</goal>
+                            </goals>
+                            <phase>test-compile</phase>
+                            <configuration>
+                                <inventoryFile>${ae.extractor.analysis.dir}/${project.artifactId}-inventory.xls</inventoryFile>
+                                <repo>${image.repo}</repo>
+                                <tag>${image.tag}</tag>
+                                <assetQualifier>${image.repo}:${image.tag}</assetQualifier>
                             </configuration>
                         </execution>
                     </executions>
@@ -357,6 +369,7 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.15.0</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

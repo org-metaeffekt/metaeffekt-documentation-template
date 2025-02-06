@@ -19,7 +19,7 @@
 
         <!-- use properties to explicitly define image repo and tag to use -->
         <image.repo>jboss/keycloak</image.repo>
-        <image.tag>15.0.0</image.tag>
+        <image.tag>15.0.2</image.tag>
 
         <image.id>${image.repo}:${image.tag}</image.id>
     </properties>
