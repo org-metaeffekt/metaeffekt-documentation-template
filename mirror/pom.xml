@@ -319,8 +319,6 @@
                                     <kevIndex/>
                                     <epssIndex/>
                                     <eolIndex/>
-
-                                    <failOnIndexError>false</failOnIndexError>
                                 </configuration>
                             </execution>
                         </executions>
