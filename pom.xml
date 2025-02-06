@@ -97,6 +97,12 @@
                 <module>mirror</module>
             </modules>
         </profile>
+        <profile>
+            <id>mirror-index_legacy</id>
+            <modules>
+                <module>mirror</module>
+            </modules>
+        </profile>
     </profiles>
 
 </project>
