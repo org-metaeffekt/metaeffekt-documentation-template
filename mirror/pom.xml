@@ -166,7 +166,7 @@
                                         </resourceLocations>
                                     </msrcSecurityUpdateGuideDownload>
 
-                                    <osvAdvisoryDownload>
+                                    <osvDownload>
                                         <resourceLocations>
                                             <!-- URL to fetch the list of ecosystems available for download.<br>
                                                 Response contains one entry per line. -->
@@ -181,13 +181,24 @@
                                             - %s GenerationId (example: 1725867421795347) -->
                                             <DOWNLOAD_FILE>https://www.googleapis.com/download/storage/v1/b/osv-vulnerabilities/o/%s%%2F%s?generation=%s&amp;alt=media</DOWNLOAD_FILE>
                                         </resourceLocations>
-                                    </osvAdvisoryDownload>
+                                    </osvDownload>
 
-                                    <csafAdvisoryDownload>
-                                        <resourceLocation>
+                                    <csafDownload>
+                                        <!-- overwrite default listers to query for providers -->
+                                        <!--<listerList>
+                                            <lister>
+                                                <name>BSI</name>
+                                                <url>https://wid.cert-bund.de/.well-known/csaf-aggregator/aggregator.json</url>
+                                            </lister>
+                                        </listerList>-->
 
-                                        </resourceLocation>
-                                    </csafAdvisoryDownload>
+                                        <!-- filter providers fetched using the listers -->
+                                        <!--<excludeList>
+                                            <name></name>
+                                            <url></url>
+                                        </excludeList>-->
+                                        <!--<includeList></includeList>-->
+                                    </csafDownload>
 
                                     <githubAdvisorDownload>
                                         <useGitCommand>true</useGitCommand>
@@ -252,20 +263,21 @@
                                     <mirrorDirectory>${database.path}</mirrorDirectory>
 
                                     <!-- Indexers -->
-                                    <certSeiAdvisorIndex/>
-                                    <certFrAdvisorIndex/>
-                                    <certEuAdvisorIndex/>
                                     <nvdVulnerabilityIndex/>
                                     <nvdCpeIndex/>
                                     <nvdCpeVendorProductIndex/>
                                     <msrcProductIndex/>
                                     <msrcAdvisorIndex/>
                                     <msrcKbChainIndex/>
-                                    <osvAdvisorIndex/>
-                                    <csafAdvisorIndex/>
+                                    <certSeiAdvisorIndex/>
+                                    <certFrAdvisorIndex/>
+                                    <certEuAdvisorIndex/>
                                     <kevIndex/>
-                                    <epssIndex />
+                                    <epssIndex/>
                                     <eolIndex/>
+                                    <osvAdvisorIndex/>
+                                    <csafAdvisoryIndex/>
+                                    <csafVulnerabilityIndex/>
                                 </configuration>
                             </execution>
                         </executions>

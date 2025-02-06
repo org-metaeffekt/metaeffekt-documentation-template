@@ -14,12 +14,6 @@
 
     <modules>
         <module>example-advisor</module>
-
-        <module>keycloak-advisor</module>
-        <module>keycloak-contextualized-advisor</module>
-        <module>openssl-1.1-advisor</module>
-        <module>openssl-3.0-advisor</module>
-        <module>selected-component-advisor</module>
     </modules>
 
     <properties>
@@ -64,14 +58,13 @@
         <activate.certsei>true</activate.certsei>
         <activate.osv.enrichment>true</activate.osv.enrichment>
         <activate.osv>true</activate.osv>
-        <activate.csaf.enrichment>true</activate.csaf.enrichment>
-        <activate.csaf>true</activate.csaf>
         <activate.correlation>true</activate.correlation>
         <activate.status>true</activate.status>
         <activate.keywords>true</activate.keywords>
         <activate.validation>true</activate.validation>
         <activate.dashboard>true</activate.dashboard>
         <activate.vulnerabilities.custom>true</activate.vulnerabilities.custom>
+        <activate.csaf>true</activate.csaf>
 
         <ae.advisor.phase>process-resources</ae.advisor.phase>
 
@@ -284,7 +277,7 @@
                                         </customVulnerabilitiesFromCpeEnrichment>
 
                                         <osvVulnerabilitiesEnrichment>
-                                            <active>${activate.osv.activate.osv.enrichment}</active>
+                                            <active>${activate.osv.enrichment}</active>
                                             <maven>true</maven>
                                             <packagist>false</packagist>
                                             <rubygems>true</rubygems>
@@ -302,7 +295,7 @@
 
                                         <!-- TODO-TMA -->
                                         <csafVulnerabilitiesEnrichment>
-                                            <active>${activate.csaf.activate.csaf.enrichment}</active>
+                                            <active>${activate.csaf}</active>
                                         </csafVulnerabilitiesEnrichment>
 
                                         <nvdCveFillDetailsEnrichment>
@@ -324,9 +317,9 @@
                                             <active>${activate.osv}</active>
                                         </osvAdvisorFillDetailsEnrichment>
 
-                                        <csafAdvisorFillDetailsEnrichment>
+                                        <csafAdvisorEnrichment>
                                             <active>${activate.csaf}</active>
-                                        </csafAdvisorFillDetailsEnrichment>
+                                        </csafAdvisorEnrichment>
 
                                         <vulnerabilityStatusEnrichment>
                                             <active>${activate.status}</active>
