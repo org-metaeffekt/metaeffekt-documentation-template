@@ -70,7 +70,7 @@
                                         <resourceLocations>
                                             <!-- Yearly archive download URL.
                                                  - %d Archive year (example: 2020) -->
-                                            <CERT_FR_ARCHIVE>https://metaeffekt.com/mirror/cert-fr/txt/%d.tar</CERT_FR_ARCHIVE>
+                                            <CERT_FR_ARCHIVE>https://metaeffekt.com/mirror/cert-fr/json/%d.tar</CERT_FR_ARCHIVE>
                                             <!-- RSS feed that contains the latest changes to the mirror. Used to check if update is required. -->
                                             <CERT_FR_RSS_FEED>https://www.cert.ssi.gouv.fr/feed/</CERT_FR_RSS_FEED>
                                         </resourceLocations>
