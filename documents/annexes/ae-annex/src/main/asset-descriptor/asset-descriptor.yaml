@@ -7,16 +7,27 @@ inventories:
       type: INPUT
 
 documents:
-  - inventories:
-      - inventoryRef: "ae-dependency-extractor"
-        assetName: "ae-dependency-extractor"
-        assetVersion: "1.0"
-        reportContextTitle: "ae-dependency-extractor"
-        reportContext: "ae-dependency-extractor"
-        referenceInventory: "reference"
+  annex:
     type: ANNEX
+    language: en
     params:
-      "targetLicensesDir": "license"
-      "targetComponentDir": "component"
-      "securityPolicyFile": "security-policy-report.json"
-    language: "en"
+      targetLicensesDir: license
+      targetComponentDir: component
+      securityPolicyFile: security-policy-report.json
+    parts:
+      annex:
+        type: ANNEX
+        inventories:
+          - inventoryRef: "ae-dependency-extractor"
+            assetName: "ae-dependency-extractor"
+            assetVersion: "1.0"
+            reportContextTitle: "ae-dependency-extractor"
+            reportContext: "ae-dependency-extractor"
+            referenceInventory: "reference"
+          - inventoryRef: "ae-dependency-extractor"
+            assetName: "ae-dependency-extractor"
+            assetVersion: "1.0"
+            reportContextTitle: "ae-dependency-extractor"
+            reportContext: "ae-dependency-extractor"
+            referenceInventory: "reference"
+
