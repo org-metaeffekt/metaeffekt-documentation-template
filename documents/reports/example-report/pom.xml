@@ -14,6 +14,7 @@
 
     <properties>
         <document.version>00.01</document.version>
+        <document.ditamap>ae-example-report/gen/map_ae-example-document.ditamap</document.ditamap>
         <document.status_en>Draft</document.status_en>
 
         <asset.title>Example</asset.title>

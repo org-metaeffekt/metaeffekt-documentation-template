@@ -10,23 +10,22 @@ inventories:
       type: INPUT
 
 documents:
-  - inventories:
-      - inventoryRef: "ae-example"
-        assetName: "AE-Example"
-        assetVersion: "1.0"
-        reportContextTitle: "AE-Example"
-        reportContext: "AE-Example"
-        referenceInventory: "reference"
-      - inventoryRef: "test"
-        assetName: "test"
-        assetVersion: "1.0"
-        reportContextTitle: "test"
-        reportContext: "test"
-        referenceInventory: "reference"
+  "ae-example":
     type: VULNERABILITY_REPORT
+    language: "en"
     params:
       "targetLicensesDir": "license"
       "targetComponentDir": "component"
       "securityPolicyFile": "security-policy-report.json"
-      "generateOverviewTablesForAdvisories": "[ {\"name\":\"CERT_EU\"} ]"
-    language: "en"
+      "generateOverviewTablesForAdvisories": "CERT_EU"
+    parts:
+      "ae-example":
+        type: VULNERABILITY_REPORT
+        inventories:
+          - inventoryRef: "ae-example"
+            assetName: "AE-Example"
+            assetVersion: "1.0"
+            reportContextTitle: "AE-Example"
+            reportContext: "AE-Example"
+            referenceInventory: "reference"
+
