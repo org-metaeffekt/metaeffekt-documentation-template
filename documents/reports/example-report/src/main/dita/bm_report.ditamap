@@ -29,7 +29,7 @@
 
     <chapter href="ae-example-report/tpc_vulnerabilities.dita" />
 
-    <chapter format="ditamap" href="ae-example-report/gen/map_vulnerability-report-bookmap.ditamap" />
+    <chapter format="ditamap" href="ae-example-report/gen/map_ae-example-document.ditamap" />
 
     <backmatter>
         <booklists>

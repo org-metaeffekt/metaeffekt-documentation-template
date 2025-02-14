@@ -32,7 +32,7 @@
 
 		<document.id>XXXX-YYY-ZZ</document.id>
 
-        <document.ditamap>ae-dependency/gen/map_annex-document.ditamap</document.ditamap>
+        <document.ditamap>bill-of-materials.ditamap</document.ditamap>
         <document.name>Software Distribution Annex</document.name>
         <document.version>0.1</document.version>
         <document.status_en>Preview</document.status_en>

@@ -14,7 +14,6 @@
 
     <properties>
         <document.version>00.01</document.version>
-        <document.ditamap>ae-example-report/gen/map_ae-example-document.ditamap</document.ditamap>
         <document.status_en>Draft</document.status_en>
 
         <asset.title>Example</asset.title>
@@ -101,8 +100,8 @@
                                 <advisorPeriodicEnrichment>
                                     <active>true</active>
 
-                                    <changedSince>1 week</changedSince>
-                                    <changedUntil>now</changedUntil>
+                                    <changedSince>2021-05-01</changedSince>
+                                    <changedUntil>2022-05-01</changedUntil>
 
                                     <advisoryProviders>
                                         [{"name":"CERT_FR"}, {"name":"CERT_SEI"}, {"name":"CERT_EU"}]
@@ -138,10 +137,6 @@
         </pluginManagement>
 
         <plugins>
-            <plugin>
-                <groupId>org.metaeffekt.core</groupId>
-                <artifactId>ae-inventory-maven-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>

@@ -19,15 +19,10 @@ documents:
         type: ANNEX
         inventories:
           - inventoryRef: "ae-dependency-extractor"
-            assetName: "ae-dependency-extractor"
+            assetName: "ae-dependency"
             assetVersion: "1.0"
-            reportContextTitle: "ae-dependency-extractor"
-            reportContext: "ae-dependency-extractor"
+            reportContextTitle: "ae-dependency"
+            reportContext: "ae-dependency"
             referenceInventory: "reference"
-          - inventoryRef: "ae-dependency-extractor"
-            assetName: "ae-dependency-extractor"
-            assetVersion: "1.0"
-            reportContextTitle: "ae-dependency-extractor"
-            reportContext: "ae-dependency-extractor"
-            referenceInventory: "reference"
+
 

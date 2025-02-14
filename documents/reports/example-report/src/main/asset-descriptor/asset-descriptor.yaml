@@ -5,9 +5,6 @@ inventories:
   - "ae-example":
       file: "../../../target/inventories/inventory/ae-example-report-summary.xlsx"
       type: INPUT
-  - "test":
-      file: "../../../target/inventories/inventory/ae-example-report-summary.xlsx"
-      type: INPUT
 
 documents:
   "ae-example":
@@ -19,7 +16,16 @@ documents:
       "securityPolicyFile": "security-policy-report.json"
       "generateOverviewTablesForAdvisories": "CERT_EU"
     parts:
-      "ae-example":
+      "stat":
+        type: VULNERABILITY_STATISTICS_REPORT
+        inventories:
+          - inventoryRef: "ae-example"
+            assetName: "AE-Example"
+            assetVersion: "1.0"
+            reportContextTitle: "AE-Example"
+            reportContext: "AE-Example"
+            referenceInventory: "reference"
+      "vul":
         type: VULNERABILITY_REPORT
         inventories:
           - inventoryRef: "ae-example"
