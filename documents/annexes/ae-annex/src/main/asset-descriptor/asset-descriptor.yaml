@@ -1,7 +1,4 @@
 inventories:
-  - "reference":
-      file: "../../../target/inventories/inventory/ae-dependency-extractor-inventory.xls"
-      type: INPUT
   - "ae-dependency-extractor":
       file: "../../../target/inventories/inventory/ae-dependency-extractor-inventory.xls"
       type: INPUT
@@ -21,8 +18,5 @@ documents:
           - inventoryRef: "ae-dependency-extractor"
             assetName: "ae-dependency"
             assetVersion: "1.0"
-            reportContextTitle: "ae-dependency"
-            reportContext: "ae-dependency"
-            referenceInventory: "reference"
 
 
