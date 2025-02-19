@@ -8,8 +8,6 @@ documents:
     type: VULNERABILITY_REPORT
     language: "en"
     params:
-      "targetLicensesDir": "license"
-      "targetComponentDir": "component"
       "securityPolicyFile": "security-policy-report.json"
       "generateOverviewTablesForAdvisories": "CERT_EU"
     parts:

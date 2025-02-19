@@ -8,8 +8,6 @@ documents:
     type: ANNEX
     language: en
     params:
-      targetLicensesDir: license
-      targetComponentDir: component
       securityPolicyFile: security-policy-report.json
     parts:
       annex:
