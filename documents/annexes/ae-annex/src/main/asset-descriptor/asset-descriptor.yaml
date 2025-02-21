@@ -4,13 +4,13 @@ inventories:
       type: INPUT
 
 documents:
-  annex:
+  "annex":
     type: ANNEX
-    language: en
+    language: "en"
     params:
-      securityPolicyFile: security-policy-report.json
+      securityPolicyFile: "security-policy-report.json"
     parts:
-      annex:
+      "annex":
         type: ANNEX
         inventories:
           - inventoryRef: "ae-dependency-extractor"
