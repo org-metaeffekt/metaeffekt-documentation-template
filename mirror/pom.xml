@@ -194,10 +194,12 @@
                                         </listerList>-->
 
                                         <!-- filter providers fetched using the listers -->
-                                        <!--<excludeList>
-                                            <name></name>
-                                            <url></url>
-                                        </excludeList>-->
+                                        <excludeList>
+                                            <excluder>
+                                                <name>huawei_psirt</name>
+                                                <url>https://www.huawei.com/.well-known/csaf/provider-metadata.json</url>
+                                            </excluder>
+                                        </excludeList>
                                         <!--<includeList></includeList>-->
                                     </csafDownload>
 
