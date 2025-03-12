@@ -266,7 +266,14 @@
                                     <mirrorDirectory>${database.path}</mirrorDirectory>
 
                                     <!-- Indexers -->
-                                    <nvdVulnerabilityIndex/>
+                                    <nvdVulnerabilityIndex>
+                                        <cpeCorrectionConfigs>
+                                            <correctionConfig>
+                                                <malformedCpe>cpe:2.3:sainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                                <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                            </correctionConfig>
+                                        </cpeCorrectionConfigs>
+                                    </nvdVulnerabilityIndex>
                                     <nvdCpeIndex/>
                                     <nvdCpeVendorProductIndex/>
                                     <msrcProductIndex/>
