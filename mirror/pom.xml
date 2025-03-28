@@ -266,21 +266,43 @@
                                     <mirrorDirectory>${database.path}</mirrorDirectory>
 
                                     <!-- Indexers -->
-                                    <nvdVulnerabilityIndex/>
+<!--                                    <nvdVulnerabilityIndex/>-->
                                     <nvdCpeIndex/>
                                     <nvdCpeVendorProductIndex/>
-                                    <msrcProductIndex/>
-                                    <msrcAdvisorIndex/>
-                                    <msrcKbChainIndex/>
-                                    <certSeiAdvisorIndex/>
-                                    <certFrAdvisorIndex/>
-                                    <certEuAdvisorIndex/>
-                                    <kevIndex/>
-                                    <epssIndex/>
-                                    <eolIndex/>
-                                    <osvAdvisorIndex/>
-                                    <csafAdvisoryIndex/>
-                                    <csafVulnerabilityIndex/>
+<!--                                    <msrcProductIndex/>-->
+<!--                                    <msrcAdvisorIndex/>-->
+<!--                                    <msrcKbChainIndex/>-->
+<!--                                    <certSeiAdvisorIndex/>-->
+<!--                                    <certFrAdvisorIndex/>-->
+<!--                                    <certEuAdvisorIndex/>-->
+<!--                                    <kevIndex/>-->
+<!--                                    <epssIndex/>-->
+<!--                                    <eolIndex/>-->
+<!--                                    <osvAdvisorIndex/>-->
+<!--                                    <csafAdvisoryIndex/>-->
+<!--                                    <csafVulnerabilityIndex/>-->
+                                    <cpeCorrections>
+                                        <!-- Missing part-->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:sainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- part and vendor melted together -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:aainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- too many compartments -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- repeat "cpe:2.3" -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:*:cpe:2.3:*:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                    </cpeCorrections>
                                 </configuration>
                             </execution>
                         </executions>
