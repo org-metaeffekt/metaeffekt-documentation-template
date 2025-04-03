@@ -13,8 +13,8 @@
 
     <properties>
         <!-- run with the mirror-database profile active to download the database contents -->
-        <database.path>/Users/tmartin/workspace/vulnerability-mirror</database.path>
-        <database.path_legacy>${database.path}</database.path_legacy>
+        <database.path>${project.basedir}/../.database/ae-vulnerability-mirror</database.path>
+        <database.path_legacy>${project.basedir}/../.database/ae-vulnerability-mirror_legacy</database.path_legacy>
 
         <proxy.scheme>none</proxy.scheme>
         <proxy.host>none</proxy.host>
