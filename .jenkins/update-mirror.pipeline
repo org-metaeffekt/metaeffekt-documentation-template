@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo CLEANUP OF SELECTED DOWNLOAD RESOURCES'
-                    sh 'REM rm -rf .database/ae-vulnerability-mirror/download/xxx'
+                    // sh 'rm -rf .database/ae-vulnerability-mirror/download/xxx'
                 }
             }
         }
