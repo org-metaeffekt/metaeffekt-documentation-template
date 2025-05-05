@@ -25,7 +25,7 @@
         <!-- you will need an API key in order to download the NVD data:
              https://nvd.nist.gov/developers/request-an-api-key
              more information: https://nvd.nist.gov/developers/start-here -->
-        <nvd.apikey></nvd.apikey>
+        <nvd.apikey>cda5ccec-4245-4784-b654-2665c4894f8c</nvd.apikey>
     </properties>
 
     <profiles>
@@ -70,7 +70,7 @@
                                         <resourceLocations>
                                             <!-- Yearly archive download URL.
                                                  - %d Archive year (example: 2020) -->
-                                            <CERT_FR_ARCHIVE>https://metaeffekt.com/mirror/cert-fr/txt/%d.tar</CERT_FR_ARCHIVE>
+                                            <CERT_FR_ARCHIVE>https://metaeffekt.com/mirror/cert-fr/json/%d.tar</CERT_FR_ARCHIVE>
                                             <!-- RSS feed that contains the latest changes to the mirror. Used to check if update is required. -->
                                             <CERT_FR_RSS_FEED>https://www.cert.ssi.gouv.fr/feed/</CERT_FR_RSS_FEED>
                                         </resourceLocations>
@@ -194,10 +194,12 @@
                                         </listerList>-->
 
                                         <!-- filter providers fetched using the listers -->
-                                        <!--<excludeList>
-                                            <name></name>
-                                            <url></url>
-                                        </excludeList>-->
+                                        <excludeList>
+                                            <excluder>
+                                                <name>huawei_psirt</name>
+                                                <url>https://www.huawei.com/.well-known/csaf/provider-metadata.json</url>
+                                            </excluder>
+                                        </excludeList>
                                         <!--<includeList></includeList>-->
                                     </csafDownload>
 
@@ -279,6 +281,28 @@
                                     <osvAdvisorIndex/>
                                     <csafAdvisoryIndex/>
                                     <csafVulnerabilityIndex/>
+                                    <cpeCorrections>
+                                        <!-- Missing part-->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:sainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- part and vendor melted together -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:aainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- too many compartments -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- repeat "cpe:2.3" -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:*:cpe:2.3:*:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                    </cpeCorrections>
                                 </configuration>
                             </execution>
                         </executions>
@@ -316,9 +340,33 @@
                                     <certSeiAdvisorIndex/>
                                     <certFrAdvisorIndex/>
                                     <certEuAdvisorIndex/>
+                                    <githubAdvisorIndex/>
                                     <kevIndex/>
                                     <epssIndex/>
                                     <eolIndex/>
+
+                                    <cpeCorrections>
+                                        <!-- Missing part-->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:sainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- part and vendor melted together -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:aainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- too many compartments -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- repeat "cpe:2.3" -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:*:cpe:2.3:*:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                    </cpeCorrections>
                                 </configuration>
                             </execution>
                         </executions>

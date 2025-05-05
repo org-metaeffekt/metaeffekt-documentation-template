@@ -7,6 +7,15 @@ pipeline {
     }
     stages {
 
+        stage('Cleanup') {
+            steps {
+                script {
+                    sh 'echo CLEANUP OF SELECTED DOWNLOAD RESOURCES'
+                    // sh 'rm -rf .database/ae-vulnerability-mirror/download/xxx'
+                }
+            }
+        }
+
         stage('Checkout metaeffekt-core') {
             steps {
                 script {
@@ -36,9 +45,9 @@ pipeline {
         stage('Build metaeffekt-core (skipping tests and javadoc)') {
             steps {
                 dir ('.metaeffekt-core') {
-                    sh 'export MAVEN_HOME=/opt/maven'
-                    sh 'export PATH=$PATH:$MAVEN_HOME/bin'
-                    sh 'JAVA_HOME=/usr/lib/jvm/zulu-8-amd64 mvn -B clean install -DskipTests -Dmaven.javadoc.skip=true'
+                    withMaven(maven: 'maven-3.9.6') {
+                        sh 'mvn -B clean install -DskipTests -Dmaven.javadoc.skip=true'
+                    }
                 }
             }
         }
@@ -46,9 +55,9 @@ pipeline {
         stage('Build metaeffekt-artifact-analysis (skipping tests and javadoc)') {
             steps {
                 dir ('.metaeffekt-terms-metadata') {
-                    sh 'export MAVEN_HOME=/opt/maven'
-                    sh 'export PATH=$PATH:$MAVEN_HOME/bin'
-                    sh 'JAVA_HOME=/usr/lib/jvm/zulu-8-amd64 mvn -B clean install -DskipTests -Dmaven.javadoc.skip=true'
+                    withMaven(maven: 'maven-3.9.6') {
+                        sh 'mvn -B clean install -DskipTests -Dmaven.javadoc.skip=true'
+                    }
                 }
             }
         }
@@ -83,10 +92,12 @@ pipeline {
             steps {
                 sh '''
                 cd .database/ae-vulnerability-mirror
+                rm -f index-database.zip || true
                 zip -r index-database.zip index
+                curl --create-dirs -T index-database.zip http://ae-scanner/upload/mirror/index/index-database.zip
+                rm -f mirror-database.zip || true
                 zip -r mirror-database.zip download
                 curl --create-dirs -T mirror-database.zip http://ae-scanner/upload/mirror/download/mirror-database.zip
-                curl --create-dirs -T index-database.zip http://ae-scanner/upload/mirror/index/index-database.zip
                 '''
             }
         }
@@ -107,7 +118,7 @@ pipeline {
                 script {
                     catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', message: 'Could not index all data sources.') {
                         withMaven(maven: 'maven-3.9.6', mavenOpts: '-Xmx8g') {
-                            sh 'mvn -B clean install -Pmirror-index_legacy -Dae.core.version=0.135.2 -Dae.artifact.analysis.version=0.135.5'
+                            sh 'mvn -B clean install -Pmirror-index_legacy -Dae.core.version=0.135.8 -Dae.artifact.analysis.version=0.135.16'
                         }
                     }
                 }
@@ -118,9 +129,8 @@ pipeline {
             steps {
                 sh '''
                 cd .database/ae-vulnerability-mirror_legacy
+                rm -f index-database_legacy.zip || true
                 zip -r index-database_legacy.zip index
-                zip -r mirror-database_legacy.zip download
-                curl --create-dirs -T mirror-database_legacy.zip http://ae-scanner/upload/mirror/download/mirror-database_legacy.zip
                 curl --create-dirs -T index-database_legacy.zip http://ae-scanner/upload/mirror/index/index-database_legacy.zip
                 '''
             }
