@@ -25,7 +25,7 @@
         <!-- you will need an API key in order to download the NVD data:
              https://nvd.nist.gov/developers/request-an-api-key
              more information: https://nvd.nist.gov/developers/start-here -->
-        <nvd.apikey>cda5ccec-4245-4784-b654-2665c4894f8c</nvd.apikey>
+        <nvd.apikey></nvd.apikey>
     </properties>
 
     <profiles>
@@ -222,6 +222,7 @@
                                         </resourceLocations>
                                     </cisaKevDownload>
 
+                                    <!--https://www.first.org/epss/-->
                                     <epssDownload>
                                         <resourceLocations>
                                             <EPSS_ALL_SCORES_CSV>https://epss.cyentia.com/epss_scores-current.csv.gz</EPSS_ALL_SCORES_CSV>
