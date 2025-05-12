@@ -433,11 +433,11 @@
                                         <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
 
                                         <timelines>
+                                            <active>${ae.dashboard.timeline}</active>
                                             <maxThreads>16</maxThreads>
                                         </timelines>
 
                                         <reportConfiguration>
-                                            <vulnerabilityTimelinesEnabled>${ae.dashboard.timeline}</vulnerabilityTimelinesEnabled>
                                             <!--<apiConfiguration></apiConfiguration>-->
                                         </reportConfiguration>
                                     </configuration>
