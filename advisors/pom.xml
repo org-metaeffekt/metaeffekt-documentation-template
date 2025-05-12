@@ -412,6 +412,38 @@
                                 </execution>
                             </executions>
                         </plugin>
+
+                        <plugin>
+                            <groupId>com.metaeffekt.artifact.analysis</groupId>
+                            <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                            <version>${ae.artifact.analysis.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>generate-vulnerability-dashboard</id>
+                                    <phase>compile</phase>
+                                    <goals>
+                                        <goal>generate-vulnerability-dashboard</goal>
+                                    </goals>
+
+                                    <configuration>
+                                        <inventoryInputFile>${output.inventory}</inventoryInputFile>
+                                        <outputFile>${output.dashboard}-new.html</outputFile>
+                                        <mirrorDirectory>${input.database}</mirrorDirectory>
+
+                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+
+                                        <timelines>
+                                            <active>${ae.dashboard.timeline}</active>
+                                            <maxThreads>16</maxThreads>
+                                        </timelines>
+
+                                        <reportConfiguration>
+                                            <!--<apiConfiguration></apiConfiguration>-->
+                                        </reportConfiguration>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
                     </plugins>
                 </pluginManagement>
             </build>

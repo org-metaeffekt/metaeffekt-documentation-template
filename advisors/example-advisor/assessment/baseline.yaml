@@ -1,20 +1,26 @@
-history:
-  - rationale:
-      "<p>
-          The application services are operated in an isolated network. No direct access from the external adversaries
-          shall be possible.
-      </p>
-      <p>
-          The CVSS vectors have been adjusted to expect that an adversary must have access to the network the 
-          application service are deployed (MAV:A; AV:A). Additional privileges are required (MAC:H) as the adversary 
-          must have already passed the gateway-level security perimeter or the physical protection of the data center.
-      </p>"
-    date: 2023-07-14
-    author: KKL
+schema-version: "2.0"
 
-scope: inventory
-
-cvssV3:
-  lower: MAV:A/MAC:H
-cvssV2:
-  lower: AV:A
+assessments:
+  - scope: inventory
+    events:
+      - date: 2023-07-14
+        author: KKL
+        discard on subsequent events: true
+        rationale:
+          "<p>
+              The application services are operated in an isolated network. No direct access from the external adversaries
+              shall be possible.
+          </p>
+          <p>
+              The CVSS vectors have been adjusted to expect that an adversary must have access to the network the 
+              application service are deployed (MAV:A; AV:A). Additional privileges are required (MAC:H) as the adversary 
+              must have already passed the gateway-level security perimeter or the physical protection of the data center.
+          </p>"
+        cvss:
+          - rationale: "An adversary must have access to the network the application service are deployed, and additional privileges are required"
+            v2.0:
+              lower score:
+                - metrics: AV:A
+            v3.1:
+              lower score:
+                - metrics: MAV:A/MAC:H
