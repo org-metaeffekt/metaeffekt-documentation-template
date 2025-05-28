@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ae-html-report</artifactId>
+        <groupId>org.metaeffekt.example.documentation</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ae-example-overview-report</artifactId>
+
+    <properties>
+        <base.directory>base-dir</base.directory>
+        <output.file>target/result.html</output.file>
+
+        <notification.configs>notifications/notification-config.yaml</notification.configs>
+        <notification.rules>rules/notification-rules.yaml</notification.rules>
+
+        <notification.output>target/.notification.json</notification.output>
+    </properties>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-inventory-overview-html-report</artifactId>
+                <version>HEAD-SNAPSHOT</version>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

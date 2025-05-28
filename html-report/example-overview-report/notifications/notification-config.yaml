@@ -1,0 +1,30 @@
+"Audience-A":
+  "configName1":
+    rules:
+      - Low Severity Vulnerability
+    emails:
+      - a.b@domain.suffix
+  "configName2":
+    rules:
+      - High Severity Vulnerability
+    emails:
+      - a.b@domain.suffix
+
+"Audience-B":
+  "configName3":
+    rules:
+      - High Severity Vulnerability
+    emails:
+      - a.b@domain.suffix
+  "configName4":
+    rules:
+      - Critical Severity Vulnerability
+    emails:
+      - c.d@domain.suffix
+
+"any":
+  "configName5":
+    rules:
+      - Critical Severity Vulnerability
+    groups:
+      - all

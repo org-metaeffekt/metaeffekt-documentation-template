@@ -1,0 +1,4 @@
+"High Severity Vulnerability":
+  severity:
+    range: High
+    min: 15
