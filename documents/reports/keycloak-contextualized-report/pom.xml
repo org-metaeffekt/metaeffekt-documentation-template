@@ -103,7 +103,12 @@
 
                         <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
-                        <securityPolicyFile>${project.basedir}/../../security-policy-report.json</securityPolicyFile>
+                        <cspLoader>
+                            <policyFiles>
+                                <file>${project.basedir}/../../../security-policy-configuration.json</file>
+                            </policyFiles>
+                            <activeIds>report-advisor-table</activeIds>
+                        </cspLoader>
 
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
@@ -120,10 +125,6 @@
                         <failOnMissingLicenseFile>false</failOnMissingLicenseFile>
                         <failOnMissingNotice>false</failOnMissingNotice>
                         <failOnMissingSources>false</failOnMissingSources>
-
-                        <generateOverviewTablesForAdvisories>
-                            [ {"name":"CERT_EU"} ]
-                        </generateOverviewTablesForAdvisories>
                     </configuration>
 
                 </plugin>

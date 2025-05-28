@@ -205,7 +205,12 @@
                                         <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
                                         <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+                                        <cspLoader>
+                                            <policyFiles>
+                                                <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            </policyFiles>
+                                            <activeIds>advise-base</activeIds>
+                                        </cspLoader>
 
                                         <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
                                         <!--<enrichmentOrder></enrichmentOrder>-->
@@ -261,7 +266,12 @@
                                         <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
                                         <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+                                        <cspLoader>
+                                            <policyFiles>
+                                                <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            </policyFiles>
+                                            <activeIds>advise-periodic-enrichment</activeIds>
+                                        </cspLoader>
 
                                         <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
                                         <!--<enrichmentOrder></enrichmentOrder>-->
@@ -430,7 +440,12 @@
                                         <outputFile>${output.dashboard}-new.html</outputFile>
                                         <mirrorDirectory>${input.database}</mirrorDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+                                        <cspLoader>
+                                            <policyFiles>
+                                                <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            </policyFiles>
+                                            <activeIds>advise-base</activeIds>
+                                        </cspLoader>
 
                                         <timelines>
                                             <active>${ae.dashboard.timeline}</active>
