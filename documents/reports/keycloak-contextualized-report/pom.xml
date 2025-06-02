@@ -103,12 +103,10 @@
 
                         <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
-                        <cspLoader>
-                            <policyFiles>
-                                <file>${project.basedir}/../../../security-policy-configuration.json</file>
-                            </policyFiles>
+                        <securityPolicy>
+                            <file>${project.basedir}/../../../security-policy-configuration.json</file>
                             <activeIds>report-advisor-table</activeIds>
-                        </cspLoader>
+                        </securityPolicy>
 
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>

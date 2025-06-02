@@ -106,12 +106,10 @@
                                     <!--  <includeAdvisoryTypes>alert, news</includeAdvisoryTypes> -->
                                 </advisorPeriodicEnrichment>
 
-                                <cspLoader>
-                                    <policyFiles>
-                                        <file>${project.basedir}/../../../security-policy-configuration.json</file>
-                                    </policyFiles>
+                                <securityPolicy>
+                                    <file>${project.basedir}/../../../security-policy-configuration.json</file>
                                     <activeIds>advise-periodic-enrichment</activeIds>
-                                </cspLoader>
+                                </securityPolicy>
                             </configuration>
                         </execution>
                     </executions>
@@ -145,12 +143,10 @@
 
                         <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
-                        <cspLoader>
-                            <policyFiles>
-                                <file>${project.basedir}/../../../security-policy-configuration.json</file>
-                            </policyFiles>
+                        <securityPolicy>
+                            <file>${project.basedir}/../../../security-policy-configuration.json</file>
                             <activeIds>report-advisor-table</activeIds>
-                        </cspLoader>
+                        </securityPolicy>
 
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>

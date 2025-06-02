@@ -101,12 +101,10 @@
 
                     <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
-                    <cspLoader>
-                        <policyFiles>
-                            <file>${project.basedir}/../../../security-policy-configuration.json</file>
-                        </policyFiles>
+                    <securityPolicy>
+                        <file>${project.basedir}/../../../security-policy-configuration.json</file>
                         <activeIds>report-base</activeIds>
-                    </cspLoader>
+                    </securityPolicy>
 
                     <enableBomReport>true</enableBomReport>
                 </configuration>
