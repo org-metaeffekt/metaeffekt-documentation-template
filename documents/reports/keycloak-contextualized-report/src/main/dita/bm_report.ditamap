@@ -11,7 +11,7 @@
         </bookid>
         <bookrights>
             <copyrlast>
-                <year>2021</year>
+                <year>2024</year>
             </copyrlast>
             <bookowner>
                 <organization>${organization.name}</organization>
@@ -29,6 +29,10 @@
 
     <chapter href="ae-keycloak-contextualized-report/tpc_vulnerabilities.dita" />
     <chapter href="ae-keycloak-contextualized-report/gen/tpc_inventory-vulnerability-statistics.dita" />
+
+    <chapter href="ae-keycloak-contextualized-report/gen/tpc_inventory-vulnerability-assets.dita" />
+    <chapter href="ae-keycloak-contextualized-report/gen/tpc_inventory-vulnerability-components.dita" />
+
     <chapter href="ae-keycloak-contextualized-report/gen/tpc_inventory-vulnerability-report.dita" />
     <chapter href="ae-keycloak-contextualized-report/gen/tpc_inventory-vulnerability-details.dita" />
 
