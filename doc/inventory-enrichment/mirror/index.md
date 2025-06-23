@@ -1,1 +1,0 @@
-moved to https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/data-mirror/index.md
