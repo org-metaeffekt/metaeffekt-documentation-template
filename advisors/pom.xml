@@ -205,7 +205,10 @@
                                         <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
                                         <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+                                        <securityPolicy>
+                                            <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            <activeIds>advise-base</activeIds>
+                                        </securityPolicy>
 
                                         <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
                                         <!--<enrichmentOrder></enrichmentOrder>-->
@@ -261,7 +264,10 @@
                                         <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
                                         <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+                                        <securityPolicy>
+                                            <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            <activeIds>advise-periodic-enrichment</activeIds>
+                                        </securityPolicy>
 
                                         <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
                                         <!--<enrichmentOrder></enrichmentOrder>-->
@@ -430,7 +436,10 @@
                                         <outputFile>${output.dashboard}-new.html</outputFile>
                                         <mirrorDirectory>${input.database}</mirrorDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+                                        <securityPolicy>
+                                            <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            <activeIds>advise-base</activeIds>
+                                        </securityPolicy>
 
                                         <timelines>
                                             <active>${ae.dashboard.timeline}</active>
