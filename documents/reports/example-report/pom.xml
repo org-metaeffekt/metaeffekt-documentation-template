@@ -102,13 +102,14 @@
 
                                     <changedSince>2021-05-01</changedSince>
                                     <changedUntil>2022-05-01</changedUntil>
-
-                                    <advisoryProviders>
-                                        [{"name":"CERT_FR"}, {"name":"CERT_SEI"}, {"name":"CERT_EU"}]
-                                    </advisoryProviders>
                                     <filterUnaffected>false</filterUnaffected>
                                     <!--  <includeAdvisoryTypes>alert, news</includeAdvisoryTypes> -->
                                 </advisorPeriodicEnrichment>
+
+                                <securityPolicy>
+                                    <file>${project.basedir}/../../../security-policy-configuration.json</file>
+                                    <activeIds>advise-periodic-enrichment</activeIds>
+                                </securityPolicy>
                             </configuration>
                         </execution>
                     </executions>
@@ -142,7 +143,10 @@
 
                         <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
 
-                        <securityPolicyFile>${project.basedir}/../../security-policy-report.json</securityPolicyFile>
+                        <securityPolicy>
+                            <file>${project.basedir}/../../../security-policy-configuration.json</file>
+                            <activeIds>report-advisor-table</activeIds>
+                        </securityPolicy>
 
                         <enableVulnerabilityReport>true</enableVulnerabilityReport>
                         <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
@@ -161,10 +165,6 @@
                         <failOnMissingLicenseFile>false</failOnMissingLicenseFile>
                         <failOnMissingNotice>false</failOnMissingNotice>
                         <failOnMissingSources>false</failOnMissingSources>
-
-                        <generateOverviewTablesForAdvisories>
-                            [ {"name":"CERT_EU"} ]
-                        </generateOverviewTablesForAdvisories>
                     </configuration>
 
                 </plugin>
