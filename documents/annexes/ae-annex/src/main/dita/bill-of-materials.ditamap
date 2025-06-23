@@ -32,14 +32,7 @@
         <topicref href="ae-common-content/bill-of-materials/en/tpc_no-import-export-information.dita" />
     </chapter>
 
-    <chapter href="ae-dependency/tpc_bill-of-materials.dita">
-        <topicref href="ae-dependency/gen/tpc_inventory-artifact-report-effective.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-webmodule-report-effective.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-package-report-effective.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-licenses-effective.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-license-usage.dita" />
-        <topicref href="ae-dependency/gen/tpc_inventory-component-license-details.dita" keys="license-notices" />
-    </chapter>
+    <chapter format="ditamap" href="ae-dependency/gen/map_annex-document.ditamap" />
 
     <backmatter>
         <booklists>

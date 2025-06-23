@@ -1,0 +1,26 @@
+inventories:
+  - "ae-example":
+      file: "../../../target/inventories/inventory/ae-example-report-summary.xlsx"
+      type: INPUT
+
+documents:
+  "ae-example":
+    type: VULNERABILITY_REPORT
+    language: "en"
+    params:
+      "securityPolicyFile": "security-policy-report.json"
+      "generateOverviewTablesForAdvisories": "CERT_EU"
+    parts:
+      "stat":
+        type: VULNERABILITY_STATISTICS_REPORT
+        inventories:
+          - inventoryRef: "ae-example"
+            assetName: "AE-Example"
+            assetVersion: "1.0"
+      "vul":
+        type: VULNERABILITY_REPORT
+        inventories:
+          - inventoryRef: "ae-example"
+            assetName: "AE-Example"
+            assetVersion: "1.0"
+

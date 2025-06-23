@@ -1,0 +1,20 @@
+inventories:
+  - "ae-dependency-extractor":
+      file: "../../../target/inventories/inventory/ae-dependency-extractor-inventory.xls"
+      type: INPUT
+
+documents:
+  "annex":
+    type: ANNEX
+    language: "en"
+    params:
+      securityPolicyFile: "security-policy-report.json"
+    parts:
+      "annex":
+        type: ANNEX
+        inventories:
+          - inventoryRef: "ae-dependency-extractor"
+            assetName: "ae-dependency"
+            assetVersion: "1.0"
+
+
