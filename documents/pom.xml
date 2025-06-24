@@ -250,11 +250,11 @@
     <dependencies>
         <!-- Default texts for general purposes -->
         <dependency>
-            <groupId>org.metaeffekt.dita</groupId>
+            <groupId>org.metaeffekt.core</groupId>
             <artifactId>ae-common-content</artifactId>
             <type>jar</type>
             <classifier>doc</classifier>
-            <version>${ae.dita.version}</version>
+            <version>${ae.core.version}</version>
         </dependency>
     </dependencies>
 
