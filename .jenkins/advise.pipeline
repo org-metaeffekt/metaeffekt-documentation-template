@@ -56,6 +56,22 @@ pipeline {
             }
         }
 
+        stage('Pull correlation data and copy to advisors/correlation/shared') {
+            steps {
+                script {
+                    sh 'mkdir -p .metaeffekt-vulnerability-correlation'
+                    sh 'rm -rf advisors/correlation/shared'
+                    sh 'mkdir -p advisors/correlation/shared'
+                    dir ('.metaeffekt-vulnerability-correlation') {
+                        withCredentials([usernamePassword(credentialsId: 'bitbucket-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            git url: 'http://ae-server:7990/scm/ae/metaeffekt-vulnerability-correlation.git', branch: 'master', credentialsId: 'bitbucket-credentials'
+                        }
+                    }
+                    sh 'cp -r .metaeffekt-vulnerability-correlation/correlation/* advisors/correlation/shared'
+                }
+            }
+        }
+
         stage('Pull artifact from server') {
             steps {
                 sh '''
