@@ -425,10 +425,10 @@
                             <version>${ae.artifact.analysis.version}</version>
                             <executions>
                                 <execution>
-                                    <id>generate-vulnerability-dashboard</id>
+                                    <id>generate-asset-dashboard</id>
                                     <phase>compile</phase>
                                     <goals>
-                                        <goal>generate-vulnerability-dashboard</goal>
+                                        <goal>generate-asset-dashboard</goal>
                                     </goals>
 
                                     <configuration>
