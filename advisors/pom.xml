@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>windows11-advisor</module>
+
         <module>example-advisor</module>
 
         <module>keycloak-advisor</module>
