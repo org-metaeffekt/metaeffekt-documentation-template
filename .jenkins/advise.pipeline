@@ -68,6 +68,7 @@ pipeline {
                         }
                     }
                     sh 'cp -r .metaeffekt-vulnerability-correlation/correlation/* advisors/correlation/shared'
+                    sh 'rm -rf advisors/correlation/shared/rust'
                 }
             }
         }
