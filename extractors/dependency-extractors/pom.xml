@@ -118,6 +118,10 @@
 
                                 <targetInventoryDir>${project.build.directory}/classes/inventory</targetInventoryDir>
                                 <targetInventoryPath>${project.artifactId}-inventory.xls</targetInventoryPath>
+
+                                <securityPolicy>
+                                    <failOnMissingPolicyFile>false</failOnMissingPolicyFile>
+                                </securityPolicy>
                             </configuration>
                         </execution>
                     </executions>
