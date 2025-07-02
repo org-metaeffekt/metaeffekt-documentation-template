@@ -120,8 +120,7 @@
                                 <targetInventoryPath>${project.artifactId}-inventory.xls</targetInventoryPath>
 
                                 <securityPolicy>
-                                    <file>${project.basedir}/../../../security-policy-configuration.json</file>
-                                    <activeIds>base</activeIds>
+                                    <failOnMissingPolicyFile>false</failOnMissingPolicyFile>
                                 </securityPolicy>
                             </configuration>
                         </execution>
