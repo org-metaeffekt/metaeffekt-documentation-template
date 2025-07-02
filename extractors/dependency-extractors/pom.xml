@@ -118,6 +118,11 @@
 
                                 <targetInventoryDir>${project.build.directory}/classes/inventory</targetInventoryDir>
                                 <targetInventoryPath>${project.artifactId}-inventory.xls</targetInventoryPath>
+
+                                <securityPolicy>
+                                    <file>${project.basedir}/../../../security-policy-configuration.json</file>
+                                    <activeIds>base</activeIds>
+                                </securityPolicy>
                             </configuration>
                         </execution>
                     </executions>
