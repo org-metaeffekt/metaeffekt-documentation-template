@@ -144,6 +144,10 @@
 
                                 <targetInventoryDir>${project.build.directory}/inventories/</targetInventoryDir>
                                 <targetInventoryPath>01_${project.artifactId}-inventory_ref.xls</targetInventoryPath>
+
+                                <securityPolicy>
+                                    <failOnMissingPolicyFile>false</failOnMissingPolicyFile>
+                                </securityPolicy>
                             </configuration>
                         </execution>
                     </executions>
