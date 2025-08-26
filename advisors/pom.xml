@@ -73,6 +73,8 @@
         <activate.dashboard>true</activate.dashboard>
         <activate.vulnerabilities.custom>true</activate.vulnerabilities.custom>
         <activate.csaf>false</activate.csaf>
+        <activate.cwe>true</activate.cwe>
+        <activate.capec>true</activate.capec>
 
         <ae.advisor.phase>process-resources</ae.advisor.phase>
 
@@ -338,6 +340,14 @@
                                         <csafAdvisorEnrichment>
                                             <active>${activate.csaf}</active>
                                         </csafAdvisorEnrichment>
+
+                                        <cweFillDetailsEnrichment>
+                                            <active>${activate.cwe}</active>
+                                        </cweFillDetailsEnrichment>
+
+                                        <capecFillDetailsEnrichment>
+                                            <active>${activate.capec}</active>
+                                        </capecFillDetailsEnrichment>
 
                                         <vulnerabilityStatusEnrichment>
                                             <active>${activate.status}</active>
