@@ -239,6 +239,24 @@
                                         </resourceLocations>
                                     </eolDownload>
 
+                                    <cweDownload>
+                                        <resourceLocations>
+                                            <!-- URL for the CWE Download is used to fetch complete and latest CWE Information -->
+                                            <MOST_RECENT_CWE>https://cwe.mitre.org/data/xml/cwec_latest.xml.zip</MOST_RECENT_CWE>
+
+                                            <!-- This URL is optional but can be used to download the complete CWE information for a specific version -->
+                                            <SPECIFIC_VERSION_CWE>https://cwe.mitre.org/data/xml/cwec_v%s.xml.zip</SPECIFIC_VERSION_CWE>
+                                        </resourceLocations>
+                                    </cweDownload>
+
+                                    <capecDownload>
+                                        <resourceLocations>
+                                            <!-- URL to fetch the complete and latest CAPEC Information as an CVS.zip-->
+                                            <MOST_RECENT_CAPEC_CSV>https://capec.mitre.org/data/archive/capec_latest.zip</MOST_RECENT_CAPEC_CSV>
+                                            <!-- URL to fetch the complete and latest CAPEC Information as an XML.zip-->
+                                            <MOST_RECENT_CAPEC_XML>https://capec.mitre.org/data/xml/views/2000.xml.zip</MOST_RECENT_CAPEC_XML>
+                                        </resourceLocations>
+                                    </capecDownload>
                                 </configuration>
                             </execution>
                         </executions>
@@ -282,6 +300,8 @@
                                     <osvAdvisorIndex/>
                                     <csafAdvisoryIndex/>
                                     <csafVulnerabilityIndex/>
+                                    <cweIndex/>
+                                    <capecIndex/>
                                     <cpeCorrections>
                                         <!-- Missing part-->
                                         <cpeCorrection>
@@ -302,6 +322,72 @@
                                         <cpeCorrection>
                                             <malformedCpe>cpe:2.3:*:cpe:2.3:*:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</malformedCpe>
                                             <replacementCpe>cpe:2.3:a:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- illegal whitespace in product" -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:*:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:*:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.3:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.3:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.4:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.4:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.5:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.5:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.6:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.6:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.7:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.7:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.0:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.0:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.1:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.1:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.2:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.2:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.3:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.3:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.4:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.4:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.5:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.5:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.6:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.6:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.7:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.7:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.7.1:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.7.1:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:adsplugin:adsmonetizer:1.8.0  :*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:adsplugin:adsmonetizer:1.8.0:*:*:*:*:wordpress:*:*</replacementCpe>
                                         </cpeCorrection>
                                     </cpeCorrections>
                                 </configuration>
@@ -366,6 +452,72 @@
                                         <cpeCorrection>
                                             <malformedCpe>cpe:2.3:*:cpe:2.3:*:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</malformedCpe>
                                             <replacementCpe>cpe:2.3:a:ninjateam:gdpr_ccpa_compliance_\&amp;_cookie_consent_banner:2.7.2:*:*:*:*:wordpress:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <!-- illegal whitespace in product" -->
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:*:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:*:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.3:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.3:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.4:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.4:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.5:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.5:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.6:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.6:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:0.7:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:0.7:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.0:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.0:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.1:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.1:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.2:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.2:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.3:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.3:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.4:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.4:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.5:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.5:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.6:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.6:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.7:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.7:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:f5:nginx unit:1.7.1:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:f5:nginx_unit:1.7.1:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
+
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:adsplugin:adsmonetizer:1.8.0  :*:*:*:*:wordpress:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:adsplugin:adsmonetizer:1.8.0:*:*:*:*:wordpress:*:*</replacementCpe>
                                         </cpeCorrection>
                                     </cpeCorrections>
                                 </configuration>

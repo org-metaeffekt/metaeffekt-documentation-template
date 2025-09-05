@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -73,8 +73,8 @@
                                 <overWriteSnapshots>true</overWriteSnapshots>
                             </configuration>
                         </execution>
-					</executions>
-				</plugin>
+                    </executions>
+                </plugin>
 
                 <plugin>
                     <groupId>com.metaeffekt.artifact.analysis</groupId>
@@ -102,80 +102,41 @@
 
                                     <changedSince>2021-05-01</changedSince>
                                     <changedUntil>2022-05-01</changedUntil>
-
-                                    <advisoryProviders>
-                                        [{"name":"CERT_FR"}, {"name":"CERT_SEI"}, {"name":"CERT_EU"}]
-                                    </advisoryProviders>
                                     <filterUnaffected>false</filterUnaffected>
                                     <!--  <includeAdvisoryTypes>alert, news</includeAdvisoryTypes> -->
                                 </advisorPeriodicEnrichment>
+
+                                <securityPolicy>
+                                    <file>${project.basedir}/../../../security-policy-configuration.json</file>
+                                    <activeIds>advise-periodic-enrichment</activeIds>
+                                </securityPolicy>
                             </configuration>
                         </execution>
                     </executions>
                 </plugin>
 
                 <plugin>
-                    <groupId>org.metaeffekt.core</groupId>
-                    <artifactId>ae-inventory-maven-plugin</artifactId>
+                    <groupId>com.metaeffekt.artifact.analysis</groupId>
+                    <artifactId>ae-asset-descriptor-maven-plugin</artifactId>
                     <version>${ae.artifact.analysis.version}</version>
                     <executions>
                         <execution>
-                            <id>create-report-ae</id>
+                            <id>default-descriptor</id>
                             <goals>
-                                <goal>create-inventory-report</goal>
+                                <goal>generate-documents</goal>
                             </goals>
                             <phase>process-sources</phase>
                             <configuration>
-                                <sourceInventoryDir>${project.build.directory}/inventories/inventory</sourceInventoryDir>
-                                <sourceInventoryIncludes>${project.artifactId}-summary.xlsx</sourceInventoryIncludes>
-                                <inventory>${project.build.directory}/inventories/inventory/${project.artifactId}-summary.xlsx</inventory>
-                                <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
+                                <assetDescriptorFile>${project.basedir}/src/main/asset-descriptor/asset-descriptor.yaml</assetDescriptorFile>
+                                <targetReportDir>${project.basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
                             </configuration>
                         </execution>
                     </executions>
-
-                    <configuration>
-                        <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
-                        <sourceInventoryIncludes>**/*.xls</sourceInventoryIncludes>
-
-                        <inventory>${project.inventory}</inventory>
-
-                        <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
-
-                        <securityPolicyFile>${project.basedir}/../../security-policy-report.json</securityPolicyFile>
-
-                        <enableVulnerabilityReport>true</enableVulnerabilityReport>
-                        <enableVulnerabilityStatisticsReport>true</enableVulnerabilityStatisticsReport>
-
-                        <!--<filterAdvisorySummary>true</filterAdvisorySummary>-->
-
-                        <failOnError>false</failOnError>
-                        <failOnBanned>false</failOnBanned>
-                        <failOnInternal>false</failOnInternal>
-                        <failOnUnknownVersion>false</failOnUnknownVersion>
-                        <failOnUnknown>false</failOnUnknown>
-                        <failOnUpgrade>false</failOnUpgrade>
-                        <failOnDowngrade>false</failOnDowngrade>
-                        <failOnDevelopment>false</failOnDevelopment>
-                        <failOnMissingLicense>false</failOnMissingLicense>
-                        <failOnMissingLicenseFile>false</failOnMissingLicenseFile>
-                        <failOnMissingNotice>false</failOnMissingNotice>
-                        <failOnMissingSources>false</failOnMissingSources>
-
-                        <generateOverviewTablesForAdvisories>
-                            [ {"name":"CERT_EU"} ]
-                        </generateOverviewTablesForAdvisories>
-                    </configuration>
-
                 </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
-            <plugin>
-                <groupId>org.metaeffekt.core</groupId>
-                <artifactId>ae-inventory-maven-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>

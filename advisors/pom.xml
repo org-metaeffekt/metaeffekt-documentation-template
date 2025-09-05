@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>windows11-advisor</module>
+
         <module>example-advisor</module>
 
         <module>keycloak-advisor</module>
@@ -71,6 +73,8 @@
         <activate.dashboard>true</activate.dashboard>
         <activate.vulnerabilities.custom>true</activate.vulnerabilities.custom>
         <activate.csaf>false</activate.csaf>
+        <activate.cwe>true</activate.cwe>
+        <activate.capec>true</activate.capec>
 
         <ae.advisor.phase>process-resources</ae.advisor.phase>
 
@@ -142,6 +146,10 @@
 
                                 <targetInventoryDir>${project.build.directory}/inventories/</targetInventoryDir>
                                 <targetInventoryPath>01_${project.artifactId}-inventory_ref.xls</targetInventoryPath>
+
+                                <securityPolicy>
+                                    <failOnMissingPolicyFile>false</failOnMissingPolicyFile>
+                                </securityPolicy>
                             </configuration>
                         </execution>
                     </executions>
@@ -205,7 +213,10 @@
                                         <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
                                         <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+                                        <securityPolicy>
+                                            <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            <activeIds>advise-base</activeIds>
+                                        </securityPolicy>
 
                                         <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
                                         <!--<enrichmentOrder></enrichmentOrder>-->
@@ -261,7 +272,10 @@
                                         <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
                                         <intermediateInventoriesDirectory>${output.inventory.intermediate.dir}</intermediateInventoriesDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+                                        <securityPolicy>
+                                            <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            <activeIds>advise-periodic-enrichment</activeIds>
+                                        </securityPolicy>
 
                                         <!--<resumeAtEnrichment>resume-at</resumeAtEnrichment>-->
                                         <!--<enrichmentOrder></enrichmentOrder>-->
@@ -326,6 +340,14 @@
                                         <csafAdvisorEnrichment>
                                             <active>${activate.csaf}</active>
                                         </csafAdvisorEnrichment>
+
+                                        <cweFillDetailsEnrichment>
+                                            <active>${activate.cwe}</active>
+                                        </cweFillDetailsEnrichment>
+
+                                        <capecFillDetailsEnrichment>
+                                            <active>${activate.capec}</active>
+                                        </capecFillDetailsEnrichment>
 
                                         <vulnerabilityStatusEnrichment>
                                             <active>${activate.status}</active>
@@ -419,10 +441,10 @@
                             <version>${ae.artifact.analysis.version}</version>
                             <executions>
                                 <execution>
-                                    <id>generate-vulnerability-dashboard</id>
+                                    <id>generate-asset-dashboard</id>
                                     <phase>compile</phase>
                                     <goals>
-                                        <goal>generate-vulnerability-dashboard</goal>
+                                        <goal>generate-asset-dashboard</goal>
                                     </goals>
 
                                     <configuration>
@@ -430,7 +452,10 @@
                                         <outputFile>${output.dashboard}-new.html</outputFile>
                                         <mirrorDirectory>${input.database}</mirrorDirectory>
 
-                                        <securityPolicyFile>${project.basedir}/../security-policy-dashboard.json</securityPolicyFile>
+                                        <securityPolicy>
+                                            <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            <activeIds>advise-base</activeIds>
+                                        </securityPolicy>
 
                                         <timelines>
                                             <active>${ae.dashboard.timeline}</active>

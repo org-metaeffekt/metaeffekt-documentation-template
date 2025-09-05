@@ -2,6 +2,10 @@
 
 # metaeffekt-documentation-template
 
+## Documentation
+
+The documentation has been moved to [metaeffekt-documentation](https://github.com/org-metaeffekt/metaeffekt-documentation/tree/main).
+
 ## Overview
 
 ![Flowchart showing how the assets and different processes are used to form a Software Annex PDF and a Vulnerability Assessment Dashboard](doc/overview.png)
@@ -65,12 +69,6 @@ With container enabled (currently disabled):
     mvn clean install -Pextract,document -Dimage.repo=debian -Dimage.tag=latest
 
 The container enabled process requires that docker daemon is running and the container of interest was already pulled.
-
-## Documentation
-
-For more information on the process, see the documents in the `doc` directory. If you are new to this project, start
-with
-[Inventory Enrichment Overview](doc/inventory-enrichment/inventory-enrichment-overview.md).
 
 ## DISCLAIMER
 

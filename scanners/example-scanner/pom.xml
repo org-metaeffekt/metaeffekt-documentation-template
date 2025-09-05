@@ -102,6 +102,10 @@
                                 <scanExcludes>-none-</scanExcludes>
 
                                 <targetInventoryDir>${project.build.directory}/inventory</targetInventoryDir>
+
+                                <securityPolicy>
+                                    <failOnMissingPolicyFile>false</failOnMissingPolicyFile>
+                                </securityPolicy>
                             </configuration>
                         </execution>
                     </executions>

@@ -46,66 +46,22 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.metaeffekt.core</groupId>
-                <artifactId>ae-inventory-maven-plugin</artifactId>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-asset-descriptor-maven-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
                 <executions>
-                    <!-- FIXME: re-enable or split into several documents -->
-                    <!--<execution>
-                        <id>create-ae-container-report</id>
-                        <goals>
-                            <goal>create-inventory-report</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                        <configuration>
-                            <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
-                            <sourceInventoryIncludes>**/*.xls</sourceInventoryIncludes>
-                            <inventory>${project.build.directory}/inventories/analysis/ae-container-extractor-inventory.xls</inventory>
-                            <targetReportDir>${basedir}/src/main/dita/ae-container/gen</targetReportDir>
-                        </configuration>
-                    </execution>
-                    -->
-
                     <execution>
-                        <id>create-ae-dependency-inventory</id>
+                        <id>default-descriptor</id>
                         <goals>
-                            <goal>create-inventory-report</goal>
+                            <goal>generate-documents</goal>
                         </goals>
                         <phase>process-sources</phase>
                         <configuration>
-                            <sourceInventoryDir>${project.build.directory}/inventory-base</sourceInventoryDir>
-                            <sourceInventoryIncludes>**/*.xls</sourceInventoryIncludes>
-                            <inventory>${project.build.directory}/inventories/inventory/ae-dependency-extractor-inventory.xls</inventory>
-                            <targetReportDir>${basedir}/src/main/dita/ae-dependency/gen</targetReportDir>
+                            <assetDescriptorFile>${project.basedir}/src/main/asset-descriptor/asset-descriptor.yaml</assetDescriptorFile>
+                            <targetReportDir>${project.basedir}/src/main/dita/ae-dependency/gen</targetReportDir>
                         </configuration>
                     </execution>
                 </executions>
-
-                <configuration>
-                    <failOnBanned>${annex.validation}</failOnBanned>
-                    <failOnError>${annex.validation}</failOnError>
-                    <failOnUnknown>${annex.validation}</failOnUnknown>
-                    <failOnUnknownVersion>${annex.validation}</failOnUnknownVersion>
-                    <failOnMissingLicense>${annex.validation}</failOnMissingLicense>
-                    <failOnMissingLicenseFile>${annex.validation}</failOnMissingLicenseFile>
-                    <failOnMissingNotice>${annex.validation}</failOnMissingNotice>
-                    <failOnDevelopment>${annex.validation}</failOnDevelopment>
-                    <failOnInternal>${annex.validation}</failOnInternal>
-
-                    <failOnUpgrade>false</failOnUpgrade>
-                    <failOnDowngrade>false</failOnDowngrade>
-
-                    <relativeLicensePath>licenses</relativeLicensePath>
-
-                    <targetLicenseDir>${project.build.directory}/licenses</targetLicenseDir>
-                    <targetComponentDir>${project.build.directory}/components</targetComponentDir>
-
-                    <targetReportDir>${basedir}/src/main/dita/${project.artifactId}/gen</targetReportDir>
-
-                    <securityPolicyFile>${project.basedir}/../../security-policy-report.json</securityPolicyFile>
-
-                    <enableBomReport>true</enableBomReport>
-                </configuration>
-
             </plugin>
 
             <plugin>
@@ -145,7 +101,7 @@
                         </goals>
                         <configuration>
                             <ditaSourceDir>${project.basedir}/src/main/dita/ae-dependency</ditaSourceDir>
-                            <ditaSourceGenDir>${project.basedir}/src/main/dita/ae-dependency/gen</ditaSourceGenDir>
+                            <ditaSourceGenDir>${project.basedir}/src/main/dita/ae-dependency/gen/ae-dependency-extractor</ditaSourceGenDir>
                         </configuration>
                     </execution>
 
@@ -345,7 +301,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>${project.basedir}/src/main/dita/ae-dependency/gen/inventory-report.properties</file>
+                                <file>${project.basedir}/src/main/dita/ae-dependency/gen/ae-dependency-extractor/inventory-report.properties</file>
                             </files>
                         </configuration>
                     </execution>
