@@ -524,6 +524,11 @@
                                             <malformedCpe>cpe:2.3:a:adsplugin:adsmonetizer:1.8.0  :*:*:*:*:wordpress:*:*</malformedCpe>
                                             <replacementCpe>cpe:2.3:a:adsplugin:adsmonetizer:1.8.0:*:*:*:*:wordpress:*:*</replacementCpe>
                                         </cpeCorrection>
+
+                                        <cpeCorrection>
+                                            <malformedCpe>cpe:2.3:a:cpe:2.3:a:campcodes:online_feeds_product_inventory_system:1.0:*:*:*:*:*:*:*</malformedCpe>
+                                            <replacementCpe>cpe:2.3:a:campcodes:online_feeds_product_inventory_system:1.0:*:*:*:*:*:*:*</replacementCpe>
+                                        </cpeCorrection>
                                     </cpeCorrections>
                                 </configuration>
                             </execution>
