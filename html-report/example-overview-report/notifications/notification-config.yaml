@@ -1,0 +1,13 @@
+config-01:
+  audience: Audience-A
+  rules:
+    - high-critical-rule
+  emails:
+    - a@example.com
+
+config-02:
+  audience: Audience-B
+  rules:
+    - high-critical-rule-many
+  emails:
+    - a@example.com
