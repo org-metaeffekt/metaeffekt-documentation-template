@@ -43,7 +43,12 @@
                                         <advisorInventoryPath>advisor</advisorInventoryPath>
                                         <notificationConfigFiles>${notification.configs}</notificationConfigFiles>
                                         <notificationRuleFiles>${notification.rules}</notificationRuleFiles>
-                                        <notificationOuputFile>${notification.output}</notificationOuputFile>
+                                        <notificationOutputFile>${notification.output}</notificationOutputFile>
+
+                                        <securityPolicy>
+                                            <file>${project.basedir}/../../security-policy-configuration.json</file>
+                                            <activeIds>base</activeIds>
+                                        </securityPolicy>
                                     </configuration>
                                 </execution>
                             </executions>

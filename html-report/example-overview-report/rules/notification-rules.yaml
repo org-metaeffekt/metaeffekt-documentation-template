@@ -1,4 +1,9 @@
-"High Severity Vulnerability":
-  severity:
-    range: High
-    min: 15
+high-critical-rule:
+  severity: High, Critical
+  minCount: 1
+  notificationText: "You have $[count] vulnerabilities with a severity of $[severity]"
+
+high-critical-rule-many:
+  severity: High, Critical
+  minCount: 9
+  notificationText: "You have $[count] vulnerabilities with a severity of $[severity]"
